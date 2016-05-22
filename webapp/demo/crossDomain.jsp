@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
 $.ajax({
-	  url: "http://192.168.7.1:10080/fxd-esb/esb/myDemo/login.jhtml"
+	  url: "http://192.168.7.1:10080/fxd-esb/esb/myDemo/login.jhtml" 
 	});
 </script>
 
