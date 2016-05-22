@@ -1,6 +1,13 @@
 package com.zhqq.funds.controller;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +33,12 @@ import cn.osworks.aos.system.dao.po.Aos_sys_orgPO;
 
 @Controller
 public class TPatientController {
+
+	/** 导出Excel时临时保存的文件名前缀 */
+	private static final String EXPORT_EXCEL_PREFIX = "tmpExportExcel_";
+
+	/** 导出时选择文件保存位置等待的时间间隔 ,用来解决清理临时文件时不删除正在等待导出的文件*/
+	private static final int EXPORT_WAIT_TIME = 1;
 
 	@Autowired
 	private TPatientService tPatientService;
@@ -88,5 +101,105 @@ public class TPatientController {
 	public String dataManagerQueryListInit() {
 		return "funds/dataManagerList.jsp";
 	}
-	
+
+	/**
+	 * 导出Excel
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "funds/patient/exportExcel")
+	public void exportExcel(final HttpServletRequest request, HttpServletResponse response) {
+		OutputStream os = null;
+		FileOutputStream fos = null;
+		try{
+			long time = 0;
+			synchronized (this){
+				time = System.currentTimeMillis();
+			}
+			final String excelTmpName = EXPORT_EXCEL_PREFIX + time ;
+			System.out.println("zzzzzzzzzzzzzzzzz");
+			final String appPath = request.getServletContext().getRealPath("/");
+			new Thread(){
+				public void run(){
+					ExecutorService executorService = Executors.newCachedThreadPool();
+					executorService.execute(new Thread(){
+						public void run(){
+							File file = new File(appPath);
+							if(file==null) return;
+							//过滤出满足条件,可以删除的文件,目前规则是前缀为EXPORT_EXCEL_PREFIX
+							File[] files = file.listFiles(new FileFilter() {
+								@Override
+								public boolean accept(File tmpFile) {
+									String tmpName = tmpFile.getName();
+									if(tmpName!=null && tmpName.indexOf(EXPORT_EXCEL_PREFIX)!=-1) {
+										if (intervalMinute(tmpName,excelTmpName+".xls")) return false;
+										//System.out.println("--过滤通过的文件-->"+tmpFile.getName());
+										return true;
+									}else{
+										return false;
+									}
+								}
+							});
+							if(files==null) return;
+							int len = files.length;
+							//临时文件数大于30则清理
+							if(len>5) {
+								for (int i = len - 1; i >= 0; i--) {
+									File tmpF = files[i];
+									//System.out.println("--清理的文件-->"+tmpF.getName());
+									tmpF.delete();
+								}
+							}
+						}
+					});
+				}
+			}.start();
+
+			Dto inDto = Dtos.newDto(request);
+
+			String tmpFilePath = appPath+excelTmpName+".xls";
+			fos = new FileOutputStream(new File(tmpFilePath));
+			tPatientService.exportExcel(inDto,"导出",fos,"2003");
+			fos.close();
+			WebCxt.write(response, excelTmpName+".xls");
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			if(fos!=null){
+				try {
+					fos.close();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	//为了避免导出前删除了临时文件,所以设定导出等待的时间间隔为EXPORT_WAIT_TIME分钟
+	private boolean intervalMinute(String sourcetmpName, String targetFileName) {
+		String sourceTimeMillis = truncateTime(sourcetmpName);
+		String targetTimeMillis = truncateTime(targetFileName);
+		Calendar sourceCalendar = Calendar.getInstance();
+		sourceCalendar.setTime(new java.util.Date(new Long(sourceTimeMillis).longValue()));
+		int resultSource = sourceCalendar.get(Calendar.MINUTE);
+		Calendar targetCalendar = Calendar.getInstance();
+		targetCalendar.setTime(new java.util.Date(new Long(targetTimeMillis).longValue()));
+		int resultTarget = targetCalendar.get(Calendar.MINUTE);
+		if(Math.abs(resultTarget-resultSource) < EXPORT_WAIT_TIME){
+			return true ;
+		}
+		return false;
+	}
+
+	private String truncateTime(String tmpName) {
+		int startPos = EXPORT_EXCEL_PREFIX.length();
+		int endPos = 0;
+		if(tmpName.lastIndexOf(".xlsx")!=-1){
+			endPos = tmpName.lastIndexOf(".xlsx");
+		}else if(tmpName.lastIndexOf(".xls")!=-1){
+			endPos = tmpName.lastIndexOf(".xls");
+		}
+		return tmpName.substring(startPos,endPos);
+	}
+
 }

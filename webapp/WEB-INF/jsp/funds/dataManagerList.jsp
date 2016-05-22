@@ -17,7 +17,7 @@
 				<aos:dockeditem text="修改" tooltip="修改患者" onclick="_w_user_u_show" icon="edit.png" />
 				<aos:dockeditem text="删除" tooltip="删除患者" onclick="_g_user_del" icon="del.png" />
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:dockeditem text="导出" tooltip="导出患者信息成Excel" onclick="_g_user_del" icon="icon9.png" />
+				<aos:dockeditem text="导出" tooltip="导出患者信息成Excel" onclick="_g_user_export" icon="icon9.png" />
 				<aos:dockeditem xtype="tbseparator" />
 				<aos:combobox id="patient_query_type" name="patient_query_type" dicField="custom_patient_query" value="0"  width="90"/>
 				<aos:triggerfield emptyText="请输入关键字" name="hotkey" id="_hotkey" onenterkey="_g_user_query"
@@ -270,6 +270,23 @@
                     });
                 });
             }
+
+			//导出
+			function _g_user_export(){
+				var selection = AOS.select(_g_user);
+				AOS.mask('正在导出, 请稍候...');
+				AOS.ajax({
+					params : {
+						aos_rows_ : selection
+					},
+					url : 'exportExcel.jhtml',
+					wait : false,
+					ok : function(data) {
+						AOS.unmask();
+						AOS.file('${cxt}/'+data.appmsg);
+					}
+				});
+			}
         </script>
 </aos:onready>
 </aos:html>

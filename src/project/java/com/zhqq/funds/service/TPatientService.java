@@ -1,7 +1,10 @@
 package com.zhqq.funds.service;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
+import cn.osworks.aos.core.typewrap.Dto;
 import com.zhqq.funds.DTO.TPatientDTO;
 
 public interface TPatientService {
@@ -55,6 +58,17 @@ public interface TPatientService {
 	 * @throws Exception
 	 */
 	public int queryPatientCount(String hotkey ,String patientQueryType) throws Exception;
+
+
+	/**
+	 * 导出Excel
+	 * @param inDto
+	 * @param sheetName
+	 * @param out
+	 * @param type
+     * @throws IOException
+     */
+	public void exportExcel(Dto inDto, String sheetName, OutputStream out, String type) throws IOException ;
 	
 	
 }
