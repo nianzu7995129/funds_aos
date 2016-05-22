@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhqq.funds.mapper.TDrugreleaseMapper" >
+  <resultMap id="BaseResultMap" type="com.zhqq.funds.po.TDrugrelease" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="patient_code" property="patientCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="idcardnumber" property="idcardnumber" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="taken_drug_number" property="takenDrugNumber" jdbcType="VARCHAR" />
+    <result column="current_dose" property="currentDose" jdbcType="VARCHAR" />
+    <result column="expected_nextTime" property="expectedNexttime" jdbcType="VARCHAR" />
+    <result column="hospital_group" property="hospitalGroup" jdbcType="VARCHAR" />
+    <result column="formal_entry_time" property="formalEntryTime" jdbcType="VARCHAR" />
+    <result column="disease" property="disease" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, patient_code, name, sex, idcardnumber, phone, taken_drug_number, current_dose, 
+    expected_nextTime, hospital_group, formal_entry_time, disease, state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhqq.funds.po.TDrugreleaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_drugrelease
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_drugrelease
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_drugrelease
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zhqq.funds.po.TDrugreleaseExample" >
+    delete from t_drugrelease
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhqq.funds.po.TDrugrelease" >
+    insert into t_drugrelease (id, patient_code, name, 
+      sex, idcardnumber, phone, 
+      taken_drug_number, current_dose, expected_nextTime, 
+      hospital_group, formal_entry_time, disease, 
+      state)
+    values (#{id,jdbcType=INTEGER}, #{patientCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{idcardnumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{takenDrugNumber,jdbcType=VARCHAR}, #{currentDose,jdbcType=VARCHAR}, #{expectedNexttime,jdbcType=VARCHAR}, 
+      #{hospitalGroup,jdbcType=VARCHAR}, #{formalEntryTime,jdbcType=VARCHAR}, #{disease,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhqq.funds.po.TDrugrelease" >
+    insert into t_drugrelease
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="patientCode != null" >
+        patient_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="idcardnumber != null" >
+        idcardnumber,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="takenDrugNumber != null" >
+        taken_drug_number,
+      </if>
+      <if test="currentDose != null" >
+        current_dose,
+      </if>
+      <if test="expectedNexttime != null" >
+        expected_nextTime,
+      </if>
+      <if test="hospitalGroup != null" >
+        hospital_group,
+      </if>
+      <if test="formalEntryTime != null" >
+        formal_entry_time,
+      </if>
+      <if test="disease != null" >
+        disease,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="patientCode != null" >
+        #{patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardnumber != null" >
+        #{idcardnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="takenDrugNumber != null" >
+        #{takenDrugNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="currentDose != null" >
+        #{currentDose,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedNexttime != null" >
+        #{expectedNexttime,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalGroup != null" >
+        #{hospitalGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="formalEntryTime != null" >
+        #{formalEntryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="disease != null" >
+        #{disease,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zhqq.funds.po.TDrugreleaseExample" resultType="java.lang.Integer" >
+    select count(*) from t_drugrelease
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_drugrelease
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.patientCode != null" >
+        patient_code = #{record.patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardnumber != null" >
+        idcardnumber = #{record.idcardnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.takenDrugNumber != null" >
+        taken_drug_number = #{record.takenDrugNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentDose != null" >
+        current_dose = #{record.currentDose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expectedNexttime != null" >
+        expected_nextTime = #{record.expectedNexttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalGroup != null" >
+        hospital_group = #{record.hospitalGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formalEntryTime != null" >
+        formal_entry_time = #{record.formalEntryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disease != null" >
+        disease = #{record.disease,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_drugrelease
+    set id = #{record.id,jdbcType=INTEGER},
+      patient_code = #{record.patientCode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      idcardnumber = #{record.idcardnumber,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      taken_drug_number = #{record.takenDrugNumber,jdbcType=VARCHAR},
+      current_dose = #{record.currentDose,jdbcType=VARCHAR},
+      expected_nextTime = #{record.expectedNexttime,jdbcType=VARCHAR},
+      hospital_group = #{record.hospitalGroup,jdbcType=VARCHAR},
+      formal_entry_time = #{record.formalEntryTime,jdbcType=VARCHAR},
+      disease = #{record.disease,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhqq.funds.po.TDrugrelease" >
+    update t_drugrelease
+    <set >
+      <if test="patientCode != null" >
+        patient_code = #{patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardnumber != null" >
+        idcardnumber = #{idcardnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="takenDrugNumber != null" >
+        taken_drug_number = #{takenDrugNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="currentDose != null" >
+        current_dose = #{currentDose,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedNexttime != null" >
+        expected_nextTime = #{expectedNexttime,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalGroup != null" >
+        hospital_group = #{hospitalGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="formalEntryTime != null" >
+        formal_entry_time = #{formalEntryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="disease != null" >
+        disease = #{disease,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhqq.funds.po.TDrugrelease" >
+    update t_drugrelease
+    set patient_code = #{patientCode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      idcardnumber = #{idcardnumber,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      taken_drug_number = #{takenDrugNumber,jdbcType=VARCHAR},
+      current_dose = #{currentDose,jdbcType=VARCHAR},
+      expected_nextTime = #{expectedNexttime,jdbcType=VARCHAR},
+      hospital_group = #{hospitalGroup,jdbcType=VARCHAR},
+      formal_entry_time = #{formalEntryTime,jdbcType=VARCHAR},
+      disease = #{disease,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
