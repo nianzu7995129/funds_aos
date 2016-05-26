@@ -152,6 +152,7 @@ public class TPatientController {
 							}
 						}
 					});
+					executorService.shutdown();
 				}
 			}.start();
 
