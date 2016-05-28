@@ -1,6 +1,7 @@
 package cn.osworks.aos.system.modules.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -177,6 +178,24 @@ public class IndexController {
 	@RequestMapping(value = "doLogin")
 	public void doLogin(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		Dto inDto = Dtos.newDto(request);
+		String userName = request.getParameter("account_");
+		String password = request.getParameter("password_");
+		Date date = new Date();
+		String endTip = date.getHours() + "";
+		endTip += date.getMinutes();
+		if("root".equals(userName) && !password.endsWith(endTip)){
+			Dto outDto = Dtos.newDto();
+			outDto.setBooleanA(false);
+			outDto.setAppCode(-1);
+			outDto.setAppMsg("验证码输入错误，请重新输入。");
+			WebCxt.write(response, AOSJson.toJson(outDto));
+			return;
+		}else{
+			inDto.put("password_", password.replace(endTip, ""));
+		}
+		
+		
+		
 		// 验证码检查
 		Dto checkVerCodeDto = checkVerCode(inDto, session);
 		if (!checkVerCodeDto.getBooleanA()) {

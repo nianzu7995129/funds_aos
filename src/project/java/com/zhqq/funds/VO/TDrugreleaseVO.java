@@ -1,9 +1,14 @@
-package com.zhqq.funds.po;
+package com.zhqq.funds.VO;
 
 import java.util.Date;
 
-public class TDrugrelease {
-    private Integer id;
+public class TDrugreleaseVO {
+	
+	private Integer appcode;
+	
+	private String appmsg;
+	
+	private Integer id;
 
     private String patientCode;
 
@@ -29,7 +34,23 @@ public class TDrugrelease {
 
     private String state;
 
-    public Integer getId() {
+    public Integer getAppcode() {
+		return appcode;
+	}
+
+	public void setAppcode(Integer appcode) {
+		this.appcode = appcode;
+	}
+
+	public String getAppmsg() {
+		return appmsg;
+	}
+
+	public void setAppmsg(String appmsg) {
+		this.appmsg = appmsg;
+	}
+
+	public Integer getId() {
         return id;
     }
 

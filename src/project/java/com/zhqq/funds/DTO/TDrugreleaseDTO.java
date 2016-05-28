@@ -1,9 +1,9 @@
-package com.zhqq.funds.po;
+package com.zhqq.funds.DTO;
 
 import java.util.Date;
 
-public class TDrugrelease {
-    private Integer id;
+public class TDrugreleaseDTO {
+	private Integer id;
 
     private String patientCode;
 

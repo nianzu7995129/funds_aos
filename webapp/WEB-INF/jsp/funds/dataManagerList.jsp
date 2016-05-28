@@ -28,7 +28,7 @@
 			<aos:selmodel type="checkbox" mode="multi" />
 			<aos:column type="rowno" />
 			<aos:column header="流水号" dataIndex="id" hidden="true" />
-<%-- 			<aos:column header="是否通过" dataIndex="catalog_id_" hidden="true" /> --%>
+			<aos:column header="是否通过" dataIndex="catalog_id_" hidden="true" />
 			<aos:column header="档案编号" dataIndex="archives" width="70" celltip="true" />
 			<aos:column header="是否通过" dataIndex="state" width="70" celltip="true" />
 			<aos:column header="姓名" dataIndex="name" width="70" celltip="true" />
@@ -55,41 +55,42 @@
 		</aos:gridpanel>
 	</aos:viewport>
 
-	<aos:window id="_w_user" title="新增用户" maxHeight="-10" width="720" autoScroll="true">
+	<aos:window id="_w_user" title="新增患者" maxHeight="-10" width="720" autoScroll="true">
 		<aos:formpanel id="_f_user" width="700" layout="column">
-			<aos:fieldset title="基本信息" labelWidth="75">
-				<aos:textfield name="archives_" fieldLabel="档案号"  maxLength="100" columnWidth="0.5" readOnly="true"/>
-				<aos:textfield fieldLabel="是否通过" name="state_"  readOnly="true" columnWidth="0.49" />
+			<aos:fieldset title="" labelWidth="120" labelAlign="right" center="true" collapsible="false">
+				<aos:textfield name="archives" fieldLabel="档案号"  maxLength="100" columnWidth="0.5" />
+				<aos:combobox fieldLabel="是否通过" name="state"  dicField="custom_patient_state" emptyText="未通过" value="0" columnWidth="0.49" />
 					
-				<aos:textfield name="name_" fieldLabel="姓名"   readOnly="true" maxLength="100" columnWidth="0.5" />
-				<aos:textfield fieldLabel="性别" name="sex_"  readOnly="true"  columnWidth="0.49" />
+				<aos:textfield name="name" fieldLabel="姓名"  maxLength="100" columnWidth="0.5" />
+				<aos:combobox fieldLabel="性别" name="sex" dicField="custom_sex" emptyText="男" value="0" columnWidth="0.49" />
 					
-				<aos:textfield name="idcardnumber_" fieldLabel="身份证号"  readOnly="true"   maxLength="20" columnWidth="0.5" />
-				<aos:textfield name="phone_" fieldLabel="联系电话"   readOnly="true" columnWidth="0.49" />
+				<aos:textfield name="idcardnumber" fieldLabel="身份证号"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="phone" fieldLabel="联系电话"  columnWidth="0.49" />
 				
-				<aos:textfield name="address_" fieldLabel="住址"  readOnly="true" maxLength="100" columnWidth="0.5" />
-				<aos:textfield name="diagnosticMaterial_" fieldLabel="诊断材料"  readOnly="true" columnWidth="0.49" />
+				<aos:textfield name="address" fieldLabel="住址" maxLength="100" columnWidth="0.5" />
+				<aos:combobox name="diagnosticMaterial" fieldLabel="诊断材料" dicField="custom_h_state" emptyText="" editable="true" forceSelection="false" columnWidth="0.49" />
 				
-				<aos:textfield name="proofIdentity_" fieldLabel="身份证明"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="proofIncome_" fieldLabel="收入证明"   readOnly="true"   columnWidth="0.49" />
+				<aos:combobox name="proofIdentity" fieldLabel="身份证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:combobox name="proofIncome" fieldLabel="收入证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:textfield name="purchaseInvoice_" fieldLabel="购药发票"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="medicalEvaluationForm_" fieldLabel="医学评估表"   readOnly="true"   columnWidth="0.49" />
+				<aos:combobox name="purchaseInvoice" fieldLabel="购药发票"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:combobox name="medicalEvaluationForm" fieldLabel="医学评估表"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:textfield name="informedConsentOfPatients_" fieldLabel="患者知情同意函"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="patienteConomicStatus_" fieldLabel="患者经济状况填报表"   readOnly="true"   columnWidth="0.49" />
+				<aos:combobox name="informedConsentOfPatients" fieldLabel="患者知情同意函"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:combobox name="patienteConomicStatus" fieldLabel="患者经济状况填报表"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:textfield name="coldChainDrugInformedConsent_" fieldLabel="冷链药品知情同意书"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="hr_" fieldLabel="项目专员" maxLength="100"  readOnly="true" columnWidth="0.49" />
+				<aos:combobox name="coldChainDrugInformedConsent" fieldLabel="冷链药品知情同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:textfield name="hr" fieldLabel="项目专员" maxLength="100" columnWidth="0.49" />
 				
-				<aos:textfield name="langMuHospital_" fieldLabel="朗沐医院" maxLength="100"  readOnly="true" columnWidth="0.5" />
-				<aos:textfield name="langMuDoctor_" fieldLabel="朗沐医生" maxLength="100"  readOnly="true" columnWidth="0.49" />
+				<aos:textfield name="langMuHospital" fieldLabel="朗沐医院" maxLength="100" columnWidth="0.5" />
+				<aos:textfield name="langMuDoctor" fieldLabel="朗沐医生" maxLength="100" columnWidth="0.49" />
 				
-				<aos:textfield name="estimatedTimeToIncreaseDrugInjection_" fieldLabel="预计增药注射时间"   readOnly="true"   columnWidth="0.5" />
-				<aos:textfield name="remarks_" fieldLabel="备注" maxLength="100"  readOnly="true" columnWidth="0.49" />
+				<aos:combobox name="estimatedTimeToIncreaseDrugInjection" fieldLabel="预计增药注射时间"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:textfield name="remarks" fieldLabel="备注" maxLength="100" columnWidth="0.49" />
 				
-				<aos:textfield name="recipientsReceiveSingleDrug_" fieldLabel="受助药品领取单"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="endOfStatement_" fieldLabel="捐助结束声明"   readOnly="true"  columnWidth="0.49" />
+				<aos:combobox name="recipientsReceiveSingleDrug" fieldLabel="受助药品领取单"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:combobox name="endOfStatement" fieldLabel="捐助结束声明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				
 			</aos:fieldset>
 		</aos:formpanel>
 		<aos:docked dock="bottom" ui="footer">
@@ -101,39 +102,41 @@
 
 	<aos:window id="_w_user_u" title="修改用户" onshow="_w_user_u_onshow" width="720" maxHeight="-10" autoScroll="true">
 		<aos:formpanel id="_f_user_u" width="700" layout="column" labelWidth="70">
-			<aos:fieldset title="基本信息" labelWidth="70" columnWidth="1" margin="0 10 0 0" >
-				<aos:textfield name="archives_" fieldLabel="档案号"  maxLength="100" columnWidth="0.5" readOnly="true"/>
-				<aos:textfield fieldLabel="是否通过" name="state_"  readOnly="true" columnWidth="0.49" />
+			<aos:hiddenfield fieldLabel="xxxxx" name="id" />
+			<aos:fieldset title="" labelWidth="120" labelAlign="right" center="true" collapsible="false">
+				<aos:textfield name="archives" fieldLabel="档案号"  maxLength="100" columnWidth="0.5" />
+				<aos:combobox fieldLabel="是否通过" name="state"  dicField="custom_patient_state" emptyText="未通过" value="0" columnWidth="0.49" />
 					
-				<aos:textfield name="name_" fieldLabel="姓名"   readOnly="true" maxLength="100" columnWidth="0.5" />
-				<aos:textfield fieldLabel="性别" name="sex_"  readOnly="true"  columnWidth="0.49" />
+				<aos:textfield name="name" fieldLabel="姓名"  maxLength="100" columnWidth="0.5" />
+				<aos:combobox fieldLabel="性别" name="sex" dicField="custom_sex" emptyText="男" value="0" columnWidth="0.49" />
 					
-				<aos:textfield name="idcardnumber_" fieldLabel="身份证号"  readOnly="true"   maxLength="20" columnWidth="0.5" />
-				<aos:textfield name="phone_" fieldLabel="联系电话"   readOnly="true" columnWidth="0.49" />
+				<aos:textfield name="idcardnumber" fieldLabel="身份证号"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="phone" fieldLabel="联系电话"  columnWidth="0.49" />
 				
-				<aos:textfield name="address_" fieldLabel="住址"  readOnly="true" maxLength="100" columnWidth="0.5" />
-				<aos:textfield name="diagnosticMaterial_" fieldLabel="诊断材料"  readOnly="true" columnWidth="0.49" />
+				<aos:textfield name="address" fieldLabel="住址" maxLength="100" columnWidth="0.5" />
+				<aos:combobox name="diagnosticMaterial" fieldLabel="诊断材料" dicField="custom_h_state" emptyText="" editable="true" forceSelection="false" columnWidth="0.49" />
 				
-				<aos:textfield name="proofIdentity_" fieldLabel="身份证明"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="proofIncome_" fieldLabel="收入证明"   readOnly="true"   columnWidth="0.49" />
+				<aos:combobox name="proofIdentity" fieldLabel="身份证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:combobox name="proofIncome" fieldLabel="收入证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:textfield name="purchaseInvoice_" fieldLabel="购药发票"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="medicalEvaluationForm_" fieldLabel="医学评估表"   readOnly="true"   columnWidth="0.49" />
+				<aos:combobox name="purchaseInvoice" fieldLabel="购药发票"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:combobox name="medicalEvaluationForm" fieldLabel="医学评估表"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:textfield name="informedConsentOfPatients_" fieldLabel="患者知情同意函"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="patienteConomicStatus_" fieldLabel="患者经济状况填报表"   readOnly="true"   columnWidth="0.49" />
+				<aos:combobox name="informedConsentOfPatients" fieldLabel="患者知情同意函"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:combobox name="patienteConomicStatus" fieldLabel="患者经济状况填报表"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:textfield name="coldChainDrugInformedConsent_" fieldLabel="冷链药品知情同意书"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="hr_" fieldLabel="项目专员" maxLength="100"  readOnly="true" columnWidth="0.49" />
+				<aos:combobox name="coldChainDrugInformedConsent" fieldLabel="冷链药品知情同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:textfield name="hr" fieldLabel="项目专员" maxLength="100" columnWidth="0.49" />
 				
-				<aos:textfield name="langMuHospital_" fieldLabel="朗沐医院" maxLength="100"  readOnly="true" columnWidth="0.5" />
-				<aos:textfield name="langMuDoctor_" fieldLabel="朗沐医生" maxLength="100"  readOnly="true" columnWidth="0.49" />
+				<aos:textfield name="langMuHospital" fieldLabel="朗沐医院" maxLength="100" columnWidth="0.5" />
+				<aos:textfield name="langMuDoctor" fieldLabel="朗沐医生" maxLength="100" columnWidth="0.49" />
 				
-				<aos:textfield name="estimatedTimeToIncreaseDrugInjection_" fieldLabel="预计增药注射时间"   readOnly="true"   columnWidth="0.5" />
-				<aos:textfield name="remarks_" fieldLabel="备注" maxLength="100"  readOnly="true" columnWidth="0.49" />
+				<aos:combobox name="estimatedTimeToIncreaseDrugInjection" fieldLabel="预计增药注射时间"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:textfield name="remarks" fieldLabel="备注" maxLength="100" columnWidth="0.49" />
 				
-				<aos:textfield name="recipientsReceiveSingleDrug_" fieldLabel="受助药品领取单"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="endOfStatement_" fieldLabel="捐助结束声明"   readOnly="true"  columnWidth="0.49" />
+				<aos:combobox name="recipientsReceiveSingleDrug" fieldLabel="受助药品领取单"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:combobox name="endOfStatement" fieldLabel="捐助结束声明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				
 			</aos:fieldset>
 		</aos:formpanel>
 		<aos:docked dock="bottom" ui="footer">
@@ -158,11 +161,6 @@
             //弹出新增用户窗口
             function _w_user_show() {
                 AOS.reset(_f_user);
-                var record = AOS.selectone(_t_org);
-                if (!AOS.empty(record)) {
-                    _f_user.down('[name=org_id_]').setValue(record.raw.id);
-                    _f_user.down('[name=org_name_]').setValue(record.raw.text);
-                }
                 _w_user.show();
             }
 
@@ -170,7 +168,7 @@
             function _f_user_save() {
                 AOS.ajax({
                     forms: _f_user,
-                    url: 'saveUser.jhtml',
+                    url: 'savePatien.jhtml',
                     ok: function (data) {
                         if (data.appcode === -1) {
                             AOS.err(data.appmsg);
@@ -195,44 +193,20 @@
             function _w_user_u_onshow() {
                 var record = AOS.selectone(_g_user);
                 AOS.ajax({
-                    params: {id_: record.data.id_},
-                    url: 'getUser.jhtml',
+                    params: {id: record.data.id},
+                    url: 'getPatient.jhtml',
                     ok: function (data) {
                         _f_user_u.form.setValues(data);
-                        _f_user_u.down('[name=old_org_id_]').setValue(record.data.org_id_);
-                        _f_user_u.down('[name=org_id_]').setValue(record.data.org_id_);
-                        _f_user_u.down('[name=org_name_]').setValue(record.data.org_name_);
-                        if(AOS.empty(data.bytearray_id_)) {
-                            Ext.get('_img_photo').dom.src = '${cxt}/static/image/empty_head_photo.png';
-                        }else {
-                            Ext.get('_img_photo').dom.src = '${cxt}/system/byteObj/viewByteObj.jhtml?id_=' + data.bytearray_id_;
-                        }
                     }
                 });
             }
 
             //修改用户保存
             function _f_user_u_save() {
-                var org_id_ = _f_user_u.down('[name=org_id_]').getValue();
-                var old_org_id_ = _f_user_u.down('[name=old_org_id_]').getValue();
-                if (org_id_ != old_org_id_) {
-                    AOS.confirm('提示：所属组织被修改，继续保存将清除当前用户和岗位的授权关系。<br>继续保存吗？', function (btn) {
-                        if (btn === 'cancel') {
-                            AOS.tip('用户修改操作被取消。');
-                        } else {
-                            _f_user_u_save2();
-                        }
-                    });
-                } else {
-                    _f_user_u_save2();
-                }
-            }
-
-            //修改用户保存
-            function _f_user_u_save2() {
+            	var record = AOS.selectone(_g_user);
                 AOS.ajax({
                     forms: _f_user_u,
-                    url: 'updateUser.jhtml',
+                    url: 'updatePatient.jhtml',
                     ok: function (data) {
                         if (data.appcode === -1) {
                             AOS.err(data.appmsg);
@@ -247,7 +221,7 @@
 
             //删除用户
             function _g_user_del() {
-                var selection = AOS.selection(_g_user, 'id_');
+                var selection = AOS.selection(_g_user, 'id');
                 if (AOS.empty(selection)) {
                     AOS.tip('删除前请先选中数据。');
                     return;
@@ -259,7 +233,7 @@
                         return;
                     }
                     AOS.ajax({
-                        url: 'deleteUser.jhtml',
+                        url: 'deletePatient.jhtml',
                         params: {
                             aos_rows_: selection
                         },
@@ -270,14 +244,15 @@
                     });
                 });
             }
+            
 
 			//导出
 			function _g_user_export(){
-				var selection = AOS.select(_g_user);
 				AOS.mask('正在导出, 请稍候...');
 				AOS.ajax({
 					params : {
-						aos_rows_ : selection
+						hotkey: _hotkey.getValue(),
+	               		patientQueryType: patient_query_type.getValue()
 					},
 					url : 'exportExcel.jhtml',
 					wait : false,
@@ -287,6 +262,7 @@
 					}
 				});
 			}
+
         </script>
 </aos:onready>
 </aos:html>

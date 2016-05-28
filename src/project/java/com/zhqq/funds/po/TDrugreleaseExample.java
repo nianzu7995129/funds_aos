@@ -1,6 +1,7 @@
 package com.zhqq.funds.po;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TDrugreleaseExample {
@@ -684,62 +685,52 @@ public class TDrugreleaseExample {
             return (Criteria) this;
         }
 
-        public Criteria andExpectedNexttimeEqualTo(String value) {
+        public Criteria andExpectedNexttimeEqualTo(Date value) {
             addCriterion("expected_nextTime =", value, "expectedNexttime");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedNexttimeNotEqualTo(String value) {
+        public Criteria andExpectedNexttimeNotEqualTo(Date value) {
             addCriterion("expected_nextTime <>", value, "expectedNexttime");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedNexttimeGreaterThan(String value) {
+        public Criteria andExpectedNexttimeGreaterThan(Date value) {
             addCriterion("expected_nextTime >", value, "expectedNexttime");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedNexttimeGreaterThanOrEqualTo(String value) {
+        public Criteria andExpectedNexttimeGreaterThanOrEqualTo(Date value) {
             addCriterion("expected_nextTime >=", value, "expectedNexttime");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedNexttimeLessThan(String value) {
+        public Criteria andExpectedNexttimeLessThan(Date value) {
             addCriterion("expected_nextTime <", value, "expectedNexttime");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedNexttimeLessThanOrEqualTo(String value) {
+        public Criteria andExpectedNexttimeLessThanOrEqualTo(Date value) {
             addCriterion("expected_nextTime <=", value, "expectedNexttime");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedNexttimeLike(String value) {
-            addCriterion("expected_nextTime like", value, "expectedNexttime");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedNexttimeNotLike(String value) {
-            addCriterion("expected_nextTime not like", value, "expectedNexttime");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedNexttimeIn(List<String> values) {
+        public Criteria andExpectedNexttimeIn(List<Date> values) {
             addCriterion("expected_nextTime in", values, "expectedNexttime");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedNexttimeNotIn(List<String> values) {
+        public Criteria andExpectedNexttimeNotIn(List<Date> values) {
             addCriterion("expected_nextTime not in", values, "expectedNexttime");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedNexttimeBetween(String value1, String value2) {
+        public Criteria andExpectedNexttimeBetween(Date value1, Date value2) {
             addCriterion("expected_nextTime between", value1, value2, "expectedNexttime");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedNexttimeNotBetween(String value1, String value2) {
+        public Criteria andExpectedNexttimeNotBetween(Date value1, Date value2) {
             addCriterion("expected_nextTime not between", value1, value2, "expectedNexttime");
             return (Criteria) this;
         }
@@ -824,62 +815,52 @@ public class TDrugreleaseExample {
             return (Criteria) this;
         }
 
-        public Criteria andFormalEntryTimeEqualTo(String value) {
+        public Criteria andFormalEntryTimeEqualTo(Date value) {
             addCriterion("formal_entry_time =", value, "formalEntryTime");
             return (Criteria) this;
         }
 
-        public Criteria andFormalEntryTimeNotEqualTo(String value) {
+        public Criteria andFormalEntryTimeNotEqualTo(Date value) {
             addCriterion("formal_entry_time <>", value, "formalEntryTime");
             return (Criteria) this;
         }
 
-        public Criteria andFormalEntryTimeGreaterThan(String value) {
+        public Criteria andFormalEntryTimeGreaterThan(Date value) {
             addCriterion("formal_entry_time >", value, "formalEntryTime");
             return (Criteria) this;
         }
 
-        public Criteria andFormalEntryTimeGreaterThanOrEqualTo(String value) {
+        public Criteria andFormalEntryTimeGreaterThanOrEqualTo(Date value) {
             addCriterion("formal_entry_time >=", value, "formalEntryTime");
             return (Criteria) this;
         }
 
-        public Criteria andFormalEntryTimeLessThan(String value) {
+        public Criteria andFormalEntryTimeLessThan(Date value) {
             addCriterion("formal_entry_time <", value, "formalEntryTime");
             return (Criteria) this;
         }
 
-        public Criteria andFormalEntryTimeLessThanOrEqualTo(String value) {
+        public Criteria andFormalEntryTimeLessThanOrEqualTo(Date value) {
             addCriterion("formal_entry_time <=", value, "formalEntryTime");
             return (Criteria) this;
         }
 
-        public Criteria andFormalEntryTimeLike(String value) {
-            addCriterion("formal_entry_time like", value, "formalEntryTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFormalEntryTimeNotLike(String value) {
-            addCriterion("formal_entry_time not like", value, "formalEntryTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andFormalEntryTimeIn(List<String> values) {
+        public Criteria andFormalEntryTimeIn(List<Date> values) {
             addCriterion("formal_entry_time in", values, "formalEntryTime");
             return (Criteria) this;
         }
 
-        public Criteria andFormalEntryTimeNotIn(List<String> values) {
+        public Criteria andFormalEntryTimeNotIn(List<Date> values) {
             addCriterion("formal_entry_time not in", values, "formalEntryTime");
             return (Criteria) this;
         }
 
-        public Criteria andFormalEntryTimeBetween(String value1, String value2) {
+        public Criteria andFormalEntryTimeBetween(Date value1, Date value2) {
             addCriterion("formal_entry_time between", value1, value2, "formalEntryTime");
             return (Criteria) this;
         }
 
-        public Criteria andFormalEntryTimeNotBetween(String value1, String value2) {
+        public Criteria andFormalEntryTimeNotBetween(Date value1, Date value2) {
             addCriterion("formal_entry_time not between", value1, value2, "formalEntryTime");
             return (Criteria) this;
         }

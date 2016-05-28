@@ -10,9 +10,9 @@
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="taken_drug_number" property="takenDrugNumber" jdbcType="VARCHAR" />
     <result column="current_dose" property="currentDose" jdbcType="VARCHAR" />
-    <result column="expected_nextTime" property="expectedNexttime" jdbcType="VARCHAR" />
+    <result column="expected_nextTime" property="expectedNexttime" jdbcType="TIMESTAMP" />
     <result column="hospital_group" property="hospitalGroup" jdbcType="VARCHAR" />
-    <result column="formal_entry_time" property="formalEntryTime" jdbcType="VARCHAR" />
+    <result column="formal_entry_time" property="formalEntryTime" jdbcType="TIMESTAMP" />
     <result column="disease" property="disease" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
@@ -119,8 +119,8 @@
       state)
     values (#{id,jdbcType=INTEGER}, #{patientCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{idcardnumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{takenDrugNumber,jdbcType=VARCHAR}, #{currentDose,jdbcType=VARCHAR}, #{expectedNexttime,jdbcType=VARCHAR}, 
-      #{hospitalGroup,jdbcType=VARCHAR}, #{formalEntryTime,jdbcType=VARCHAR}, #{disease,jdbcType=VARCHAR}, 
+      #{takenDrugNumber,jdbcType=VARCHAR}, #{currentDose,jdbcType=VARCHAR}, #{expectedNexttime,jdbcType=TIMESTAMP}, 
+      #{hospitalGroup,jdbcType=VARCHAR}, #{formalEntryTime,jdbcType=TIMESTAMP}, #{disease,jdbcType=VARCHAR}, 
       #{state,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zhqq.funds.po.TDrugrelease" >
@@ -192,13 +192,13 @@
         #{currentDose,jdbcType=VARCHAR},
       </if>
       <if test="expectedNexttime != null" >
-        #{expectedNexttime,jdbcType=VARCHAR},
+        #{expectedNexttime,jdbcType=TIMESTAMP},
       </if>
       <if test="hospitalGroup != null" >
         #{hospitalGroup,jdbcType=VARCHAR},
       </if>
       <if test="formalEntryTime != null" >
-        #{formalEntryTime,jdbcType=VARCHAR},
+        #{formalEntryTime,jdbcType=TIMESTAMP},
       </if>
       <if test="disease != null" >
         #{disease,jdbcType=VARCHAR},
@@ -242,13 +242,13 @@
         current_dose = #{record.currentDose,jdbcType=VARCHAR},
       </if>
       <if test="record.expectedNexttime != null" >
-        expected_nextTime = #{record.expectedNexttime,jdbcType=VARCHAR},
+        expected_nextTime = #{record.expectedNexttime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.hospitalGroup != null" >
         hospital_group = #{record.hospitalGroup,jdbcType=VARCHAR},
       </if>
       <if test="record.formalEntryTime != null" >
-        formal_entry_time = #{record.formalEntryTime,jdbcType=VARCHAR},
+        formal_entry_time = #{record.formalEntryTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.disease != null" >
         disease = #{record.disease,jdbcType=VARCHAR},
@@ -271,9 +271,9 @@
       phone = #{record.phone,jdbcType=VARCHAR},
       taken_drug_number = #{record.takenDrugNumber,jdbcType=VARCHAR},
       current_dose = #{record.currentDose,jdbcType=VARCHAR},
-      expected_nextTime = #{record.expectedNexttime,jdbcType=VARCHAR},
+      expected_nextTime = #{record.expectedNexttime,jdbcType=TIMESTAMP},
       hospital_group = #{record.hospitalGroup,jdbcType=VARCHAR},
-      formal_entry_time = #{record.formalEntryTime,jdbcType=VARCHAR},
+      formal_entry_time = #{record.formalEntryTime,jdbcType=TIMESTAMP},
       disease = #{record.disease,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -305,13 +305,13 @@
         current_dose = #{currentDose,jdbcType=VARCHAR},
       </if>
       <if test="expectedNexttime != null" >
-        expected_nextTime = #{expectedNexttime,jdbcType=VARCHAR},
+        expected_nextTime = #{expectedNexttime,jdbcType=TIMESTAMP},
       </if>
       <if test="hospitalGroup != null" >
         hospital_group = #{hospitalGroup,jdbcType=VARCHAR},
       </if>
       <if test="formalEntryTime != null" >
-        formal_entry_time = #{formalEntryTime,jdbcType=VARCHAR},
+        formal_entry_time = #{formalEntryTime,jdbcType=TIMESTAMP},
       </if>
       <if test="disease != null" >
         disease = #{disease,jdbcType=VARCHAR},
@@ -331,9 +331,9 @@
       phone = #{phone,jdbcType=VARCHAR},
       taken_drug_number = #{takenDrugNumber,jdbcType=VARCHAR},
       current_dose = #{currentDose,jdbcType=VARCHAR},
-      expected_nextTime = #{expectedNexttime,jdbcType=VARCHAR},
+      expected_nextTime = #{expectedNexttime,jdbcType=TIMESTAMP},
       hospital_group = #{hospitalGroup,jdbcType=VARCHAR},
-      formal_entry_time = #{formalEntryTime,jdbcType=VARCHAR},
+      formal_entry_time = #{formalEntryTime,jdbcType=TIMESTAMP},
       disease = #{disease,jdbcType=VARCHAR},
       state = #{state,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

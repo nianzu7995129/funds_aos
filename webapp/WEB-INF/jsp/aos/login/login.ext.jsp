@@ -67,8 +67,6 @@
 					<aos:fieldset labelWidth="65" columnWidth="0.3" height="30" collapsible="false" contentEl="_div_vercode"
 						border="false" margin="0 60 0 0" />
 				</c:if>
-				<aos:toggle name="remberme" offText="忽略" onText="记住" state="true" columnWidth="0.4" resizeHandle="true"
-					margin="0 65 0 95" />
 				<aos:docked dock="bottom" ui="footer">
 					<aos:dockeditem xtype="tbfill" />
 					<aos:dockeditem xtype="button" onclick="_fn_login" icon="user6.png" text="登 录" tooltip="登录系统" />

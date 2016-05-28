@@ -9,31 +9,36 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.zhqq.funds.DTO.TPatientDTO;
 import com.zhqq.funds.VO.TPatientVO;
 import com.zhqq.funds.service.TPatientService;
+import com.zhqq.funds.utils.PatientUtils;
 
+import cn.osworks.aos.core.asset.AOSCons;
 import cn.osworks.aos.core.asset.AOSJson;
 import cn.osworks.aos.core.asset.AOSUtils;
 import cn.osworks.aos.core.asset.WebCxt;
 import cn.osworks.aos.core.typewrap.Dto;
 import cn.osworks.aos.core.typewrap.Dtos;
 import cn.osworks.aos.system.dao.po.Aos_sys_orgPO;
+import cn.osworks.aos.system.dao.po.Aos_sys_user_cfgPO;
+import cn.osworks.aos.system.dao.po.Aos_sys_user_extPO;
+import cn.osworks.aos.system.modules.dao.vo.UserInfoVO;
 
 
 
 @Controller
 public class TPatientController {
-
 	/** 导出Excel时临时保存的文件名前缀 */
 	private static final String EXPORT_EXCEL_PREFIX = "tmpExportExcel_";
 
@@ -69,15 +74,62 @@ public class TPatientController {
 		rlt.setAppcode(1);
 		WebCxt.write(response, AOSJson.toJson(rlt));
 	}
+	
+	@RequestMapping(value="funds/patient/deletePatient")
+	public void deletePatient(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="aos_rows_")String ids) throws Exception {
+		TPatientVO rlt = new TPatientVO();
+		tPatientService.deletePatients(ids);
+		rlt.setAppcode(1);
+		rlt.setAppmsg("删除患者成功!");
+		WebCxt.write(response, AOSJson.toJson(rlt));
+	}
+	
+	@RequestMapping(value="funds/patient/updatePatient")
+	public void updatePatient(HttpServletRequest request, HttpServletResponse response,TPatientDTO tPatientDTO) throws Exception {
+		TPatientVO rlt = new TPatientVO();
+		tPatientService.updatePatient(tPatientDTO);
+		rlt.setAppcode(1);
+		rlt.setAppmsg("修改患者成功!");
+		WebCxt.write(response, AOSJson.toJson(rlt));
+	}
+	
+	@RequestMapping(value="funds/patient/getPatient")
+	public void getPatient(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="id")String id) throws Exception {
+		TPatientVO rlt = new TPatientVO();
+		TPatientDTO dto = tPatientService.getPatientByID(id); 
+		AOSUtils.copyProperties(dto, rlt);
+		rlt.setAppcode(1);
+		WebCxt.write(response, AOSJson.toJson(rlt));
+	}
+	
+	
+	
 
 	
-	@RequestMapping(value="/addPatient")
-	public ModelAndView addPatient(HttpServletRequest requet,TPatientDTO tPatientDTO) throws Exception {
-		ModelAndView modelAndView = new ModelAndView();
-//		tPatientService.addPatient(tPatientVo);
-//		modelAndView.addObject("state", "增加患者资料成功!");
-//		modelAndView.setViewName("add");
-		return modelAndView;
+	@RequestMapping(value="funds/patient/savePatien")
+	public void addPatient(HttpServletRequest requet, HttpServletResponse response,TPatientDTO tPatientDTO) throws Exception {
+		TPatientVO rlt = new TPatientVO();
+		tPatientService.addPatient(tPatientDTO);
+		rlt.setAppcode(1);
+		rlt.setAppmsg("新增患者成功!");
+		WebCxt.write(response, AOSJson.toJson(rlt));
+	}
+	
+	@RequestMapping(value="funds/patient/queryPatientListHR")
+	public void queryPatientListHR(HttpSession session,HttpServletRequest request, HttpServletResponse response,@RequestParam(value="hotkey")String hotkey ,
+			@RequestParam(value="patientQueryType")String patientQueryType,
+			@RequestParam(value="limit")String limit,
+			@RequestParam(value="page")String page,
+			@RequestParam(value="start")String start) throws Exception {
+		
+		UserInfoVO userInfoVO = (UserInfoVO)session.getAttribute(AOSCons.USERINFOKEY);
+		String hr = userInfoVO.getName_();
+		
+		int totalCount = tPatientService.queryPatientCountHR(hotkey,patientQueryType,hr);
+		List<TPatientDTO> listTPatientDTO = tPatientService.queryPatientListHR(hotkey,patientQueryType,hr,page,start,limit,true);
+		PatientUtils.proTPatientDTO(listTPatientDTO);
+		String outString = AOSJson.toGridJson(listTPatientDTO, totalCount);
+		WebCxt.write(response, outString);
 	}
 	
 	@RequestMapping(value="funds/patient/queryPatientList")
@@ -87,9 +139,22 @@ public class TPatientController {
 			@RequestParam(value="page")String page,
 			@RequestParam(value="start")String start) throws Exception {
 		int totalCount = tPatientService.queryPatientCount(hotkey,patientQueryType);
-		List<TPatientDTO> listTPatientDTO = tPatientService.queryPatientList(hotkey,patientQueryType,page,start,limit);
+		List<TPatientDTO> listTPatientDTO = tPatientService.queryPatientList(hotkey,patientQueryType,page,start,limit,true);
+		PatientUtils.proTPatientDTO(listTPatientDTO);
 		String outString = AOSJson.toGridJson(listTPatientDTO, totalCount);
 		WebCxt.write(response, outString);
+	}
+
+	
+	
+	/**
+	 * 页面初始化
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "funds/hr/hrQueryList")
+	public String hrQueryListInit() {
+		return "funds/hr.jsp";
 	}
 	
 	/**
@@ -101,6 +166,7 @@ public class TPatientController {
 	public String dataManagerQueryListInit() {
 		return "funds/dataManagerList.jsp";
 	}
+	
 
 	/**
 	 * 导出Excel
@@ -117,8 +183,8 @@ public class TPatientController {
 				time = System.currentTimeMillis();
 			}
 			final String excelTmpName = EXPORT_EXCEL_PREFIX + time ;
-			System.out.println("zzzzzzzzzzzzzzzzz");
 			final String appPath = request.getServletContext().getRealPath("/");
+			
 			new Thread(){
 				public void run(){
 					ExecutorService executorService = Executors.newCachedThreadPool();
@@ -152,7 +218,6 @@ public class TPatientController {
 							}
 						}
 					});
-					executorService.shutdown();
 				}
 			}.start();
 
@@ -203,4 +268,6 @@ public class TPatientController {
 		return tmpName.substring(startPos,endPos);
 	}
 
+
+	
 }

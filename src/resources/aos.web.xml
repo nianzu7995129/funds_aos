@@ -18,7 +18,7 @@
 	</context:component-scan>
 
 	<!-- MVC注解驱动配置 -->
-	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" conversion-service="conversionService">
 		<mvc:message-converters register-defaults="true">
 			<!-- 设定StringHttpMessageConverter的默认编码 -->
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -45,15 +45,14 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 	</bean>
 	
-	<!-- velocity视图解析器 
-    <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">  
-        <property name="cache" value="true"/>  
-        <property name="prefix" value="/"/>   
-    </bean>  
-    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">  
-        <property name="configLocation" value="/WEB-INF/velocity.properties"/>  
-        <property name="resourceLoaderPath" value="/WEB-INF/velocity/"/>  
-    </bean> 
-    -->
-
+	<!-- 转换器 -->
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.zhqq.funds.converter.StringToDateConverter">
+					<constructor-arg type="java.lang.String" value="yyyy-MM-dd"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
 </beans>
