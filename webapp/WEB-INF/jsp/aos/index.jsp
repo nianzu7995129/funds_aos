@@ -53,9 +53,6 @@
 		<div class="south_el_left main_text">
 			<i class="fa fa-pagelines"></i> ${welcome}, ${username}. 所属组织:${deptname}.
 		</div>
-		<div class="south_el_right main_text">
-			<i class="fa fa-copyright"></i> ${copyright}
-		</div>
 	</div>
 </aos:body>
 
