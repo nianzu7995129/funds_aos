@@ -43,6 +43,12 @@
 			<aos:column header="备注" dataIndex="remarks" width="70" celltip="true" />
 			<aos:column header="受助药品领取单" dataIndex="recipientsReceiveSingleDrug" width="120" celltip="true" />
 			<aos:column header="捐助结束声明" dataIndex="endOfStatement" width="120" celltip="true" />
+			<aos:column header="通过日期"  dataIndex="passdate" width="120" celltip="true" />
+			<aos:column header="150/82" dataIndex="other1" width="120" celltip="true" />
+			<aos:column header="1243" dataIndex="other2" width="120" celltip="true" />
+			<aos:column header="2016新申请" dataIndex="other3" width="120" celltip="true" />
+			<aos:column header="2016复申请" dataIndex="other4" width="120" celltip="true" />
+			<aos:column header="1519" dataIndex="other5" width="120" celltip="true" />
 			<aos:column header=""   width="1" flex="1"/>
 		</aos:gridpanel>
 	</aos:viewport>

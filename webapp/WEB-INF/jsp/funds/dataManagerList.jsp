@@ -17,6 +17,8 @@
 				<aos:dockeditem text="修改" tooltip="修改患者" onclick="_w_user_u_show" icon="edit.png" />
 				<aos:dockeditem text="删除" tooltip="删除患者" onclick="_g_user_del" icon="del.png" />
 				<aos:dockeditem xtype="tbseparator" />
+				<aos:dockeditem text="导入" tooltip="导入患者信息" onclick="importExcel()" icon="edit.png"/>
+				<aos:dockeditem xtype="tbseparator" />
 				<aos:dockeditem text="导出" tooltip="导出患者信息成Excel" onclick="_g_user_export" icon="icon9.png" />
 				<aos:dockeditem xtype="tbseparator" />
 				<aos:combobox id="patient_query_type" name="patient_query_type" dicField="custom_patient_query" value="0"  width="90"/>
@@ -51,6 +53,12 @@
 			<aos:column header="备注" dataIndex="remarks" width="70" celltip="true" />
 			<aos:column header="受助药品领取单" dataIndex="recipientsReceiveSingleDrug" width="120" celltip="true" />
 			<aos:column header="捐助结束声明" dataIndex="endOfStatement" width="120" celltip="true" />
+			<aos:column header="通过日期"  dataIndex="passdate" width="120" celltip="true" />
+			<aos:column header="150/82" dataIndex="other1" width="120" celltip="true" />
+			<aos:column header="1243" dataIndex="other2" width="120" celltip="true" />
+			<aos:column header="2016新申请" dataIndex="other3" width="120" celltip="true" />
+			<aos:column header="2016复申请" dataIndex="other4" width="120" celltip="true" />
+			<aos:column header="1519" dataIndex="other5" width="120" celltip="true" />
 			<aos:column header=""   width="1" flex="1"/>
 		</aos:gridpanel>
 	</aos:viewport>
@@ -145,8 +153,68 @@
 			<aos:dockeditem onclick="#_w_user_u.hide();" text="关闭" icon="close.png" />
 		</aos:docked>
 	</aos:window>
+	
+	<aos:window id="_w_file_upload" title="文件上传" width="560" height="100" >
+            <aos:formpanel id="_f_import" width="550" layout="column" labelWidth="70">
+                <aos:filefield id="myFileField" name="myFile1" fieldLabel="导入文件" buttonText="请选择" allowBlank="false" columnWidth="0.99"
+                               emptyText="请选择符合规范的Excel文件..." />
+            </aos:formpanel>
+            <aos:docked dock="bottom" ui="footer">
+                <aos:dockeditem xtype="tbfill" />
+                <aos:dockeditem onclick="importExcelFile" text="导入" icon="ok.png" />
+                <aos:dockeditem onclick="#_w_file_upload.hide();" text="关闭" icon="close.png" />
+            </aos:docked>
+        </aos:window>
 
 	<script type="text/javascript">
+	
+			var importSumType = 0;
+		    function importExcel(){
+		    	_w_file_upload.show();
+		    }
+		    
+		    
+		    var batchNO = 0;
+            //执行导入Excel
+            function importExcelFile(){
+                _w_file_upload.hide();
+                var filePath = myFileField.getValue();
+                var len = filePath.length;
+                //XLS(2003)、XLSX(2007)
+                var pos = filePath.lastIndexOf(".");
+                if(pos!=-1){
+                    var tmp = filePath.substring(pos+1);
+                    if(tmp.toUpperCase() == 'XLS' || tmp.toUpperCase() == 'XLSX' ){
+                        var form = _f_import.getForm();
+                        if (!form.isValid()) {
+                            return;
+                        }
+                        AOS.wait();
+                        form.submit({
+                            timeout: 15*60*1000,
+                            params: {
+                                model:"medicalRecords"
+                            },
+                            url: 'importExcel.jhtml',
+                            success: function (form, action) {
+                                AOS.hide();
+                                AOS.tip("导入成功");
+                                _g_user_query();
+                               
+                            },
+                            failure:function(form, action){
+                            	 AOS.hide();
+                            	 AOS.tip("导入成功");
+                                 _g_user_query();
+                            }
+                        });
+                    }else{
+                        alert("请选择xls或xlsx后缀名类型的文件");
+                    }
+                }else{
+                    alert("请选择xls或xlsx后缀名类型的文件");
+                }
+            }
 
             //查询用户列表
             function _g_user_query() {

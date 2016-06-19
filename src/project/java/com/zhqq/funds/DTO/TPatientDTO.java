@@ -3,6 +3,8 @@
  */
 package com.zhqq.funds.DTO;
 
+import java.util.Date;
+
 /**
  * @author dell
  *
@@ -53,8 +55,70 @@ public class TPatientDTO {
     private String recipientsReceiveSingleDrug;
 
     private String endOfStatement;
+    
+    private Date passdate;
 
-    public Integer getId() {
+    private String other1;
+
+    private String other2;
+
+    private String other3;
+
+    private String other4;
+
+    private String other5;
+    
+    
+
+    public Date getPassdate() {
+		return passdate;
+	}
+
+	public void setPassdate(Date passdate) {
+		this.passdate = passdate;
+	}
+
+	public String getOther1() {
+		return other1;
+	}
+
+	public void setOther1(String other1) {
+		this.other1 = other1;
+	}
+
+	public String getOther2() {
+		return other2;
+	}
+
+	public void setOther2(String other2) {
+		this.other2 = other2;
+	}
+
+	public String getOther3() {
+		return other3;
+	}
+
+	public void setOther3(String other3) {
+		this.other3 = other3;
+	}
+
+	public String getOther4() {
+		return other4;
+	}
+
+	public void setOther4(String other4) {
+		this.other4 = other4;
+	}
+
+	public String getOther5() {
+		return other5;
+	}
+
+	public void setOther5(String other5) {
+		this.other5 = other5;
+	}
+
+	public Integer getId() {
         return id;
     }
 

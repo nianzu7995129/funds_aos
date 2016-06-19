@@ -2,7 +2,9 @@ package com.zhqq.funds.service.impl;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +18,10 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -24,12 +30,14 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zhqq.funds.DTO.TPatientDTO;
 import com.zhqq.funds.po.TPatient;
 import com.zhqq.funds.mapper.TPatientMapper;
 import com.zhqq.funds.po.TPatientExample;
 import com.zhqq.funds.service.TPatientService;
+import com.zhqq.funds.utils.CopyUtils;
 import com.zhqq.funds.utils.PatientUtils;
 import com.zhqq.funds.utils.SQLUtils;
 
@@ -47,7 +55,7 @@ public class TPatientServiceImpl implements TPatientService {
 	@Override
 	public void addPatient(TPatientDTO tPatient) throws Exception {
 		TPatient record = new TPatient();
-		AOSUtils.copyProperties(tPatient, record);
+		record = CopyUtils.copyDTOToPO(tPatient);
 		tPatientMapper.insert(record);
 	}
 
@@ -61,7 +69,7 @@ public class TPatientServiceImpl implements TPatientService {
 		List<TPatient> list = tPatientMapper.selectByExample(example);
 		if(list!=null && list.size()>0){
 			TPatient po = list.get(0);
-			AOSUtils.copyProperties(po, rlt);
+			rlt = CopyUtils.copyPOToDTO(po);
 		}
 		return rlt;
 	}
@@ -120,9 +128,7 @@ public class TPatientServiceImpl implements TPatientService {
 		List<TPatient> list = tPatientMapper.selectByExample(example);
 		if(list!=null && list.size()>0){
 			for(TPatient po : list){
-				TPatientDTO dto = new TPatientDTO();
-				AOSUtils.copyProperties(po, dto);
-				rlt.add(dto);
+				rlt.add(CopyUtils.copyPOToDTO(po));
 			}
 		}
 		return rlt;
@@ -161,7 +167,7 @@ public class TPatientServiceImpl implements TPatientService {
 	public TPatientDTO getPatientByID(String id) throws Exception {
 		TPatientDTO rlt = new TPatientDTO();
 		TPatient po = tPatientMapper.selectByPrimaryKey(Integer.valueOf(id));
-		AOSUtils.copyProperties(po, rlt);
+		rlt = CopyUtils.copyPOToDTO(po);
 		return rlt;
 	}
 
@@ -186,7 +192,7 @@ public class TPatientServiceImpl implements TPatientService {
 	@Override
 	public void updatePatient(TPatientDTO tPatientDTO) throws Exception {
 		TPatient record = new TPatient();
-		AOSUtils.copyProperties(tPatientDTO, record);
+		record = CopyUtils.copyDTOToPO(tPatientDTO);
 		tPatientMapper.updateByPrimaryKey(record);
 	}
 	
@@ -296,16 +302,29 @@ public class TPatientServiceImpl implements TPatientService {
 		cell.setCellValue(tPatientDTO.getHr());
 		cell = row.createCell(16);
 		cell.setCellValue(tPatientDTO.getLangMuHospital());
-		cell = row.createCell(10);
+		cell = row.createCell(17);
 		cell.setCellValue(tPatientDTO.getLangMuDoctor());
-		cell = row.createCell(10);
+		cell = row.createCell(18);
 		cell.setCellValue(tPatientDTO.getEstimatedTimeToIncreaseDrugInjection());
-		cell = row.createCell(10);
+		cell = row.createCell(19);
 		cell.setCellValue(tPatientDTO.getRemarks());
-		cell = row.createCell(10);
+		cell = row.createCell(20);
 		cell.setCellValue(tPatientDTO.getRecipientsReceiveSingleDrug());
-		cell = row.createCell(10);
+		cell = row.createCell(21);
 		cell.setCellValue(tPatientDTO.getEndOfStatement());
+		
+		cell = row.createCell(22);
+		cell.setCellValue(CopyUtils.getFormatDateString(tPatientDTO.getPassdate()));
+		cell = row.createCell(23);
+		cell.setCellValue(tPatientDTO.getOther1());
+		cell = row.createCell(24);
+		cell.setCellValue(tPatientDTO.getOther2());
+		cell = row.createCell(25);
+		cell.setCellValue(tPatientDTO.getOther3());
+		cell = row.createCell(26);
+		cell.setCellValue(tPatientDTO.getOther4());
+		cell = row.createCell(27);
+		cell.setCellValue(tPatientDTO.getOther5());
 	}
 
 	/**
@@ -346,16 +365,28 @@ public class TPatientServiceImpl implements TPatientService {
 		cell.setCellValue("项目专员");
 		cell = row.createCell(16);
 		cell.setCellValue("朗沐医院");
-		cell = row.createCell(10);
+		cell = row.createCell(17);
 		cell.setCellValue("朗沐医生");
-		cell = row.createCell(10);
+		cell = row.createCell(18);
 		cell.setCellValue("预计增药注射时间");
-		cell = row.createCell(10);
+		cell = row.createCell(19);
 		cell.setCellValue("备注");
-		cell = row.createCell(10);
+		cell = row.createCell(20);
 		cell.setCellValue("受助药品领取单");
-		cell = row.createCell(10);
+		cell = row.createCell(21);
 		cell.setCellValue("捐助结束声明");
+		cell = row.createCell(22);
+		cell.setCellValue("通过日期");
+		cell = row.createCell(23);
+		cell.setCellValue("150/82");
+		cell = row.createCell(24);
+		cell.setCellValue("1243");
+		cell = row.createCell(25);
+		cell.setCellValue("2016新申请");
+		cell = row.createCell(26);
+		cell.setCellValue("2016复申请");
+		cell = row.createCell(27);
+		cell.setCellValue("1519");
 	}
 
 	public XSSFWorkbook export2007Excel(Dto inDto,String sheetName) throws Exception {
@@ -454,16 +485,29 @@ public class TPatientServiceImpl implements TPatientService {
 		cell.setCellValue(tPatientDTO.getHr());
 		cell = row.createCell(16);
 		cell.setCellValue(tPatientDTO.getLangMuHospital());
-		cell = row.createCell(10);
+		cell = row.createCell(17);
 		cell.setCellValue(tPatientDTO.getLangMuDoctor());
-		cell = row.createCell(10);
+		cell = row.createCell(18);
 		cell.setCellValue(tPatientDTO.getEstimatedTimeToIncreaseDrugInjection());
-		cell = row.createCell(10);
+		cell = row.createCell(19);
 		cell.setCellValue(tPatientDTO.getRemarks());
-		cell = row.createCell(10);
+		cell = row.createCell(20);
 		cell.setCellValue(tPatientDTO.getRecipientsReceiveSingleDrug());
-		cell = row.createCell(10);
+		cell = row.createCell(21);
 		cell.setCellValue(tPatientDTO.getEndOfStatement());
+		
+		cell = row.createCell(22);
+		cell.setCellValue(CopyUtils.getFormatDateString(tPatientDTO.getPassdate()));
+		cell = row.createCell(23);
+		cell.setCellValue(tPatientDTO.getOther1());
+		cell = row.createCell(24);
+		cell.setCellValue(tPatientDTO.getOther2());
+		cell = row.createCell(25);
+		cell.setCellValue(tPatientDTO.getOther3());
+		cell = row.createCell(26);
+		cell.setCellValue(tPatientDTO.getOther4());
+		cell = row.createCell(27);
+		cell.setCellValue(tPatientDTO.getOther5());
 	}
 
 	/**
@@ -504,16 +548,28 @@ public class TPatientServiceImpl implements TPatientService {
 		cell.setCellValue("项目专员");
 		cell = row.createCell(16);
 		cell.setCellValue("朗沐医院");
-		cell = row.createCell(10);
+		cell = row.createCell(17);
 		cell.setCellValue("朗沐医生");
-		cell = row.createCell(10);
+		cell = row.createCell(18);
 		cell.setCellValue("预计增药注射时间");
-		cell = row.createCell(10);
+		cell = row.createCell(19);
 		cell.setCellValue("备注");
-		cell = row.createCell(10);
+		cell = row.createCell(20);
 		cell.setCellValue("受助药品领取单");
-		cell = row.createCell(10);
+		cell = row.createCell(21);
 		cell.setCellValue("捐助结束声明");
+		cell = row.createCell(22);
+		cell.setCellValue("通过日期");
+		cell = row.createCell(23);
+		cell.setCellValue("150/82");
+		cell = row.createCell(24);
+		cell.setCellValue("1243");
+		cell = row.createCell(25);
+		cell.setCellValue("2016新申请");
+		cell = row.createCell(26);
+		cell.setCellValue("2016复申请");
+		cell = row.createCell(27);
+		cell.setCellValue("1519");
 	}
 	
 	/* (non-Javadoc)
@@ -553,9 +609,7 @@ public class TPatientServiceImpl implements TPatientService {
 		List<TPatient> list = tPatientMapper.selectByExample(example);
 		if(list!=null && list.size()>0){
 			for(TPatient po : list){
-				TPatientDTO dto = new TPatientDTO();
-				AOSUtils.copyProperties(po, dto);
-				rlt.add(dto);
+				rlt.add(CopyUtils.copyPOToDTO(po));
 			}
 		}
 		return rlt;
@@ -591,5 +645,98 @@ public class TPatientServiceImpl implements TPatientService {
 		return rlt;
 	}
 
-
+	@Override
+	@Transactional
+	public void importPatientExcel(Workbook workbook) throws Exception {
+		  // 得到第一张工作表
+        Sheet sheet = workbook.getSheetAt(0);
+        int lastRow = sheet.getLastRowNum();
+        for(int i=1;i<=lastRow;i++) {
+        	Row ssfRow = sheet.getRow(i);
+            if(ssfRow==null || ssfRow.getCell(0)==null || "".equals(getStringCellValue(ssfRow.getCell(0)))) continue;
+            TPatient record = new TPatient();
+            record.setArchives(getStringCellValue(ssfRow.getCell(1)));
+            record.setState(getStringCellValue(ssfRow.getCell(2)));
+            record.setName(getStringCellValue(ssfRow.getCell(3)));
+            record.setSex(getStringCellValue(ssfRow.getCell(4)));
+            record.setIdcardnumber(getStringCellValue(ssfRow.getCell(7)));
+            record.setPhone(getStringCellValue(ssfRow.getCell(6)));
+            record.setAddress(getStringCellValue(ssfRow.getCell(5)));
+            record.setDiagnosticMaterial(getStringCellValue(ssfRow.getCell(8)));
+            record.setProofIdentity(getStringCellValue(ssfRow.getCell(9)));
+            record.setProofIncome(getStringCellValue(ssfRow.getCell(10)));
+            record.setPurchaseInvoice(getStringCellValue(ssfRow.getCell(11)));
+            record.setMedicalEvaluationForm(getStringCellValue(ssfRow.getCell(12)));
+            record.setInformedConsentOfPatients(getStringCellValue(ssfRow.getCell(13)));
+            record.setPatienteConomicStatus(getStringCellValue(ssfRow.getCell(14)));
+            record.setColdChainDrugInformedConsent(getStringCellValue(ssfRow.getCell(15)));
+            record.setHr(getStringCellValue(ssfRow.getCell(16)));
+            record.setLangMuHospital(getStringCellValue(ssfRow.getCell(17)));
+            record.setLangMuDoctor(getStringCellValue(ssfRow.getCell(18)));
+            record.setEstimatedTimeToIncreaseDrugInjection(getStringCellValue(ssfRow.getCell(19)));
+            record.setRemarks(getStringCellValue(ssfRow.getCell(20)));
+            record.setRecipientsReceiveSingleDrug(getStringCellValue(ssfRow.getCell(21)));
+            record.setEndOfStatement(getStringCellValue(ssfRow.getCell(22)));
+            record.setPassdate(getDateCellValue(ssfRow.getCell(23)));
+            record.setOther1(getStringCellValue(ssfRow.getCell(24)));
+            record.setOther2(getStringCellValue(ssfRow.getCell(25)));
+            record.setOther3(getStringCellValue(ssfRow.getCell(26)));
+            record.setOther4(getStringCellValue(ssfRow.getCell(27)));
+            record.setOther5(getStringCellValue(ssfRow.getCell(28)));
+    		tPatientMapper.insert(record);
+        }
+	}
+	
+	 /** 获得日期单元格值 */
+    public Date getDateCellValue(Cell cell){
+    	Date rlt = null;
+    	if(cell!=null || !"".equals(getStringCellValue(cell))){
+    		 if (Cell.CELL_TYPE_NUMERIC == cell.getCellType()) {
+    	        	rlt = cell.getDateCellValue();
+    	        } else {
+    	            try{
+    	            	rlt = getFormatDate("yyyy年mm月dd日 HH:mm:ss",cell);
+    	            }catch(Exception e1){
+    	                try {
+    	                	rlt = getFormatDate("yyyy-mm-dd HH:mm:ss", cell);
+    	                }catch(Exception e2){
+    	                    try {
+    	                    	rlt = getFormatDate("yyyy/mm/dd HH:mm:ss", cell);
+    	                    }catch(Exception e3){
+    	                    	rlt = new Date();
+    	                    }
+    	                }
+    	            }
+    	        }
+    	}
+        return rlt;
+    }
+    
+    private Date getFormatDate(String format,Cell cell) throws Exception{
+        String tmpValue = cell.getStringCellValue();
+        if(tmpValue == null || tmpValue.trim().length()==0) return null;
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        Date realDate = sdf.parse(cell.getStringCellValue());;
+        return realDate;
+    }
+	
+	/** 获得字符串单元格值 */
+    private String getStringCellValue(Cell cell){
+        String tmpValue = "";
+        if(cell!=null){
+        	 if(Cell.CELL_TYPE_NUMERIC == cell.getCellType()){
+                 cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+                 tmpValue = "" + cell.getStringCellValue();
+             }else {
+                 tmpValue = cell.getStringCellValue();
+             }
+             if(tmpValue!=null){
+                 tmpValue = tmpValue.trim();
+                 if("√".equals(tmpValue)){
+                	 tmpValue = "-999";
+                 }
+             }
+        }
+        return tmpValue;
+    }
 }

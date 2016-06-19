@@ -25,6 +25,12 @@
     <result column="remarks" property="remarks" jdbcType="VARCHAR" />
     <result column="recipients_receive_single_drug" property="recipientsReceiveSingleDrug" jdbcType="VARCHAR" />
     <result column="end_of_statement" property="endOfStatement" jdbcType="VARCHAR" />
+    <result column="passDate" property="passdate" jdbcType="TIMESTAMP" />
+    <result column="other1" property="other1" jdbcType="VARCHAR" />
+    <result column="other2" property="other2" jdbcType="VARCHAR" />
+    <result column="other3" property="other3" jdbcType="VARCHAR" />
+    <result column="other4" property="other4" jdbcType="VARCHAR" />
+    <result column="other5" property="other5" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -89,7 +95,7 @@
     proof_identity, proof_income, purchase_invoice, medical_evaluation_form, informed_consent_of_patients, 
     patiente_conomic_status, Cold_chain_drug_informed_consent, hr, lang_mu_hospital, 
     lang_mu_doctor, estimated_time_to_increase_drug_injection, remarks, recipients_receive_single_drug, 
-    end_of_statement
+    end_of_statement, passDate, other1, other2, other3, other4, other5
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhqq.funds.po.TPatientExample" >
     select
@@ -133,7 +139,9 @@
       patiente_conomic_status, Cold_chain_drug_informed_consent, 
       hr, lang_mu_hospital, lang_mu_doctor, 
       estimated_time_to_increase_drug_injection, remarks, 
-      recipients_receive_single_drug, end_of_statement
+      recipients_receive_single_drug, end_of_statement, 
+      passDate, other1, other2, 
+      other3, other4, other5
       )
     values (#{id,jdbcType=INTEGER}, #{archives,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{idcardnumber,jdbcType=VARCHAR}, 
@@ -143,7 +151,9 @@
       #{patienteConomicStatus,jdbcType=VARCHAR}, #{coldChainDrugInformedConsent,jdbcType=VARCHAR}, 
       #{hr,jdbcType=VARCHAR}, #{langMuHospital,jdbcType=VARCHAR}, #{langMuDoctor,jdbcType=VARCHAR}, 
       #{estimatedTimeToIncreaseDrugInjection,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
-      #{recipientsReceiveSingleDrug,jdbcType=VARCHAR}, #{endOfStatement,jdbcType=VARCHAR}
+      #{recipientsReceiveSingleDrug,jdbcType=VARCHAR}, #{endOfStatement,jdbcType=VARCHAR}, 
+      #{passdate,jdbcType=TIMESTAMP}, #{other1,jdbcType=VARCHAR}, #{other2,jdbcType=VARCHAR}, 
+      #{other3,jdbcType=VARCHAR}, #{other4,jdbcType=VARCHAR}, #{other5,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zhqq.funds.po.TPatient" >
@@ -218,6 +228,24 @@
       <if test="endOfStatement != null" >
         end_of_statement,
       </if>
+      <if test="passdate != null" >
+        passDate,
+      </if>
+      <if test="other1 != null" >
+        other1,
+      </if>
+      <if test="other2 != null" >
+        other2,
+      </if>
+      <if test="other3 != null" >
+        other3,
+      </if>
+      <if test="other4 != null" >
+        other4,
+      </if>
+      <if test="other5 != null" >
+        other5,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -288,6 +316,24 @@
       </if>
       <if test="endOfStatement != null" >
         #{endOfStatement,jdbcType=VARCHAR},
+      </if>
+      <if test="passdate != null" >
+        #{passdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="other1 != null" >
+        #{other1,jdbcType=VARCHAR},
+      </if>
+      <if test="other2 != null" >
+        #{other2,jdbcType=VARCHAR},
+      </if>
+      <if test="other3 != null" >
+        #{other3,jdbcType=VARCHAR},
+      </if>
+      <if test="other4 != null" >
+        #{other4,jdbcType=VARCHAR},
+      </if>
+      <if test="other5 != null" >
+        #{other5,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -369,6 +415,24 @@
       <if test="record.endOfStatement != null" >
         end_of_statement = #{record.endOfStatement,jdbcType=VARCHAR},
       </if>
+      <if test="record.passdate != null" >
+        passDate = #{record.passdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.other1 != null" >
+        other1 = #{record.other1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.other2 != null" >
+        other2 = #{record.other2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.other3 != null" >
+        other3 = #{record.other3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.other4 != null" >
+        other4 = #{record.other4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.other5 != null" >
+        other5 = #{record.other5,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -398,7 +462,13 @@
       estimated_time_to_increase_drug_injection = #{record.estimatedTimeToIncreaseDrugInjection,jdbcType=VARCHAR},
       remarks = #{record.remarks,jdbcType=VARCHAR},
       recipients_receive_single_drug = #{record.recipientsReceiveSingleDrug,jdbcType=VARCHAR},
-      end_of_statement = #{record.endOfStatement,jdbcType=VARCHAR}
+      end_of_statement = #{record.endOfStatement,jdbcType=VARCHAR},
+      passDate = #{record.passdate,jdbcType=TIMESTAMP},
+      other1 = #{record.other1,jdbcType=VARCHAR},
+      other2 = #{record.other2,jdbcType=VARCHAR},
+      other3 = #{record.other3,jdbcType=VARCHAR},
+      other4 = #{record.other4,jdbcType=VARCHAR},
+      other5 = #{record.other5,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -472,6 +542,24 @@
       <if test="endOfStatement != null" >
         end_of_statement = #{endOfStatement,jdbcType=VARCHAR},
       </if>
+      <if test="passdate != null" >
+        passDate = #{passdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="other1 != null" >
+        other1 = #{other1,jdbcType=VARCHAR},
+      </if>
+      <if test="other2 != null" >
+        other2 = #{other2,jdbcType=VARCHAR},
+      </if>
+      <if test="other3 != null" >
+        other3 = #{other3,jdbcType=VARCHAR},
+      </if>
+      <if test="other4 != null" >
+        other4 = #{other4,jdbcType=VARCHAR},
+      </if>
+      <if test="other5 != null" >
+        other5 = #{other5,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -498,7 +586,13 @@
       estimated_time_to_increase_drug_injection = #{estimatedTimeToIncreaseDrugInjection,jdbcType=VARCHAR},
       remarks = #{remarks,jdbcType=VARCHAR},
       recipients_receive_single_drug = #{recipientsReceiveSingleDrug,jdbcType=VARCHAR},
-      end_of_statement = #{endOfStatement,jdbcType=VARCHAR}
+      end_of_statement = #{endOfStatement,jdbcType=VARCHAR},
+      passDate = #{passdate,jdbcType=TIMESTAMP},
+      other1 = #{other1,jdbcType=VARCHAR},
+      other2 = #{other2,jdbcType=VARCHAR},
+      other3 = #{other3,jdbcType=VARCHAR},
+      other4 = #{other4,jdbcType=VARCHAR},
+      other5 = #{other5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

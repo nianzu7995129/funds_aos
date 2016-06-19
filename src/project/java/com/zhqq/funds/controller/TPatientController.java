@@ -3,6 +3,8 @@ package com.zhqq.funds.controller;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.List;
@@ -14,14 +16,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.zhqq.funds.DTO.TPatientDTO;
 import com.zhqq.funds.VO.TPatientVO;
 import com.zhqq.funds.service.TPatientService;
+import com.zhqq.funds.utils.CopyUtils;
 import com.zhqq.funds.utils.PatientUtils;
 
 import cn.osworks.aos.core.asset.AOSCons;
@@ -70,7 +81,7 @@ public class TPatientController {
 			return;
 		}
 		TPatientDTO dto = tPatientService.queryPatient(name,cdcard); 
-		AOSUtils.copyProperties(dto, rlt);
+		rlt = CopyUtils.copyDTOToVO(dto);
 		rlt.setAppcode(1);
 		WebCxt.write(response, AOSJson.toJson(rlt));
 	}
@@ -97,7 +108,7 @@ public class TPatientController {
 	public void getPatient(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="id")String id) throws Exception {
 		TPatientVO rlt = new TPatientVO();
 		TPatientDTO dto = tPatientService.getPatientByID(id); 
-		AOSUtils.copyProperties(dto, rlt);
+		rlt = CopyUtils.copyDTOToVO(dto);
 		rlt.setAppcode(1);
 		WebCxt.write(response, AOSJson.toJson(rlt));
 	}
@@ -269,5 +280,63 @@ public class TPatientController {
 	}
 
 
-	
+	/**
+	 * 导入数据
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "funds/patient/importExcel")
+	public Dto importExcel(@RequestParam("myFile1") MultipartFile multipartFile,final HttpServletRequest request, HttpServletResponse response) {
+		Dto outDto = Dtos.newOutDto();
+		if(multipartFile==null){
+			outDto.setAppMsg("操作被取消，Excel文件获取失败。");
+		}else{
+			String originalFileName = multipartFile.getOriginalFilename();
+	        String updateCaseName = originalFileName.toUpperCase();
+	        //XLS、XLSX
+	        if (StringUtils.indexOf(updateCaseName, ".XLS") > 0 || StringUtils.indexOf(updateCaseName, ".XLSX") > 0 ) {
+	            InputStream is = null;
+	            try {
+	                is = multipartFile.getInputStream();
+	            }catch(Exception e){
+	                outDto.setAppMsg("操作被取消，获取导入的Excel文件流失败");
+	            }
+	            Workbook workbook = null;
+	            try{
+	                workbook = new HSSFWorkbook(is);
+	            }catch(Exception ioException1){
+	                try {
+	                    is = multipartFile.getInputStream();
+	                    workbook = new XSSFWorkbook(is);
+	                }catch(Exception ioException2){
+	                    outDto.setAppMsg("操作被取消，转换输入流出现问题");
+	                }
+	            }
+
+	            if(is!=null){
+	                try {
+	                    is.close();
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+
+	            if (workbook == null) {
+	                outDto.setAppMsg("操作被取消，文件对象获取失败");
+	            }
+
+	            int num = workbook.getNumberOfSheets();
+	            if (num == 0) {
+	                outDto.setAppMsg("操作被取消，未获得有效的Sheet。");
+	            }
+	            try {
+	            	tPatientService.importPatientExcel(workbook);
+                    outDto.setAppMsg("导入成功");
+	            }catch(Exception e){
+	                outDto.setAppMsg(e.getMessage()==null?"导入异常":e.getMessage());
+	            }
+	        }
+		}
+		return outDto;
+	}
 }

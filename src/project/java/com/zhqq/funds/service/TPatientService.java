@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Workbook;
+
 import com.zhqq.funds.DTO.TPatientDTO;
 
 import cn.osworks.aos.core.typewrap.Dto;
@@ -110,6 +112,13 @@ public interface TPatientService {
 	public void deletePatients(String ids) throws Exception;
 	
 	public void updatePatient(TPatientDTO tPatientDTO) throws Exception;
+	
+	/**
+	 * 导入患者信息
+	 * @param workbook
+	 * @throws Exception
+	 */
+	public void importPatientExcel(Workbook workbook) throws Exception;
 	
 	
 }

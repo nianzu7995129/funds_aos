@@ -333,10 +333,12 @@ public class MDServiceImpl implements MDService {
 		cell = row.createCell(5);
 		cell.setCellValue(tDrugreleaseDTO.getCurrentDose());
 		cell = row.createCell(6);
-		cell.setCellValue(tDrugreleaseDTO.getExpectedNexttime());
+		cell.setCellValue(CopyUtils.getFormatDateString(tDrugreleaseDTO.getExpectedNexttime()));
 		cell = row.createCell(7);
 		cell.setCellValue(tDrugreleaseDTO.getHospitalGroup());
 		cell = row.createCell(8);
+		cell.setCellValue(CopyUtils.getFormatDateString(tDrugreleaseDTO.getFormalEntryTime()));
+		cell = row.createCell(9);
 		cell.setCellValue(tDrugreleaseDTO.getDisease());
 	}
 
@@ -445,10 +447,12 @@ public class MDServiceImpl implements MDService {
 		cell = row.createCell(5);
 		cell.setCellValue(tDrugreleaseDTO.getCurrentDose());
 		cell = row.createCell(6);
-		cell.setCellValue(tDrugreleaseDTO.getExpectedNexttime());
+		cell.setCellValue(CopyUtils.getFormatDateString(tDrugreleaseDTO.getExpectedNexttime()));
 		cell = row.createCell(7);
 		cell.setCellValue(tDrugreleaseDTO.getHospitalGroup());
 		cell = row.createCell(8);
+		cell.setCellValue(CopyUtils.getFormatDateString(tDrugreleaseDTO.getFormalEntryTime()));
+		cell = row.createCell(9);
 		cell.setCellValue(tDrugreleaseDTO.getDisease());
 	}
 
