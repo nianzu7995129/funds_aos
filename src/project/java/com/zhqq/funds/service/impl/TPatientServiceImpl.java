@@ -69,6 +69,7 @@ public class TPatientServiceImpl implements TPatientService {
 		List<TPatient> list = tPatientMapper.selectByExample(example);
 		if(list!=null && list.size()>0){
 			TPatient po = list.get(0);
+			
 			rlt = CopyUtils.copyPOToDTO(po);
 		}
 		return rlt;
@@ -252,7 +253,7 @@ public class TPatientServiceImpl implements TPatientService {
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<TPatientDTO> patientList = queryPatientList(hotkey, patientQueryType, "", "", "", false);
-		PatientUtils.proTPatientDTO(patientList);
+		PatientUtils.proTPatientDTOList(patientList);
 		// 产生表格标题行
 		HSSFRow row = sheet.createRow(0);
 		createTitle(row);
@@ -433,7 +434,7 @@ public class TPatientServiceImpl implements TPatientService {
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<TPatientDTO> patientList = queryPatientList(hotkey, patientQueryType, "", "", "", false);
-		PatientUtils.proTPatientDTO(patientList);
+		PatientUtils.proTPatientDTOList(patientList);
 		// 产生表格标题行
 		XSSFRow row = sheet.createRow(0);
 		createTitleXSSF(row);
@@ -644,47 +645,76 @@ public class TPatientServiceImpl implements TPatientService {
 		rlt = tPatientMapper.countByExample(example);
 		return rlt;
 	}
+	
+	public List<TPatient> getPatientByArchives(String hotkey) throws Exception {
+		List<TPatient> rlt = new ArrayList<TPatient>();
+		TPatientExample example = new TPatientExample();  
+		TPatientExample.Criteria criteria = example.createCriteria();
+		criteria.andArchivesEqualTo(hotkey);
+		rlt = tPatientMapper.selectByExample(example);
+		return rlt;
+	}
 
 	@Override
-	@Transactional
 	public void importPatientExcel(Workbook workbook) throws Exception {
 		  // 得到第一张工作表
         Sheet sheet = workbook.getSheetAt(0);
         int lastRow = sheet.getLastRowNum();
         for(int i=1;i<=lastRow;i++) {
-        	Row ssfRow = sheet.getRow(i);
-            if(ssfRow==null || ssfRow.getCell(0)==null || "".equals(getStringCellValue(ssfRow.getCell(0)))) continue;
-            TPatient record = new TPatient();
-            record.setArchives(getStringCellValue(ssfRow.getCell(1)));
-            record.setState(getStringCellValue(ssfRow.getCell(2)));
-            record.setName(getStringCellValue(ssfRow.getCell(3)));
-            record.setSex(getStringCellValue(ssfRow.getCell(4)));
-            record.setIdcardnumber(getStringCellValue(ssfRow.getCell(7)));
-            record.setPhone(getStringCellValue(ssfRow.getCell(6)));
-            record.setAddress(getStringCellValue(ssfRow.getCell(5)));
-            record.setDiagnosticMaterial(getStringCellValue(ssfRow.getCell(8)));
-            record.setProofIdentity(getStringCellValue(ssfRow.getCell(9)));
-            record.setProofIncome(getStringCellValue(ssfRow.getCell(10)));
-            record.setPurchaseInvoice(getStringCellValue(ssfRow.getCell(11)));
-            record.setMedicalEvaluationForm(getStringCellValue(ssfRow.getCell(12)));
-            record.setInformedConsentOfPatients(getStringCellValue(ssfRow.getCell(13)));
-            record.setPatienteConomicStatus(getStringCellValue(ssfRow.getCell(14)));
-            record.setColdChainDrugInformedConsent(getStringCellValue(ssfRow.getCell(15)));
-            record.setHr(getStringCellValue(ssfRow.getCell(16)));
-            record.setLangMuHospital(getStringCellValue(ssfRow.getCell(17)));
-            record.setLangMuDoctor(getStringCellValue(ssfRow.getCell(18)));
-            record.setEstimatedTimeToIncreaseDrugInjection(getStringCellValue(ssfRow.getCell(19)));
-            record.setRemarks(getStringCellValue(ssfRow.getCell(20)));
-            record.setRecipientsReceiveSingleDrug(getStringCellValue(ssfRow.getCell(21)));
-            record.setEndOfStatement(getStringCellValue(ssfRow.getCell(22)));
-            record.setPassdate(getDateCellValue(ssfRow.getCell(23)));
-            record.setOther1(getStringCellValue(ssfRow.getCell(24)));
-            record.setOther2(getStringCellValue(ssfRow.getCell(25)));
-            record.setOther3(getStringCellValue(ssfRow.getCell(26)));
-            record.setOther4(getStringCellValue(ssfRow.getCell(27)));
-            record.setOther5(getStringCellValue(ssfRow.getCell(28)));
-    		tPatientMapper.insert(record);
+        	try{
+	        	Row ssfRow = sheet.getRow(i);
+	            if(ssfRow==null || ssfRow.getCell(0)==null || "".equals(getStringCellValue(ssfRow.getCell(0)))) continue;
+	            TPatient record = new TPatient();
+	            proTPatient(ssfRow, record);
+	            List<TPatient> rlt = getPatientByArchives(record.getArchives());
+	            if(rlt!=null && rlt.size()>0){
+	            	record.setId(rlt.get(0).getId());
+	            	tPatientMapper.updateByPrimaryKey(record);
+	            }else{
+	            	tPatientMapper.insert(record);
+	            }
+	        }catch(Exception e){
+				e.printStackTrace();
+	        }
         }
+	}
+
+	/**
+	 * @param ssfRow
+	 * @param record
+	 */
+	private void proTPatient(Row ssfRow, TPatient record) {
+		
+			record.setArchives(getStringCellValue(ssfRow.getCell(1)));
+			record.setState(getStringCellValue(ssfRow.getCell(2)));
+			record.setName(getStringCellValue(ssfRow.getCell(3)));
+			record.setSex(getStringCellValue(ssfRow.getCell(4)));
+			record.setIdcardnumber(getStringCellValue(ssfRow.getCell(7)));
+			record.setPhone(getStringCellValue(ssfRow.getCell(6)));
+			record.setAddress(getStringCellValue(ssfRow.getCell(5)));
+			record.setDiagnosticMaterial(getStringCellValue(ssfRow.getCell(8)));
+			record.setProofIdentity(getStringCellValue(ssfRow.getCell(9)));
+			record.setProofIncome(getStringCellValue(ssfRow.getCell(10)));
+			record.setPurchaseInvoice(getStringCellValue(ssfRow.getCell(11)));
+			record.setMedicalEvaluationForm(getStringCellValue(ssfRow.getCell(12)));
+			record.setInformedConsentOfPatients(getStringCellValue(ssfRow.getCell(13)));
+			record.setPatienteConomicStatus(getStringCellValue(ssfRow.getCell(14)));
+			record.setColdChainDrugInformedConsent(getStringCellValue(ssfRow.getCell(15)));
+			record.setHr(getStringCellValue(ssfRow.getCell(16)));
+			record.setLangMuHospital(getStringCellValue(ssfRow.getCell(17)));
+			record.setLangMuDoctor(getStringCellValue(ssfRow.getCell(18)));
+			record.setEstimatedTimeToIncreaseDrugInjection(getStringCellValue(ssfRow.getCell(19)));
+			record.setRemarks(getStringCellValue(ssfRow.getCell(20)));
+			record.setRecipientsReceiveSingleDrug(getStringCellValue(ssfRow.getCell(21)));
+			record.setEndOfStatement(getStringCellValue(ssfRow.getCell(22)));
+			record.setPassdate(getDateCellValue(ssfRow.getCell(23)));
+			record.setOther1(getStringCellValue(ssfRow.getCell(24)));
+			record.setOther2(getStringCellValue(ssfRow.getCell(25)));
+			record.setOther3(getStringCellValue(ssfRow.getCell(26)));
+			record.setOther4(getStringCellValue(ssfRow.getCell(27)));
+			record.setOther5(getStringCellValue(ssfRow.getCell(28)));
+		
+		
 	}
 	
 	 /** 获得日期单元格值 */

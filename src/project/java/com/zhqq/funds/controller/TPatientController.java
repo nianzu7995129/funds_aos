@@ -81,6 +81,7 @@ public class TPatientController {
 			return;
 		}
 		TPatientDTO dto = tPatientService.queryPatient(name,cdcard); 
+		PatientUtils.proTPatientDTO(dto);
 		rlt = CopyUtils.copyDTOToVO(dto);
 		rlt.setAppcode(1);
 		WebCxt.write(response, AOSJson.toJson(rlt));
@@ -138,7 +139,7 @@ public class TPatientController {
 		
 		int totalCount = tPatientService.queryPatientCountHR(hotkey,patientQueryType,hr);
 		List<TPatientDTO> listTPatientDTO = tPatientService.queryPatientListHR(hotkey,patientQueryType,hr,page,start,limit,true);
-		PatientUtils.proTPatientDTO(listTPatientDTO);
+		PatientUtils.proTPatientDTOList(listTPatientDTO);
 		String outString = AOSJson.toGridJson(listTPatientDTO, totalCount);
 		WebCxt.write(response, outString);
 	}
@@ -151,7 +152,7 @@ public class TPatientController {
 			@RequestParam(value="start")String start) throws Exception {
 		int totalCount = tPatientService.queryPatientCount(hotkey,patientQueryType);
 		List<TPatientDTO> listTPatientDTO = tPatientService.queryPatientList(hotkey,patientQueryType,page,start,limit,true);
-		PatientUtils.proTPatientDTO(listTPatientDTO);
+		PatientUtils.proTPatientDTOList(listTPatientDTO);
 		String outString = AOSJson.toGridJson(listTPatientDTO, totalCount);
 		WebCxt.write(response, outString);
 	}

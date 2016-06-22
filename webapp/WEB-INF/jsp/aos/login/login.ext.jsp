@@ -255,7 +255,7 @@
 					 	AOS.field(_f_p_query, 'phone_').setValue(data.phone);
 					 	AOS.field(_f_p_query, 'address_').setValue(data.address);
 					 	AOS.field(_f_p_query, 'diagnosticMaterial_').setValue(data.diagnosticMaterial);
-					 	AOS.field(_f_p_query, 'proofIdentity_').setValue(data.proofIdentitye);
+					 	AOS.field(_f_p_query, 'proofIdentity_').setValue(data.proofIdentity);
 					 	AOS.field(_f_p_query, 'proofIncome_').setValue(data.proofIncome);
 					 	AOS.field(_f_p_query, 'purchaseInvoice_').setValue(data.purchaseInvoice);
 					 	AOS.field(_f_p_query, 'medicalEvaluationForm_').setValue(data.medicalEvaluationForm);
@@ -266,6 +266,7 @@
 					 	AOS.field(_f_p_query, 'langMuDoctor_').setValue(data.langMuDoctor);
 					 	AOS.field(_f_p_query, 'estimatedTimeToIncreaseDrugInjection_').setValue(data.estimatedTimeToIncreaseDrugInjection);
 					 	AOS.field(_f_p_query, 'remarks_').setValue(data.remarks);
+					 	AOS.field(_f_p_query, 'hr_').setValue(data.hr);
 					 	AOS.field(_f_p_query, 'recipientsReceiveSingleDrug_').setValue(data.recipientsReceiveSingleDrug);
 					 	AOS.field(_f_p_query, 'endOfStatement_').setValue(data.endOfStatement);
 			            _w_p_query.show();
