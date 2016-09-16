@@ -81,5 +81,15 @@ public class CommonController {
 	public String hrList() {
 		return "funds/hrList.jsp";
 	}
+
+	/**
+	 * 医院与医生关联管理页面初始化
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "funds/hd/hdQueryList")
+	public String hdQueryList() {
+		return "funds/hdList.jsp";
+	}
 	
 }

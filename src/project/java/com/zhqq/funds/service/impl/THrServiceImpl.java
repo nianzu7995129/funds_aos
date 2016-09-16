@@ -27,12 +27,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zhqq.funds.DTO.TDoctorDTO;
-import com.zhqq.funds.mapper.TDoctorMapper;
-import com.zhqq.funds.po.TDoctor;
-import com.zhqq.funds.po.TDoctorExample;
-import com.zhqq.funds.service.AreaService;
-import com.zhqq.funds.service.TDoctorService;
+import com.zhqq.funds.DTO.THrDTO;
+import com.zhqq.funds.mapper.THrMapper;
+import com.zhqq.funds.po.THr;
+import com.zhqq.funds.po.THrExample;
+import com.zhqq.funds.service.THrService;
 import com.zhqq.funds.utils.ChangeUtils;
 import com.zhqq.funds.utils.CopyUtils;
 import com.zhqq.funds.utils.SQLUtils;
@@ -41,40 +40,33 @@ import cn.osworks.aos.core.typewrap.Dto;
 
 
 @Service
-public class TDoctorServiceImpl implements TDoctorService {
+public class THrServiceImpl implements THrService {
 
 	@Autowired
-	private TDoctorMapper tDoctorMapper;
-	
-	@Autowired
-	private AreaService areaService;
+	private THrMapper tHrMapper;
 	
 	@Override
-	public void addDoctor(TDoctorDTO tDoctor) throws Exception {
-		tDoctorMapper.insert(CopyUtils.createCopy(tDoctor, TDoctor.class));
+	public void addHr(THrDTO tHr) throws Exception {
+		tHrMapper.insert(CopyUtils.createCopy(tHr, THr.class));
 	}
 	
 	@Override
-	public List<TDoctorDTO> queryDoctorList(String hotkey, String doctorQueryType, String page, String start,
+	public List<THrDTO> queryHrList(String hotkey, String hrQueryType, String page, String start,
 			String limit,boolean pageFlag) throws Exception {
-		List<TDoctorDTO> rlt = new ArrayList<TDoctorDTO>();
-		TDoctorExample example = new TDoctorExample();  
-		TDoctorExample.Criteria criteria = example.createCriteria();
+		List<THrDTO> rlt = new ArrayList<THrDTO>();
+		THrExample example = new THrExample();  
+		THrExample.Criteria criteria = example.createCriteria();
 		if(!StringUtils.isEmpty(hotkey)){
 			hotkey = SQLUtils.proLikeCondition(hotkey);
-			if("0".equals(doctorQueryType)){
-				criteria.andProvinceLike(hotkey);
-			}else if("1".equals(doctorQueryType)){
-				criteria.andStateLike(hotkey);
-			}else if("2".equals(doctorQueryType)){
+			if("0".equals(hrQueryType)){
 				criteria.andNameLike(hotkey);
-			}else if("3".equals(doctorQueryType)){
+			}else if("1".equals(hrQueryType)){
 				criteria.andSexLike(hotkey);
-			}else if("4".equals(doctorQueryType)){
-				criteria.andHospitalLike(hotkey);
-			}else if("5".equals(doctorQueryType)){
+			}else if("2".equals(hrQueryType)){
 				criteria.andPhoneLike(hotkey);
-			}else if("6".equals(doctorQueryType)){
+			}else if("3".equals(hrQueryType)){
+				criteria.andEmailLike(hotkey);
+			}else if("4".equals(hrQueryType)){
 				criteria.andIsRegisterLike(hotkey);
 			}
 		}
@@ -82,54 +74,50 @@ public class TDoctorServiceImpl implements TDoctorService {
 			example.setLimitStart(Integer.valueOf(start));
 			example.setLimitEnd(Integer.valueOf(start)+Integer.valueOf(limit));
 		}
-		List<TDoctor> list = tDoctorMapper.selectByExample(example);
+		List<THr> list = tHrMapper.selectByExample(example);
 		if(list!=null && list.size()>0){
-			for(TDoctor po : list){
-				rlt.add(CopyUtils.createCopy(po, TDoctorDTO.class));
+			for(THr po : list){
+				rlt.add(CopyUtils.createCopy(po, THrDTO.class));
 			}
 		}
 		return rlt;
 	}
 
 	@Override
-	public int queryDoctorCount(String hotkey, String doctorQueryType) throws Exception {
+	public int queryHrCount(String hotkey, String hrQueryType) throws Exception {
 		int rlt = 0;
-		TDoctorExample example = new TDoctorExample();  
+		THrExample example = new THrExample();  
 		if(!StringUtils.isEmpty(hotkey)){
-			TDoctorExample.Criteria criteria = example.createCriteria();
+			THrExample.Criteria criteria = example.createCriteria();
 			hotkey = SQLUtils.proLikeCondition(hotkey);
-			if("0".equals(doctorQueryType)){
-				criteria.andProvinceLike(hotkey);
-			}else if("1".equals(doctorQueryType)){
-				criteria.andStateLike(hotkey);
-			}else if("2".equals(doctorQueryType)){
+			if("0".equals(hrQueryType)){
 				criteria.andNameLike(hotkey);
-			}else if("3".equals(doctorQueryType)){
+			}else if("1".equals(hrQueryType)){
 				criteria.andSexLike(hotkey);
-			}else if("4".equals(doctorQueryType)){
-				criteria.andHospitalLike(hotkey);
-			}else if("5".equals(doctorQueryType)){
+			}else if("2".equals(hrQueryType)){
 				criteria.andPhoneLike(hotkey);
-			}else if("6".equals(doctorQueryType)){
+			}else if("3".equals(hrQueryType)){
+				criteria.andEmailLike(hotkey);
+			}else if("4".equals(hrQueryType)){
 				criteria.andIsRegisterLike(hotkey);
 			}
 		}
-		rlt = tDoctorMapper.countByExample(example);
+		rlt = tHrMapper.countByExample(example);
 		return rlt;
 	}
 
 	@Override
-	public TDoctorDTO getDoctorByID(String id) throws Exception {
-		TDoctorDTO rlt = new TDoctorDTO();
-		TDoctor po = tDoctorMapper.selectByPrimaryKey(Long.valueOf(id));
-		rlt = CopyUtils.createCopy(po,TDoctorDTO.class);
+	public THrDTO getHrByID(String id) throws Exception {
+		THrDTO rlt = new THrDTO();
+		THr po = tHrMapper.selectByPrimaryKey(Long.valueOf(id));
+		rlt = CopyUtils.createCopy(po,THrDTO.class);
 		return rlt;
 	}
 
 	@Override
-	public void deleteDoctors(String ids) throws Exception {
-		TDoctorExample example = new TDoctorExample();  
-		TDoctorExample.Criteria criteria = example.createCriteria();  
+	public void deleteHrs(String ids) throws Exception {
+		THrExample example = new THrExample();  
+		THrExample.Criteria criteria = example.createCriteria();  
 		if (StringUtils.isNotEmpty(ids)) {
 			String[] temps = ids.split(",");
 			List<Long> values = new ArrayList<Long>();
@@ -137,7 +125,7 @@ public class TDoctorServiceImpl implements TDoctorService {
 				values.add(Long.valueOf(temp));
 			}
 			criteria.andIdIn(values);
-			tDoctorMapper.deleteByExample(example);
+			tHrMapper.deleteByExample(example);
 		}
 		
 		
@@ -145,10 +133,10 @@ public class TDoctorServiceImpl implements TDoctorService {
 	}
 
 	@Override
-	public void updateDoctor(TDoctorDTO tDoctorDTO) throws Exception {
-		TDoctor record = new TDoctor();
-		record = CopyUtils.createCopy(tDoctorDTO,TDoctor.class);
-		tDoctorMapper.updateByPrimaryKey(record);
+	public void updateHr(THrDTO tHrDTO) throws Exception {
+		THr record = new THr();
+		record = CopyUtils.createCopy(tHrDTO,THr.class);
+		tHrMapper.updateByPrimaryKey(record);
 	}
 	
 	public void exportExcel(Dto inDto, String sheetName, OutputStream out, String type) throws Exception {
@@ -206,53 +194,42 @@ public class TDoctorServiceImpl implements TDoctorService {
 
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
-		List<TDoctorDTO> listTDoctorDTO = queryDoctorList(hotkey, patientQueryType, "", "", "", false);
-		if(ChangeUtils.tProvincesDTOList==null){
-			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,areaService.getAllProvinces());
-		}else{
-			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,null);
-		}
+		List<THrDTO> listTHrDTO = queryHrList(hotkey, patientQueryType, "", "", "", false);
+		ChangeUtils.proTHrDTOList(listTHrDTO);
 		// 产生表格标题行
 		HSSFRow row = sheet.createRow(0);
 		createTitle(row);
-		int size = listTDoctorDTO.size();
+		int size = listTHrDTO.size();
 		for(int i=1;i<=size;i++){
 			HSSFRow dataRow = sheet.createRow(i);
-			createData(dataRow,listTDoctorDTO.get(i-1),i);
+			createData(dataRow,listTHrDTO.get(i-1),i);
 		}
 		return workbook;
 	}
 	
-	private void createData(HSSFRow row,TDoctorDTO tDoctorDTO,int count) {
+	/**
+	 * @param row
+	 */
+	private void createData(HSSFRow row,THrDTO tHrDTO,int count) {
 		int index = 0;
 		HSSFCell cell = row.createCell(index++);
 		cell.setCellValue(count);
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getState());
+		cell.setCellValue(tHrDTO.getName());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getProvince());
+		cell.setCellValue(tHrDTO.getSex());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getName());
+		cell.setCellValue(tHrDTO.getIdcardCopy());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getSex());
+		cell.setCellValue(tHrDTO.getCompanyProfile());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getHospital());
+		cell.setCellValue(tHrDTO.getPhone());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getIdcardCopy());
+		cell.setCellValue(tHrDTO.getEmail());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getRegisterDoctorTable());
+		cell.setCellValue(tHrDTO.getIsRegister());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getRegisterHospitalConsent());
-		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getRegisterDoctorConsent());
-		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getResume());
-		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getHospitalProfile());
-		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getPhone());
-		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getIsRegister());
+		cell.setCellValue(tHrDTO.getRemark());
 	}
 
 	/**
@@ -263,31 +240,21 @@ public class TDoctorServiceImpl implements TDoctorService {
 		HSSFCell cell = row.createCell(index++);
 		cell.setCellValue("序号");
 		cell = row.createCell(index++);
-		cell.setCellValue("是否通过");
-		cell = row.createCell(index++);
-		cell.setCellValue("省份");
-		cell = row.createCell(index++);
 		cell.setCellValue("姓名");
 		cell = row.createCell(index++);
 		cell.setCellValue("性别");
 		cell = row.createCell(index++);
-		cell.setCellValue("所在医院");
-		cell = row.createCell(index++);
 		cell.setCellValue("身份证复印件");
 		cell = row.createCell(index++);
-		cell.setCellValue("注册医生申请表");
-		cell = row.createCell(index++);
-		cell.setCellValue("注册医院同意书");
-		cell = row.createCell(index++);
-		cell.setCellValue("注册医生同意书");
-		cell = row.createCell(index++);
-		cell.setCellValue("个人简历");
-		cell = row.createCell(index++);
-		cell.setCellValue("医院简介");
+		cell.setCellValue("公司名片");
 		cell = row.createCell(index++);
 		cell.setCellValue("联系电话");
 		cell = row.createCell(index++);
+		cell.setCellValue("邮箱");
+		cell = row.createCell(index++);
 		cell.setCellValue("是否在册");
+		cell = row.createCell(index++);
+		cell.setCellValue("备注");
 	}
 
 	public XSSFWorkbook export2007Excel(Dto inDto,String sheetName) throws Exception {
@@ -333,95 +300,72 @@ public class TDoctorServiceImpl implements TDoctorService {
 
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
-		List<TDoctorDTO> listTDoctorDTO = queryDoctorList(hotkey, patientQueryType, "", "", "", false);
+		List<THrDTO> listTHrDTO = queryHrList(hotkey, patientQueryType, "", "", "", false);
 		
-		if(ChangeUtils.tProvincesDTOList==null){
-			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,areaService.getAllProvinces());
-		}else{
-			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,null);
-		}
+		ChangeUtils.proTHrDTOList(listTHrDTO);
 		
 		// 产生表格标题行
 		XSSFRow row = sheet.createRow(0);
 		createTitleXSSF(row);
-		int size = listTDoctorDTO.size();
+		int size = listTHrDTO.size();
 		for(int i=1;i<=size;i++){
 			XSSFRow dataRow = sheet.createRow(i);
-			createDataXSSF(dataRow,listTDoctorDTO.get(i-1),i);
+			createDataXSSF(dataRow,listTHrDTO.get(i-1),i);
 		}
 
 		return workbook;
 	}
 	
-	private void createDataXSSF(XSSFRow row,TDoctorDTO tDoctorDTO,int count) {
+	
+	/**
+	 * @param row
+	 */
+	private void createDataXSSF(XSSFRow row,THrDTO tHrDTO,int count) {
 		int index = 0;
 		XSSFCell cell = row.createCell(index++);
 		cell.setCellValue(count);
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getState());
+		cell.setCellValue(tHrDTO.getName());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getProvince());
+		cell.setCellValue(tHrDTO.getSex());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getName());
+		cell.setCellValue(tHrDTO.getIdcardCopy());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getSex());
+		cell.setCellValue(tHrDTO.getCompanyProfile());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getHospital());
+		cell.setCellValue(tHrDTO.getPhone());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getIdcardCopy());
+		cell.setCellValue(tHrDTO.getEmail());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getRegisterDoctorTable());
+		cell.setCellValue(tHrDTO.getIsRegister());
 		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getRegisterHospitalConsent());
-		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getRegisterDoctorConsent());
-		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getResume());
-		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getHospitalProfile());
-		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getPhone());
-		cell = row.createCell(index++);
-		cell.setCellValue(tDoctorDTO.getIsRegister());
+		cell.setCellValue(tHrDTO.getRemark());
 	}
 
-	/**
-	 * @param row
-	 */
 	private void createTitleXSSF(XSSFRow row) {
 		int index = 0;
 		XSSFCell cell = row.createCell(index++);
 		cell.setCellValue("序号");
 		cell = row.createCell(index++);
-		cell.setCellValue("是否通过");
-		cell = row.createCell(index++);
-		cell.setCellValue("省份");
-		cell = row.createCell(index++);
 		cell.setCellValue("姓名");
 		cell = row.createCell(index++);
 		cell.setCellValue("性别");
 		cell = row.createCell(index++);
-		cell.setCellValue("所在医院");
-		cell = row.createCell(index++);
 		cell.setCellValue("身份证复印件");
 		cell = row.createCell(index++);
-		cell.setCellValue("注册医生申请表");
-		cell = row.createCell(index++);
-		cell.setCellValue("注册医院同意书");
-		cell = row.createCell(index++);
-		cell.setCellValue("注册医生同意书");
-		cell = row.createCell(index++);
-		cell.setCellValue("个人简历");
-		cell = row.createCell(index++);
-		cell.setCellValue("医院简介");
+		cell.setCellValue("公司名片");
 		cell = row.createCell(index++);
 		cell.setCellValue("联系电话");
 		cell = row.createCell(index++);
+		cell.setCellValue("邮箱");
+		cell = row.createCell(index++);
 		cell.setCellValue("是否在册");
+		cell = row.createCell(index++);
+		cell.setCellValue("备注");
 	}
 
 	@Override
-	public void importDoctorExcel(Workbook workbook) throws Exception {
+	public void importHrExcel(Workbook workbook) throws Exception {
 		  // 得到第一张工作表
         Sheet sheet = workbook.getSheetAt(0);
         int lastRow = sheet.getLastRowNum();
@@ -429,9 +373,9 @@ public class TDoctorServiceImpl implements TDoctorService {
         	try{
 	        	Row ssfRow = sheet.getRow(i);
 	            if(ssfRow==null || ssfRow.getCell(0)==null || "".equals(getStringCellValue(ssfRow.getCell(0)))) continue;
-	            TDoctor record = new TDoctor();
-	            proTDoctor(ssfRow, record);
-            	tDoctorMapper.insert(record);
+	            THr record = new THr();
+	            proTHr(ssfRow, record);
+            	tHrMapper.insert(record);
 	        }catch(Exception e){
 				e.printStackTrace();
 	        }
@@ -442,22 +386,16 @@ public class TDoctorServiceImpl implements TDoctorService {
 	 * @param ssfRow
 	 * @param record
 	 */
-	private void proTDoctor(Row ssfRow, TDoctor record) {
+	private void proTHr(Row ssfRow, THr record) {
 		int index = 1;
-		record.setState(getStringCellValue(ssfRow.getCell(index++)));
-		record.setProvince(getStringCellValue(ssfRow.getCell(index++)));
 		record.setName(getStringCellValue(ssfRow.getCell(index++)));
 		record.setSex(getStringCellValue(ssfRow.getCell(index++)));
-		record.setHospital(getStringCellValue(ssfRow.getCell(index++)));
 		record.setIdcardCopy(getStringCellValue(ssfRow.getCell(index++)));
-		record.setRegisterDoctorTable(getStringCellValue(ssfRow.getCell(index++)));
-		record.setRegisterHospitalConsent(getStringCellValue(ssfRow.getCell(index++)));
-		record.setRegisterDoctorConsent(getStringCellValue(ssfRow.getCell(index++)));
-		record.setResume(getStringCellValue(ssfRow.getCell(index++)));
-		record.setHospitalProfile(getStringCellValue(ssfRow.getCell(index++)));
+		record.setCompanyProfile(getStringCellValue(ssfRow.getCell(index++)));
 		record.setPhone(getStringCellValue(ssfRow.getCell(index++)));
+		record.setEmail(getStringCellValue(ssfRow.getCell(index++)));
 		record.setIsRegister(getStringCellValue(ssfRow.getCell(index++)));
-		ChangeUtils.proTDoctorReverse(record);
+		ChangeUtils.proTHrReverse(record);
 	}
 	
 	 /** 获得日期单元格值 */

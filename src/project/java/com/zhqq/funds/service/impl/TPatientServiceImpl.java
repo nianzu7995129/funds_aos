@@ -31,6 +31,7 @@ import com.zhqq.funds.DTO.TPatientDTO;
 import com.zhqq.funds.mapper.TPatientMapper;
 import com.zhqq.funds.po.TPatient;
 import com.zhqq.funds.po.TPatientExample;
+import com.zhqq.funds.service.AreaService;
 import com.zhqq.funds.service.TPatientService;
 import com.zhqq.funds.utils.ChangeUtils;
 import com.zhqq.funds.utils.CopyUtils;
@@ -44,6 +45,9 @@ public class TPatientServiceImpl implements TPatientService {
 
 	@Autowired
 	private TPatientMapper tPatientMapper;
+	
+	@Autowired
+	private AreaService areaService;
 	
 	@Override
 	public void addPatient(TPatientDTO tPatient) throws Exception {
@@ -246,14 +250,18 @@ public class TPatientServiceImpl implements TPatientService {
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<TPatientDTO> patientList = queryPatientList(hotkey, patientQueryType, "", "", "", false);
-		ChangeUtils.proTPatientDTOList(patientList);
+		if(ChangeUtils.tProvincesDTOList==null){
+			ChangeUtils.proTPatientDTOList(patientList,areaService.getAllProvinces());
+		}else{
+			ChangeUtils.proTPatientDTOList(patientList,null);
+		}
 		// 产生表格标题行
 		HSSFRow row = sheet.createRow(0);
 		createTitle(row);
 		int size = patientList.size();
 		for(int i=1;i<=size;i++){
 			HSSFRow dataRow = sheet.createRow(i);
-			createData(dataRow,patientList.get(i-1));
+			createData(dataRow,patientList.get(i-1),i);
 		}
 		return workbook;
 	}
@@ -261,9 +269,11 @@ public class TPatientServiceImpl implements TPatientService {
 	/**
 	 * @param row
 	 */
-	private void createData(HSSFRow row,TPatientDTO tPatientDTO) {
+	private void createData(HSSFRow row,TPatientDTO tPatientDTO,int count) {
 		int index = 0;
 		HSSFCell cell = row.createCell(index++);
+		cell.setCellValue(count);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getArchives());
 		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getState());
@@ -323,62 +333,63 @@ public class TPatientServiceImpl implements TPatientService {
 	 * @param row
 	 */
 	private void createTitle(HSSFRow row) {
-		HSSFCell cell = row.createCell(0);
+		int index = 0;
+		HSSFCell cell = row.createCell(index++);
+		cell.setCellValue("序号");
+		cell = row.createCell(index++);
 		cell.setCellValue("档案编号");
-		cell = row.createCell(1);
+		cell = row.createCell(index++);
 		cell.setCellValue("是否通过");
-		cell = row.createCell(2);
+		cell = row.createCell(index++);
 		cell.setCellValue("姓名");
-		cell = row.createCell(3);
+		cell = row.createCell(index++);
 		cell.setCellValue("性别");
-		cell = row.createCell(4);
+		cell = row.createCell(index++);
+		cell.setCellValue("省份");
+		cell = row.createCell(index++);
+		cell.setCellValue("申请类型");
+		cell = row.createCell(index++);
 		cell.setCellValue("住址");
-		cell = row.createCell(5);
+		cell = row.createCell(index++);
 		cell.setCellValue("联系电话");
-		cell = row.createCell(6);
+		cell = row.createCell(index++);
 		cell.setCellValue("身份号证");
-		cell = row.createCell(7);
+		cell = row.createCell(index++);
 		cell.setCellValue("诊断材料");
-		cell = row.createCell(8);
+		cell = row.createCell(index++);
 		cell.setCellValue("身份证明");
-		cell = row.createCell(9);
+		cell = row.createCell(index++);
 		cell.setCellValue("收入证明");
-		cell = row.createCell(10);
+		cell = row.createCell(index++);
 		cell.setCellValue("购药发票");
-		cell = row.createCell(11);
+		cell = row.createCell(index++);
 		cell.setCellValue("医学评估表");
-		cell = row.createCell(12);
+		cell = row.createCell(index++);
 		cell.setCellValue("患者知情同意函");
-		cell = row.createCell(13);
+		cell = row.createCell(index++);
 		cell.setCellValue("患者经济状况填报表");
-		cell = row.createCell(14);
+		cell = row.createCell(index++);
 		cell.setCellValue("冷链药品知情同意书");
-		cell = row.createCell(15);
+		cell = row.createCell(index++);
 		cell.setCellValue("项目专员");
-		cell = row.createCell(16);
+		cell = row.createCell(index++);
 		cell.setCellValue("朗沐医院");
-		cell = row.createCell(17);
+		cell = row.createCell(index++);
 		cell.setCellValue("朗沐医生");
-		cell = row.createCell(18);
+		cell = row.createCell(index++);
 		cell.setCellValue("预计增药注射时间");
-		cell = row.createCell(19);
+		cell = row.createCell(index++);
 		cell.setCellValue("备注");
-		cell = row.createCell(20);
-		cell.setCellValue("受助药品领取单");
-		cell = row.createCell(21);
-		cell.setCellValue("捐助结束声明");
-		cell = row.createCell(22);
+		cell = row.createCell(index++);
 		cell.setCellValue("通过日期");
-		cell = row.createCell(23);
-		cell.setCellValue("150/82");
-		cell = row.createCell(24);
-		cell.setCellValue("1243");
-		cell = row.createCell(25);
-		cell.setCellValue("2016新申请");
-		cell = row.createCell(26);
-		cell.setCellValue("2016复申请");
-		cell = row.createCell(27);
-		cell.setCellValue("1519");
+		cell = row.createCell(index++);
+		cell.setCellValue("诊断医院是否为朗沐医院");
+		cell = row.createCell(index++);
+		cell.setCellValue("受助药品领取单");
+		cell = row.createCell(index++);
+		cell.setCellValue("捐助结束声明");
+		cell = row.createCell(index++);
+		cell.setCellValue("年份");
 	}
 
 	public XSSFWorkbook export2007Excel(Dto inDto,String sheetName) throws Exception {
@@ -425,14 +436,18 @@ public class TPatientServiceImpl implements TPatientService {
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<TPatientDTO> patientList = queryPatientList(hotkey, patientQueryType, "", "", "", false);
-		ChangeUtils.proTPatientDTOList(patientList);
+		if(ChangeUtils.tProvincesDTOList==null){
+			ChangeUtils.proTPatientDTOList(patientList,areaService.getAllProvinces());
+		}else{
+			ChangeUtils.proTPatientDTOList(patientList,null);
+		}
 		// 产生表格标题行
 		XSSFRow row = sheet.createRow(0);
 		createTitleXSSF(row);
 		int size = patientList.size();
 		for(int i=1;i<=size;i++){
 			XSSFRow dataRow = sheet.createRow(i);
-			createDataXSSF(dataRow,patientList.get(i-1));
+			createDataXSSF(dataRow,patientList.get(i-1),i);
 		}
 
 		return workbook;
@@ -442,9 +457,11 @@ public class TPatientServiceImpl implements TPatientService {
 	/**
 	 * @param row
 	 */
-	private void createDataXSSF(XSSFRow row,TPatientDTO tPatientDTO) {
+	private void createDataXSSF(XSSFRow row,TPatientDTO tPatientDTO,int count) {
 		int index = 0;
 		XSSFCell cell = row.createCell(index++);
+		cell.setCellValue(count);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getArchives());
 		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getState());
@@ -505,62 +522,63 @@ public class TPatientServiceImpl implements TPatientService {
 	 * @param row
 	 */
 	private void createTitleXSSF(XSSFRow row) {
-		XSSFCell cell = row.createCell(0);
+		int index = 0;
+		XSSFCell cell = row.createCell(index++);
+		cell.setCellValue("序号");
+		cell = row.createCell(index++);
 		cell.setCellValue("档案编号");
-		cell = row.createCell(1);
+		cell = row.createCell(index++);
 		cell.setCellValue("是否通过");
-		cell = row.createCell(2);
+		cell = row.createCell(index++);
 		cell.setCellValue("姓名");
-		cell = row.createCell(3);
+		cell = row.createCell(index++);
 		cell.setCellValue("性别");
-		cell = row.createCell(4);
+		cell = row.createCell(index++);
+		cell.setCellValue("省份");
+		cell = row.createCell(index++);
+		cell.setCellValue("申请类型");
+		cell = row.createCell(index++);
 		cell.setCellValue("住址");
-		cell = row.createCell(5);
+		cell = row.createCell(index++);
 		cell.setCellValue("联系电话");
-		cell = row.createCell(6);
+		cell = row.createCell(index++);
 		cell.setCellValue("身份号证");
-		cell = row.createCell(7);
+		cell = row.createCell(index++);
 		cell.setCellValue("诊断材料");
-		cell = row.createCell(8);
+		cell = row.createCell(index++);
 		cell.setCellValue("身份证明");
-		cell = row.createCell(9);
+		cell = row.createCell(index++);
 		cell.setCellValue("收入证明");
-		cell = row.createCell(10);
+		cell = row.createCell(index++);
 		cell.setCellValue("购药发票");
-		cell = row.createCell(11);
+		cell = row.createCell(index++);
 		cell.setCellValue("医学评估表");
-		cell = row.createCell(12);
+		cell = row.createCell(index++);
 		cell.setCellValue("患者知情同意函");
-		cell = row.createCell(13);
+		cell = row.createCell(index++);
 		cell.setCellValue("患者经济状况填报表");
-		cell = row.createCell(14);
+		cell = row.createCell(index++);
 		cell.setCellValue("冷链药品知情同意书");
-		cell = row.createCell(15);
+		cell = row.createCell(index++);
 		cell.setCellValue("项目专员");
-		cell = row.createCell(16);
+		cell = row.createCell(index++);
 		cell.setCellValue("朗沐医院");
-		cell = row.createCell(17);
+		cell = row.createCell(index++);
 		cell.setCellValue("朗沐医生");
-		cell = row.createCell(18);
+		cell = row.createCell(index++);
 		cell.setCellValue("预计增药注射时间");
-		cell = row.createCell(19);
+		cell = row.createCell(index++);
 		cell.setCellValue("备注");
-		cell = row.createCell(20);
-		cell.setCellValue("受助药品领取单");
-		cell = row.createCell(21);
-		cell.setCellValue("捐助结束声明");
-		cell = row.createCell(22);
+		cell = row.createCell(index++);
 		cell.setCellValue("通过日期");
-		cell = row.createCell(23);
-		cell.setCellValue("150/82");
-		cell = row.createCell(24);
-		cell.setCellValue("1243");
-		cell = row.createCell(25);
-		cell.setCellValue("2016新申请");
-		cell = row.createCell(26);
-		cell.setCellValue("2016复申请");
-		cell = row.createCell(27);
-		cell.setCellValue("1519");
+		cell = row.createCell(index++);
+		cell.setCellValue("诊断医院是否为朗沐医院");
+		cell = row.createCell(index++);
+		cell.setCellValue("受助药品领取单");
+		cell = row.createCell(index++);
+		cell.setCellValue("捐助结束声明");
+		cell = row.createCell(index++);
+		cell.setCellValue("年份");
 	}
 	
 	/* (non-Javadoc)
@@ -656,6 +674,7 @@ public class TPatientServiceImpl implements TPatientService {
 	            if(ssfRow==null || ssfRow.getCell(0)==null || "".equals(getStringCellValue(ssfRow.getCell(0)))) continue;
 	            TPatient record = new TPatient();
 	            proTPatient(ssfRow, record);
+	            ChangeUtils.proTPatientReverse(record);
 	            List<TPatient> rlt = getPatientByArchives(record.getArchives());
 	            if(rlt!=null && rlt.size()>0){
 	            	record.setId(rlt.get(0).getId());

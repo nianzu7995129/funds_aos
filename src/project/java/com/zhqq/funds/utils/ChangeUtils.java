@@ -10,9 +10,11 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Maps;
 import com.zhqq.funds.DTO.TDoctorDTO;
+import com.zhqq.funds.DTO.THrDTO;
 import com.zhqq.funds.DTO.TPatientDTO;
 import com.zhqq.funds.DTO.TProvincesDTO;
 import com.zhqq.funds.po.TDoctor;
+import com.zhqq.funds.po.THr;
 import com.zhqq.funds.po.TPatient;
 
 public final class ChangeUtils {
@@ -36,7 +38,10 @@ public final class ChangeUtils {
 	/**
 	 * @param listTPatientDTO
 	 */
-	public static void proTPatientDTOList(List<TPatientDTO> listTPatientDTO) {
+	public static void proTPatientDTOList(List<TPatientDTO> listTPatientDTO,List<TProvincesDTO> tProvincesDTOList) {
+		if(ChangeUtils.tProvincesDTOList==null){
+			ChangeUtils.tProvincesDTOList = tProvincesDTOList;
+		}
 		for(TPatientDTO tPatientDTO : listTPatientDTO){
 			proTPatientDTO(tPatientDTO);
 			
@@ -59,6 +64,8 @@ public final class ChangeUtils {
 		tPatientDTO.setEstimatedTimeToIncreaseDrugInjection(ChangeUtils.getFormatValue(tPatientDTO.getEstimatedTimeToIncreaseDrugInjection(), "-999", "√"));
 		tPatientDTO.setRecipientsReceiveSingleDrug(ChangeUtils.getFormatValue(tPatientDTO.getRecipientsReceiveSingleDrug(), "-999", "√"));
 		tPatientDTO.setEndOfStatement(ChangeUtils.getFormatValue(tPatientDTO.getEndOfStatement(), "-999", "√"));
+		tPatientDTO.setIsLangMuHospital(ChangeUtils.getFormatValue(tPatientDTO.getIsLangMuHospital(), "-999", "√"));
+		tPatientDTO.setProvince(getProviceNameByCode(tPatientDTO.getProvince()));
 	}
 	
 	public static void proTPatientReverse(TPatient tPatientDTO) {
@@ -77,6 +84,8 @@ public final class ChangeUtils {
 		tPatientDTO.setEstimatedTimeToIncreaseDrugInjection(ChangeUtils.getFormatValue(tPatientDTO.getEstimatedTimeToIncreaseDrugInjection(), "√", "-999"));
 		tPatientDTO.setRecipientsReceiveSingleDrug(ChangeUtils.getFormatValue(tPatientDTO.getRecipientsReceiveSingleDrug(), "√", "-999"));
 		tPatientDTO.setEndOfStatement(ChangeUtils.getFormatValue(tPatientDTO.getEndOfStatement(), "√", "-999"));
+		tPatientDTO.setIsLangMuHospital(ChangeUtils.getFormatValue(tPatientDTO.getIsLangMuHospital(), "√", "-999"));
+		tPatientDTO.setProvince(getProviceCodeByName(tPatientDTO.getProvince()));
 	}
 	
 	public static void proTDoctorDTOList(List<TDoctorDTO> listTDoctorDTO,List<TProvincesDTO> tProvincesDTOList) {
@@ -103,6 +112,32 @@ public final class ChangeUtils {
 		tDoctorDTO.setIsRegister(ChangeUtils.getFormatValue(tDoctorDTO.getIsRegister(), "0", "是"));
 		tDoctorDTO.setIsRegister(ChangeUtils.getFormatValue(tDoctorDTO.getIsRegister(), "1", "否"));
 		tDoctorDTO.setProvince(getProviceNameByCode(tDoctorDTO.getProvince()));
+	}
+	
+	
+	public static void proTHrDTOList(List<THrDTO> listTHrDTO) {
+		for(THrDTO tHrDTO : listTHrDTO){
+			proTHrDTO(tHrDTO);
+		}
+	}
+	
+	
+	public static void proTHrDTO(THrDTO tHrDTO) {
+		tHrDTO.setSex(ChangeUtils.getFormatValue(tHrDTO.getSex(), "0", "男"));
+		tHrDTO.setSex(ChangeUtils.getFormatValue(tHrDTO.getSex(), "1", "女"));
+		tHrDTO.setIdcardCopy(ChangeUtils.getFormatValue(tHrDTO.getIdcardCopy(), "-999", "√"));
+		tHrDTO.setCompanyProfile(ChangeUtils.getFormatValue(tHrDTO.getCompanyProfile(), "-999", "√"));
+		tHrDTO.setIsRegister(ChangeUtils.getFormatValue(tHrDTO.getIsRegister(), "0", "是"));
+		tHrDTO.setIsRegister(ChangeUtils.getFormatValue(tHrDTO.getIsRegister(), "1", "否"));
+	}
+	
+	public static void proTHrReverse(THr tHr) {
+		tHr.setSex(ChangeUtils.getFormatValue(tHr.getSex(), "男", "0"));
+		tHr.setSex(ChangeUtils.getFormatValue(tHr.getSex(), "女", "1"));
+		tHr.setIdcardCopy(ChangeUtils.getFormatValue(tHr.getIdcardCopy(), "√", "-999"));
+		tHr.setCompanyProfile(ChangeUtils.getFormatValue(tHr.getCompanyProfile(), "√", "-999"));
+		tHr.setIsRegister(ChangeUtils.getFormatValue(tHr.getIsRegister(), "是", "0"));
+		tHr.setIsRegister(ChangeUtils.getFormatValue(tHr.getIsRegister(), "否", "1"));
 	}
 	
 	public static void proTDoctorReverse(TDoctor tDoctorDTO) {
