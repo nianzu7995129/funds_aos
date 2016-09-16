@@ -51,7 +51,7 @@
 		<aos:formpanel id="_f_user" width="700" layout="column">
 			<aos:fieldset title="" labelWidth="150" labelAlign="right" center="true" collapsible="false">
 				<aos:combobox fieldLabel="是否通过" name="state"  dicField="custom_patient_state" emptyText="未通过" value="0" columnWidth="0.5" />
-				<aos:combobox fieldLabel="省份" name="province" emptyText="请省份..." columnWidth="0.49" url="getProvinces.jhtml" />
+				<aos:combobox fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.49" url="getProvinces.jhtml" />
 					
 				<aos:textfield name="name" fieldLabel="姓名"  maxLength="100" columnWidth="0.5" />
 				<aos:combobox fieldLabel="性别" name="sex" dicField="custom_sex" emptyText="男" value="0" columnWidth="0.49" />
@@ -81,7 +81,7 @@
 			<aos:hiddenfield fieldLabel="xxxxx" name="id" />
 			<aos:fieldset title="" labelWidth="120" labelAlign="right" center="true" collapsible="false">
 				<aos:combobox fieldLabel="是否通过" name="state"  dicField="custom_patient_state" emptyText="未通过" value="0" columnWidth="0.5" />
-				<aos:combobox id="province" fieldLabel="省份" name="province" emptyText="请省份..." columnWidth="0.49" url="getProvinces.jhtml" />
+				<aos:combobox id="province" fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.49" url="getProvinces.jhtml" />
 					
 				<aos:textfield name="name" fieldLabel="姓名"  maxLength="100" columnWidth="0.5" />
 				<aos:combobox fieldLabel="性别" name="sex" dicField="custom_sex" emptyText="男" value="0" columnWidth="0.49" />

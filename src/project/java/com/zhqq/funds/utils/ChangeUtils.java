@@ -9,11 +9,14 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Maps;
+import com.zhqq.funds.DTO.TCitiesDTO;
 import com.zhqq.funds.DTO.TDoctorDTO;
+import com.zhqq.funds.DTO.THospitalMappingDTO;
 import com.zhqq.funds.DTO.THrDTO;
 import com.zhqq.funds.DTO.TPatientDTO;
 import com.zhqq.funds.DTO.TProvincesDTO;
 import com.zhqq.funds.po.TDoctor;
+import com.zhqq.funds.po.THospitalMapping;
 import com.zhqq.funds.po.THr;
 import com.zhqq.funds.po.TPatient;
 
@@ -23,7 +26,13 @@ public final class ChangeUtils {
 	
 	private static Map<String, String> provinceCodeCacheMap;
 	
+	private static Map<String, String> cityNameCacheMap;
+	
+	private static Map<String, String> cityCodeCacheMap;
+	
 	public static List<TProvincesDTO> tProvincesDTOList;
+	
+	public static List<TCitiesDTO> tCitiesDTOList;
 
 	public static String getFormatValue(String src,String format,String target){
 		String rlt = src;
@@ -96,6 +105,26 @@ public final class ChangeUtils {
 			proTDoctorDTO(tDoctorDTO);
 			
 		}
+	}
+	
+	public static void proTHospitalMappingDTOList(List<THospitalMappingDTO> listTHospitalMappingDTO,List<TCitiesDTO> tCitiesDTOList) {
+		if(ChangeUtils.tCitiesDTOList==null){
+			ChangeUtils.tCitiesDTOList = tCitiesDTOList;
+		}
+		for(THospitalMappingDTO tHospitalMappingDTO : listTHospitalMappingDTO){
+			proTHospitalMappingDTO(tHospitalMappingDTO);
+			
+		}
+	}
+	
+	public static void proTHospitalMappingDTO(THospitalMappingDTO tHospitalMappingDTO) {
+		tHospitalMappingDTO.setProvince(getProviceNameByCode(tHospitalMappingDTO.getProvince()));
+		tHospitalMappingDTO.setCity(getCityNameByCode(tHospitalMappingDTO.getCity()));
+	}
+	
+	public static void proTHospitalMappingReverse(THospitalMapping tHospitalMapping) {
+		tHospitalMapping.setProvince(getProviceNameByCode(tHospitalMapping.getProvince()));
+		tHospitalMapping.setCity(getCityCodeByName(tHospitalMapping.getCity()));
 	}
 	
 	public static void proTDoctorDTO(TDoctorDTO tDoctorDTO) {
@@ -198,6 +227,50 @@ public final class ChangeUtils {
 			}
 		}
 		return provinceCodeCacheMap.get(name);
+	}
+	
+	/**
+	 * 根据城市ID获取城市名字
+	 * @param code
+	 */
+	public static String getCityNameByCode(String code){
+		if(cityCodeCacheMap==null){
+			synchronized (ChangeUtils.class) {
+				if(cityCodeCacheMap==null){
+					try{
+						cityCodeCacheMap = Maps.newHashMap();
+						for(TCitiesDTO tCitiesDTO : tCitiesDTOList){
+							cityCodeCacheMap.put(tCitiesDTO.getCityid(), tCitiesDTO.getCity());
+						}
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return cityCodeCacheMap.get(code);
+	}
+	
+	/**
+	 * 根据城市名字获取城市ID
+	 * @param code
+	 */
+	public static String getCityCodeByName(String name){
+		if(cityNameCacheMap==null){
+			synchronized (ChangeUtils.class) {
+				if(cityNameCacheMap==null){
+					try{
+						cityNameCacheMap = Maps.newHashMap();
+						for(TCitiesDTO tCitiesDTO : tCitiesDTOList){
+							cityNameCacheMap.put(tCitiesDTO.getCity(), tCitiesDTO.getCityid());
+						}
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return cityNameCacheMap.get(name);
 	}
 	
 

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ include file="/WEB-INF/jsp/common/tags.jsp"%>
 <aos:html>
-<aos:head title="医生管理">
+<aos:head title="医院医生关联管理">
 	<aos:include lib="ext" />
 	<aos:base href="funds/" />
 </aos:head>
@@ -9,19 +9,19 @@
 </aos:body>
 <aos:onready>
 	<aos:viewport layout="border">
-		<aos:gridpanel id="_g_user" region="center" onrender="_g_user_query" url="doctor/queryDoctorList.jhtml"
+		<aos:gridpanel id="_g_user" region="center" onrender="_g_user_query" url="hd/queryHdList.jhtml"
 			onitemdblclick="_w_user_u_show">
 			<aos:docked forceBoder="0 0 1 0">
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:dockeditem text="新增" tooltip="新增医生" onclick="_w_user_show" icon="add.png" />
-				<aos:dockeditem text="修改" tooltip="修改医生" onclick="_w_user_u_show" icon="edit.png" />
-				<aos:dockeditem text="删除" tooltip="删除医生" onclick="_g_user_del" icon="del.png" />
+				<aos:dockeditem text="新增" tooltip="新增医院医生关联" onclick="_w_user_show" icon="add.png" />
+				<aos:dockeditem text="修改" tooltip="修改医院医生关联" onclick="_w_user_u_show" icon="edit.png" />
+				<aos:dockeditem text="删除" tooltip="删除医院医生关联" onclick="_g_user_del" icon="del.png" />
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:dockeditem text="导入" tooltip="导入医生信息" onclick="importExcel()" icon="edit.png"/>
+				<aos:dockeditem text="导入" tooltip="导入医院医生关联信息" onclick="importExcel()" icon="edit.png"/>
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:dockeditem text="导出" tooltip="导出医生信息成Excel" onclick="_g_user_export" icon="icon9.png" />
+				<aos:dockeditem text="导出" tooltip="导出医院医生关联信息成Excel" onclick="_g_user_export" icon="icon9.png" />
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:combobox id="patient_query_type" name="patient_query_type" dicField="custom_doctor_query" value="0"  width="90"/>
+				<aos:combobox id="patient_query_type" name="patient_query_type" dicField="custom_hd_query" value="0"  width="90"/>
 				<aos:triggerfield emptyText="请输入关键字" name="hotkey" id="_hotkey" onenterkey="_g_user_query"
 					trigger1Cls="x-form-search-trigger" onTrigger1Click="_g_user_query" width="180" />
 				<aos:dockeditem xtype="tbfill" />
@@ -30,43 +30,47 @@
 			<aos:selmodel type="checkbox" mode="multi" />
 			<aos:column type="rowno" />
 			<aos:column header="流水号" dataIndex="id" hidden="true" />
-			<aos:column header="是否通过" dataIndex="state" width="100" celltip="true" />
+			<aos:column header="区域" dataIndex="area" width="100" celltip="true" />
+			<aos:column header="医院" dataIndex="hospitalName" width="100" celltip="true" />
 			<aos:column header="省份" dataIndex="province" width="100" celltip="true" />
-			<aos:column header="姓名" dataIndex="name" width="100" celltip="true" />
-			<aos:column header="性别" dataIndex="sex" width="100" celltip="true" />
-			<aos:column header="所在医院" dataIndex="hospital" width="100" celltip="true" />
-			<aos:column header="身份证复印件" dataIndex="idcardCopy" width="100" celltip="true" />
-			<aos:column header="注册医生申请表" dataIndex="registerDoctorTable" width="100" celltip="true" />
-			<aos:column header="注册医院同意书" dataIndex="registerHospitalConsent" width="100" celltip="true" />
-			<aos:column header="注册医生同意书" dataIndex="registerDoctorConsent" width="100" celltip="true" />
-			<aos:column header="个人简历" dataIndex="resume" width="100" celltip="true" />
-			<aos:column header="医院简介" dataIndex="hospitalProfile" width="100" celltip="true" />
-			<aos:column header="联系电话" dataIndex="phone" width="80" celltip="true" />
-			<aos:column header="是否在册" dataIndex="isRegister" width="120" celltip="true" />
+			<aos:column header="城市" dataIndex="city" width="100" celltip="true" />
+			<aos:column header="医院分级" dataIndex="hospitalGrade" width="100" celltip="true" />
+			<aos:column header="医院级别" dataIndex="hospitalLevel" width="100" celltip="true" />
+			<aos:column header="医院类型" dataIndex="hospitalType" width="100" celltip="true" />
+			<aos:column header="地区经理" dataIndex="areaManager" width="100" celltip="true" />
+			<aos:column header="专员" dataIndex="hr" width="100" celltip="true" />
+			<aos:column header="医生姓名" dataIndex="doctorName" width="100" celltip="true" />
+			<aos:column header="医生职称" dataIndex="doctorTitle" width="100" celltip="true" />
+			<aos:column header="医生行政职务" dataIndex="administrativePost" width="80" celltip="true" />
+			<aos:column header="医生专业方向" dataIndex="professionalDirection" width="120" celltip="true" />
+			<aos:column header="备注" dataIndex="remark" width="120" celltip="true" />
 			<aos:column header=""   width="1" flex="1"/>
 		</aos:gridpanel>
 	</aos:viewport>
 
-	<aos:window id="_w_user" title="新增医生" maxHeight="-10" width="720" autoScroll="true">
+	<aos:window id="_w_user" title="新增医院医生关联" maxHeight="-10" width="720" autoScroll="true">
 		<aos:formpanel id="_f_user" width="700" layout="column">
 			<aos:fieldset title="" labelWidth="150" labelAlign="right" center="true" collapsible="false">
-				<aos:combobox fieldLabel="是否通过" name="state"  dicField="custom_patient_state" emptyText="未通过" value="0" columnWidth="0.5" />
-				<aos:combobox fieldLabel="省份" name="province" emptyText="请省份..." columnWidth="0.49" url="getProvinces.jhtml" />
+				<aos:textfield name="area" fieldLabel="区域"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="hospitalName" fieldLabel="医院"   maxLength="20" columnWidth="0.49" />
 					
-				<aos:textfield name="name" fieldLabel="姓名"  maxLength="100" columnWidth="0.5" />
-				<aos:combobox fieldLabel="性别" name="sex" dicField="custom_sex" emptyText="男" value="0" columnWidth="0.49" />
+				<aos:combobox  fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.5" url="getProvinces.jhtml" />
+				<aos:combobox  fieldLabel="城市" name="city" emptyText="请选择城市..." columnWidth="0.49" url="getProvinces.jhtml" />
 					
-				<aos:textfield name="hospital" fieldLabel="所在医院"   maxLength="20" columnWidth="0.5" />
-				<aos:combobox name="idcardCopy" fieldLabel="身份证复印件"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				<aos:textfield name="hospitalGrade" fieldLabel="医院分级"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="hospitalLevel" fieldLabel="医院级别"   maxLength="20" columnWidth="0.49" />
 				
-				<aos:combobox name="registerDoctorTable" fieldLabel="注册医生申请表"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
-				<aos:combobox name="registerHospitalConsent" fieldLabel="注册医院同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				<aos:textfield name="hospitalType" fieldLabel="医院类型"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="areaManager" fieldLabel="地区经理"   maxLength="20" columnWidth="0.49" />
 				
-				<aos:combobox name="registerDoctorConsent" fieldLabel="注册医生同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
-				<aos:combobox name="resume" fieldLabel="个人简历"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				<aos:textfield name="hr" fieldLabel="专员"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="doctorName" fieldLabel="医生姓名"   maxLength="20" columnWidth="0.49" />
 				
-				<aos:textfield name="phone" fieldLabel="联系电话"  maxLength="100" columnWidth="0.5" />
-				<aos:combobox name="isRegister" fieldLabel="是否在册" dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.49" />
+				<aos:textfield name="doctorTitle" fieldLabel="医生职称"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="administrativePost" fieldLabel="医生行政职务"   maxLength="20" columnWidth="0.49" />
+				
+				<aos:textfield name="professionalDirection" fieldLabel="医生专业方向"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="remark" fieldLabel="备注"   maxLength="20" columnWidth="0.49" />
 			</aos:fieldset>
 		</aos:formpanel>
 		<aos:docked dock="bottom" ui="footer">
@@ -76,27 +80,30 @@
 		</aos:docked>
 	</aos:window>
 
-	<aos:window id="_w_user_u" title="修改医生" onshow="_w_user_u_onshow" width="720" maxHeight="-10" autoScroll="true">
+	<aos:window id="_w_user_u" title="修改医院医生关联" onshow="_w_user_u_onshow" width="720" maxHeight="-10" autoScroll="true">
 		<aos:formpanel id="_f_user_u" width="700" layout="column" labelWidth="70">
 			<aos:hiddenfield fieldLabel="xxxxx" name="id" />
 			<aos:fieldset title="" labelWidth="120" labelAlign="right" center="true" collapsible="false">
-				<aos:combobox fieldLabel="是否通过" name="state"  dicField="custom_patient_state" emptyText="未通过" value="0" columnWidth="0.5" />
-				<aos:combobox id="province" fieldLabel="省份" name="province" emptyText="请省份..." columnWidth="0.49" url="getProvinces.jhtml" />
+				<aos:textfield name="area" fieldLabel="区域"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="hospitalName" fieldLabel="医院"   maxLength="20" columnWidth="0.49" />
 					
-				<aos:textfield name="name" fieldLabel="姓名"  maxLength="100" columnWidth="0.5" />
-				<aos:combobox fieldLabel="性别" name="sex" dicField="custom_sex" emptyText="男" value="0" columnWidth="0.49" />
+				<aos:combobox id="province" fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.5" url="getProvinces.jhtml" />
+				<aos:combobox id="city" fieldLabel="城市" name="city" emptyText="请选择城市..." columnWidth="0.49" url="getProvinces.jhtml" />
 					
-				<aos:textfield name="hospital" fieldLabel="所在医院"   maxLength="20" columnWidth="0.5" />
-				<aos:combobox name="idcardCopy" fieldLabel="身份证复印件"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				<aos:textfield name="hospitalGrade" fieldLabel="医院分级"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="hospitalLevel" fieldLabel="医院级别"   maxLength="20" columnWidth="0.49" />
 				
-				<aos:combobox name="registerDoctorTable" fieldLabel="注册医生申请表"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
-				<aos:combobox name="registerHospitalConsent" fieldLabel="注册医院同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				<aos:textfield name="hospitalType" fieldLabel="医院类型"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="areaManager" fieldLabel="地区经理"   maxLength="20" columnWidth="0.49" />
 				
-				<aos:combobox name="registerDoctorConsent" fieldLabel="注册医生同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
-				<aos:combobox name="resume" fieldLabel="个人简历"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				<aos:textfield name="hr" fieldLabel="专员"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="doctorName" fieldLabel="医生姓名"   maxLength="20" columnWidth="0.49" />
 				
-				<aos:textfield name="phone" fieldLabel="联系电话"  maxLength="100" columnWidth="0.5" />
-				<aos:combobox name="isRegister" fieldLabel="是否在册" dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.49" />
+				<aos:textfield name="doctorTitle" fieldLabel="医生职称"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="administrativePost" fieldLabel="医生行政职务"   maxLength="20" columnWidth="0.49" />
+				
+				<aos:textfield name="professionalDirection" fieldLabel="医生专业方向"   maxLength="20" columnWidth="0.5" />
+				<aos:textfield name="remark" fieldLabel="备注"   maxLength="20" columnWidth="0.49" />
 			</aos:fieldset>
 		</aos:formpanel>
 		<aos:docked dock="bottom" ui="footer">
@@ -147,7 +154,7 @@
                             params: {
                                 model:"medicalRecords"
                             },
-                            url: 'doctor/importExcel.jhtml',
+                            url: 'hd/importExcel.jhtml',
                             success: function (form, action) {
                                 AOS.hide();
                                 AOS.tip("导入成功");
@@ -189,7 +196,7 @@
             function _f_user_save() {
                 AOS.ajax({
                     forms: _f_user,
-                    url: 'doctor/saveDoctor.jhtml',
+                    url: 'hd/saveHd.jhtml',
                     ok: function (data) {
                         if (data.appcode === -1) {
                             AOS.err(data.appmsg);
@@ -216,7 +223,7 @@
                 var record = AOS.selectone(_g_user);
                 AOS.ajax({
                     params: {id: record.data.id},
-                    url: 'doctor/getDoctor.jhtml',
+                    url: 'hd/getHd.jhtml',
                     ok: function (data) {
                         _f_user_u.form.setValues(data);
                     }
@@ -228,7 +235,7 @@
             	var record = AOS.selectone(_g_user);
                 AOS.ajax({
                     forms: _f_user_u,
-                    url: 'doctor/updateDoctor.jhtml',
+                    url: 'hd/updateHd.jhtml',
                     ok: function (data) {
                         if (data.appcode === -1) {
                             AOS.err(data.appmsg);
@@ -255,7 +262,7 @@
                         return;
                     }
                     AOS.ajax({
-                        url: 'doctor/deleteDoctor.jhtml',
+                        url: 'hd/deleteHd.jhtml',
                         params: {
                             aos_rows_: selection
                         },
@@ -276,7 +283,7 @@
 						hotkey: _hotkey.getValue(),
 	               		patientQueryType: patient_query_type.getValue()
 					},
-					url : 'doctor/exportExcel.jhtml',
+					url : 'hd/exportExcel.jhtml',
 					wait : false,
 					ok : function(data) {
 						AOS.unmask();
