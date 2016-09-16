@@ -1,15 +1,11 @@
 package com.zhqq.funds.service.impl;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import org.activiti.engine.impl.util.json.JSONArray;
-import org.activiti.engine.impl.util.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -30,19 +26,16 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.zhqq.funds.DTO.TPatientDTO;
-import com.zhqq.funds.po.TPatient;
 import com.zhqq.funds.mapper.TPatientMapper;
+import com.zhqq.funds.po.TPatient;
 import com.zhqq.funds.po.TPatientExample;
 import com.zhqq.funds.service.TPatientService;
+import com.zhqq.funds.utils.ChangeUtils;
 import com.zhqq.funds.utils.CopyUtils;
-import com.zhqq.funds.utils.PatientUtils;
 import com.zhqq.funds.utils.SQLUtils;
 
-import cn.osworks.aos.core.asset.AOSJson;
-import cn.osworks.aos.core.asset.AOSUtils;
 import cn.osworks.aos.core.typewrap.Dto;
 
 
@@ -253,7 +246,7 @@ public class TPatientServiceImpl implements TPatientService {
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<TPatientDTO> patientList = queryPatientList(hotkey, patientQueryType, "", "", "", false);
-		PatientUtils.proTPatientDTOList(patientList);
+		ChangeUtils.proTPatientDTOList(patientList);
 		// 产生表格标题行
 		HSSFRow row = sheet.createRow(0);
 		createTitle(row);
@@ -269,63 +262,61 @@ public class TPatientServiceImpl implements TPatientService {
 	 * @param row
 	 */
 	private void createData(HSSFRow row,TPatientDTO tPatientDTO) {
-		HSSFCell cell = row.createCell(0);
+		int index = 0;
+		HSSFCell cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getArchives());
-		cell = row.createCell(1);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getState());
-		cell = row.createCell(2);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getName());
-		cell = row.createCell(3);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getSex());
-		cell = row.createCell(4);
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getProvince());
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getApplyType());
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getAddress());
-		cell = row.createCell(5);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getPhone());
-		cell = row.createCell(6);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getIdcardnumber());
-		cell = row.createCell(7);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getDiagnosticMaterial());
-		cell = row.createCell(8);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getProofIdentity());
-		cell = row.createCell(9);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getProofIncome());
-		cell = row.createCell(10);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getPurchaseInvoice());
-		cell = row.createCell(11);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getMedicalEvaluationForm());
-		cell = row.createCell(12);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getInformedConsentOfPatients());
-		cell = row.createCell(13);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getPatienteConomicStatus());
-		cell = row.createCell(14);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getColdChainDrugInformedConsent());
-		cell = row.createCell(15);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getHr());
-		cell = row.createCell(16);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getLangMuHospital());
-		cell = row.createCell(17);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getLangMuDoctor());
-		cell = row.createCell(18);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getEstimatedTimeToIncreaseDrugInjection());
-		cell = row.createCell(19);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getRemarks());
-		cell = row.createCell(20);
-		cell.setCellValue(tPatientDTO.getRecipientsReceiveSingleDrug());
-		cell = row.createCell(21);
-		cell.setCellValue(tPatientDTO.getEndOfStatement());
-		
-		cell = row.createCell(22);
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getIsLangMuHospital());
+		cell = row.createCell(index++);
 		cell.setCellValue(CopyUtils.getFormatDateString(tPatientDTO.getPassdate()));
-		cell = row.createCell(23);
-		cell.setCellValue(tPatientDTO.getOther1());
-		cell = row.createCell(24);
-		cell.setCellValue(tPatientDTO.getOther2());
-		cell = row.createCell(25);
-		cell.setCellValue(tPatientDTO.getOther3());
-		cell = row.createCell(26);
-		cell.setCellValue(tPatientDTO.getOther4());
-		cell = row.createCell(27);
-		cell.setCellValue(tPatientDTO.getOther5());
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getRecipientsReceiveSingleDrug());
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getEndOfStatement());
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getYear());
 	}
 
 	/**
@@ -434,7 +425,7 @@ public class TPatientServiceImpl implements TPatientService {
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<TPatientDTO> patientList = queryPatientList(hotkey, patientQueryType, "", "", "", false);
-		PatientUtils.proTPatientDTOList(patientList);
+		ChangeUtils.proTPatientDTOList(patientList);
 		// 产生表格标题行
 		XSSFRow row = sheet.createRow(0);
 		createTitleXSSF(row);
@@ -452,63 +443,62 @@ public class TPatientServiceImpl implements TPatientService {
 	 * @param row
 	 */
 	private void createDataXSSF(XSSFRow row,TPatientDTO tPatientDTO) {
-		XSSFCell cell = row.createCell(0);
+		int index = 0;
+		XSSFCell cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getArchives());
-		cell = row.createCell(1);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getState());
-		cell = row.createCell(2);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getName());
-		cell = row.createCell(3);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getSex());
-		cell = row.createCell(4);
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getProvince());
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getApplyType());
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getAddress());
-		cell = row.createCell(5);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getPhone());
-		cell = row.createCell(6);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getIdcardnumber());
-		cell = row.createCell(7);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getDiagnosticMaterial());
-		cell = row.createCell(8);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getProofIdentity());
-		cell = row.createCell(9);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getProofIncome());
-		cell = row.createCell(10);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getPurchaseInvoice());
-		cell = row.createCell(11);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getMedicalEvaluationForm());
-		cell = row.createCell(12);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getInformedConsentOfPatients());
-		cell = row.createCell(13);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getPatienteConomicStatus());
-		cell = row.createCell(14);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getColdChainDrugInformedConsent());
-		cell = row.createCell(15);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getHr());
-		cell = row.createCell(16);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getLangMuHospital());
-		cell = row.createCell(17);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getLangMuDoctor());
-		cell = row.createCell(18);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getEstimatedTimeToIncreaseDrugInjection());
-		cell = row.createCell(19);
+		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getRemarks());
-		cell = row.createCell(20);
-		cell.setCellValue(tPatientDTO.getRecipientsReceiveSingleDrug());
-		cell = row.createCell(21);
-		cell.setCellValue(tPatientDTO.getEndOfStatement());
-		
-		cell = row.createCell(22);
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getIsLangMuHospital());
+		cell = row.createCell(index++);
 		cell.setCellValue(CopyUtils.getFormatDateString(tPatientDTO.getPassdate()));
-		cell = row.createCell(23);
-		cell.setCellValue(tPatientDTO.getOther1());
-		cell = row.createCell(24);
-		cell.setCellValue(tPatientDTO.getOther2());
-		cell = row.createCell(25);
-		cell.setCellValue(tPatientDTO.getOther3());
-		cell = row.createCell(26);
-		cell.setCellValue(tPatientDTO.getOther4());
-		cell = row.createCell(27);
-		cell.setCellValue(tPatientDTO.getOther5());
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getRecipientsReceiveSingleDrug());
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getEndOfStatement());
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getYear());
+		
 	}
 
 	/**
@@ -685,36 +675,35 @@ public class TPatientServiceImpl implements TPatientService {
 	 */
 	private void proTPatient(Row ssfRow, TPatient record) {
 		
-			record.setArchives(getStringCellValue(ssfRow.getCell(1)));
-			record.setState(getStringCellValue(ssfRow.getCell(2)));
-			record.setName(getStringCellValue(ssfRow.getCell(3)));
-			record.setSex(getStringCellValue(ssfRow.getCell(4)));
-			record.setIdcardnumber(getStringCellValue(ssfRow.getCell(7)));
-			record.setPhone(getStringCellValue(ssfRow.getCell(6)));
-			record.setAddress(getStringCellValue(ssfRow.getCell(5)));
-			record.setDiagnosticMaterial(getStringCellValue(ssfRow.getCell(8)));
-			record.setProofIdentity(getStringCellValue(ssfRow.getCell(9)));
-			record.setProofIncome(getStringCellValue(ssfRow.getCell(10)));
-			record.setPurchaseInvoice(getStringCellValue(ssfRow.getCell(11)));
-			record.setMedicalEvaluationForm(getStringCellValue(ssfRow.getCell(12)));
-			record.setInformedConsentOfPatients(getStringCellValue(ssfRow.getCell(13)));
-			record.setPatienteConomicStatus(getStringCellValue(ssfRow.getCell(14)));
-			record.setColdChainDrugInformedConsent(getStringCellValue(ssfRow.getCell(15)));
-			record.setHr(getStringCellValue(ssfRow.getCell(16)));
-			record.setLangMuHospital(getStringCellValue(ssfRow.getCell(17)));
-			record.setLangMuDoctor(getStringCellValue(ssfRow.getCell(18)));
-			record.setEstimatedTimeToIncreaseDrugInjection(getStringCellValue(ssfRow.getCell(19)));
-			record.setRemarks(getStringCellValue(ssfRow.getCell(20)));
-			record.setRecipientsReceiveSingleDrug(getStringCellValue(ssfRow.getCell(21)));
-			record.setEndOfStatement(getStringCellValue(ssfRow.getCell(22)));
-			record.setPassdate(getDateCellValue(ssfRow.getCell(23)));
-			record.setOther1(getStringCellValue(ssfRow.getCell(24)));
-			record.setOther2(getStringCellValue(ssfRow.getCell(25)));
-			record.setOther3(getStringCellValue(ssfRow.getCell(26)));
-			record.setOther4(getStringCellValue(ssfRow.getCell(27)));
-			record.setOther5(getStringCellValue(ssfRow.getCell(28)));
-		
-		
+		int index = 1;
+		record.setArchives(getStringCellValue(ssfRow.getCell(index++)));
+		record.setState(getStringCellValue(ssfRow.getCell(index++)));
+		record.setName(getStringCellValue(ssfRow.getCell(index++)));
+		record.setSex(getStringCellValue(ssfRow.getCell(index++)));
+		record.setProvince(getStringCellValue(ssfRow.getCell(index++)));
+		record.setApplyType(getStringCellValue(ssfRow.getCell(index++)));
+		record.setAddress(getStringCellValue(ssfRow.getCell(index++)));
+		record.setPhone(getStringCellValue(ssfRow.getCell(index++)));
+		record.setIdcardnumber(getStringCellValue(ssfRow.getCell(index++)));
+		record.setDiagnosticMaterial(getStringCellValue(ssfRow.getCell(index++)));
+		record.setProofIdentity(getStringCellValue(ssfRow.getCell(index++)));
+		record.setProofIncome(getStringCellValue(ssfRow.getCell(index++)));
+		record.setPurchaseInvoice(getStringCellValue(ssfRow.getCell(index++)));
+		record.setMedicalEvaluationForm(getStringCellValue(ssfRow.getCell(index++)));
+		record.setInformedConsentOfPatients(getStringCellValue(ssfRow.getCell(index++)));
+		record.setPatienteConomicStatus(getStringCellValue(ssfRow.getCell(index++)));
+		record.setColdChainDrugInformedConsent(getStringCellValue(ssfRow.getCell(index++)));
+		record.setHr(getStringCellValue(ssfRow.getCell(index++)));
+		record.setLangMuHospital(getStringCellValue(ssfRow.getCell(index++)));
+		record.setLangMuDoctor(getStringCellValue(ssfRow.getCell(index++)));
+		record.setEstimatedTimeToIncreaseDrugInjection(getStringCellValue(ssfRow.getCell(index++)));
+		record.setRemarks(getStringCellValue(ssfRow.getCell(index++)));
+		record.setIsLangMuHospital(getStringCellValue(ssfRow.getCell(index++)));
+		record.setPassdate(getDateCellValue(ssfRow.getCell(index++)));
+		record.setRecipientsReceiveSingleDrug(getStringCellValue(ssfRow.getCell(index++)));
+		record.setEndOfStatement(getStringCellValue(ssfRow.getCell(index++)));
+		record.setYear(getStringCellValue(ssfRow.getCell(index++)));
+		ChangeUtils.proTPatientReverse(record);
 	}
 	
 	 /** 获得日期单元格值 */

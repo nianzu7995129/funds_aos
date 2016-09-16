@@ -5,20 +5,76 @@ package com.zhqq.funds.utils;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
 
 import com.zhqq.funds.DTO.TDrugreleaseDTO;
 import com.zhqq.funds.DTO.TPatientDTO;
+import com.zhqq.funds.DTO.TProvincesDTO;
 import com.zhqq.funds.VO.TDrugreleaseVO;
 import com.zhqq.funds.VO.TPatientVO;
+import com.zhqq.funds.VO.TProvincesVO;
 import com.zhqq.funds.po.TDrugrelease;
 import com.zhqq.funds.po.TPatient;
+import com.zhqq.funds.po.TProvinces;
 
 /**
  * @author dell
  *
  */
 public final class CopyUtils {
+	
+	
+	/**
+	 * 按照目标类名创建对象，并拷贝原对象属性
+	 * 如果原对象为空，则将目标对象也置为空
+	 * @param source 原对象
+	 * @param targetClass 目标类名
+	 */
+	public static <T1 ,T2> T2 createCopy(T1 source,  Class<T2> targetClass){
+		
+		if(source==null){
+			return null;
+		}else{
+			T2 target;
+			try {
+				target = targetClass.newInstance();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+				return null;
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				return null;
+			}
+			BeanUtils.copyProperties(source, target);
+			return target;
+		}
+		
+	}
+	
+	/**
+	 * 按照目标类名创建List，并拷贝原List中对象属性
+	 * 如果原List为空，则返回为空
+	 * @param sourceList 原对象List
+	 * @param targetClass 目标类名
+	 */
+	public static <T1 ,T2> List<T2> createCopyList(List<T1> sourceList, Class<T2> targetClass){
+		if(sourceList==null){
+			return null;
+		}else if(sourceList.size()==0){
+			return new ArrayList<T2>();
+		}else{
+			List<T2> targetList=new ArrayList<T2>();
+			for(Object source:sourceList){
+				T2 target = (T2)createCopy(source,targetClass);
+				targetList.add(target);
+			}
+			return targetList;
+		}
+	}
 	
 	public static TDrugrelease copyDTOToPO(TDrugreleaseDTO tDrugreleaseDTO){
 		TDrugrelease rlt = new TDrugrelease();
@@ -45,6 +101,8 @@ public final class CopyUtils {
 		rlt.setState(tPatient.getState());
 		rlt.setName(tPatient.getName());
 		rlt.setSex(tPatient.getSex());
+		rlt.setProvince(tPatient.getProvince());
+		rlt.setApplyType(tPatient.getApplyType());
 		rlt.setIdcardnumber(tPatient.getIdcardnumber());
 		rlt.setPhone(tPatient.getPhone());
 		rlt.setAddress(tPatient.getAddress());
@@ -63,11 +121,8 @@ public final class CopyUtils {
 		rlt.setRecipientsReceiveSingleDrug(tPatient.getRecipientsReceiveSingleDrug());
 		rlt.setEndOfStatement(tPatient.getEndOfStatement());
 		rlt.setPassdate(tPatient.getPassdate());
-		rlt.setOther1(tPatient.getOther1());
-		rlt.setOther2(tPatient.getOther2());
-		rlt.setOther3(tPatient.getOther3());
-		rlt.setOther4(tPatient.getOther4());
-		rlt.setOther5(tPatient.getOther5());
+		rlt.setIsLangMuHospital(tPatient.getIsLangMuHospital());
+		rlt.setYear(tPatient.getYear());
 		return rlt;
 	}
 	
@@ -78,6 +133,8 @@ public final class CopyUtils {
 		rlt.setState(tPatient.getState());
 		rlt.setName(tPatient.getName());
 		rlt.setSex(tPatient.getSex());
+		rlt.setProvince(tPatient.getProvince());
+		rlt.setApplyType(tPatient.getApplyType());
 		rlt.setIdcardnumber(tPatient.getIdcardnumber());
 		rlt.setPhone(tPatient.getPhone());
 		rlt.setAddress(tPatient.getAddress());
@@ -96,11 +153,16 @@ public final class CopyUtils {
 		rlt.setRecipientsReceiveSingleDrug(tPatient.getRecipientsReceiveSingleDrug());
 		rlt.setEndOfStatement(tPatient.getEndOfStatement());
 		rlt.setPassdate(tPatient.getPassdate());
-		rlt.setOther1(tPatient.getOther1());
-		rlt.setOther2(tPatient.getOther2());
-		rlt.setOther3(tPatient.getOther3());
-		rlt.setOther4(tPatient.getOther4());
-		rlt.setOther5(tPatient.getOther5());
+		rlt.setIsLangMuHospital(tPatient.getIsLangMuHospital());
+		rlt.setYear(tPatient.getYear());
+		return rlt;
+	}
+	
+	public static TProvincesDTO copyPOToDTO(TProvinces tProvinces){
+		TProvincesDTO rlt = new TProvincesDTO();
+		rlt.setId(tProvinces.getId());
+		rlt.setProvinceid(tProvinces.getProvinceid());
+		rlt.setProvince(tProvinces.getProvince());
 		return rlt;
 	}
 	
@@ -111,6 +173,8 @@ public final class CopyUtils {
 		rlt.setState(tPatient.getState());
 		rlt.setName(tPatient.getName());
 		rlt.setSex(tPatient.getSex());
+		rlt.setProvince(tPatient.getProvince());
+		rlt.setApplyType(tPatient.getApplyType());
 		rlt.setIdcardnumber(tPatient.getIdcardnumber());
 		rlt.setPhone(tPatient.getPhone());
 		rlt.setAddress(tPatient.getAddress());
@@ -129,11 +193,15 @@ public final class CopyUtils {
 		rlt.setRecipientsReceiveSingleDrug(tPatient.getRecipientsReceiveSingleDrug());
 		rlt.setEndOfStatement(tPatient.getEndOfStatement());
 		rlt.setPassdate(tPatient.getPassdate());
-		rlt.setOther1(tPatient.getOther1());
-		rlt.setOther2(tPatient.getOther2());
-		rlt.setOther3(tPatient.getOther3());
-		rlt.setOther4(tPatient.getOther4());
-		rlt.setOther5(tPatient.getOther5());
+		rlt.setIsLangMuHospital(tPatient.getIsLangMuHospital());
+		rlt.setYear(tPatient.getYear());
+		return rlt;
+	}
+	
+	public static TProvincesVO copyDTOToVO(TProvincesDTO tProvincesDTO){
+		TProvincesVO rlt = new TProvincesVO();
+		rlt.setDisplay(tProvincesDTO.getProvince());
+		rlt.setValue(tProvincesDTO.getProvinceid());
 		return rlt;
 	}
 	

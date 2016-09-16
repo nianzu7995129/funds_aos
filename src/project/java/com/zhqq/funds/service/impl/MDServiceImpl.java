@@ -30,7 +30,7 @@ import com.zhqq.funds.po.TDrugreleaseExample;
 import com.zhqq.funds.service.MDService;
 import com.zhqq.funds.mapper.TDrugreleaseMapper;
 import com.zhqq.funds.utils.CopyUtils;
-import com.zhqq.funds.utils.PatientUtils;
+import com.zhqq.funds.utils.ChangeUtils;
 import com.zhqq.funds.utils.SQLUtils;
 
 import cn.osworks.aos.core.asset.AOSUtils;
@@ -302,8 +302,8 @@ public class MDServiceImpl implements MDService {
 		String mdDateType = inDto.getString("mdDateType");
 		List<TDrugreleaseDTO> mdList = this.queryMDList(hotkey, mdQueryType, mdDateType, "", "", "", false);
 		for(TDrugreleaseDTO tDrugreleaseDTO : mdList){
-			tDrugreleaseDTO.setState(PatientUtils.getFormatValue(tDrugreleaseDTO.getState(), "0", "发药"));
-			tDrugreleaseDTO.setState(PatientUtils.getFormatValue(tDrugreleaseDTO.getState(), "1", "已发"));
+			tDrugreleaseDTO.setState(ChangeUtils.getFormatValue(tDrugreleaseDTO.getState(), "0", "发药"));
+			tDrugreleaseDTO.setState(ChangeUtils.getFormatValue(tDrugreleaseDTO.getState(), "1", "已发"));
 		}
 		// 产生表格标题行
 		HSSFRow row = sheet.createRow(0);
@@ -414,8 +414,8 @@ public class MDServiceImpl implements MDService {
 		String mdDateType = inDto.getString("mdDateType");
 		List<TDrugreleaseDTO> mdList = this.queryMDList(hotkey, mdQueryType, mdDateType, "", "", "", false);
 		for(TDrugreleaseDTO tDrugreleaseDTO : mdList){
-			tDrugreleaseDTO.setState(PatientUtils.getFormatValue(tDrugreleaseDTO.getState(), "0", "发药"));
-			tDrugreleaseDTO.setState(PatientUtils.getFormatValue(tDrugreleaseDTO.getState(), "1", "已发"));
+			tDrugreleaseDTO.setState(ChangeUtils.getFormatValue(tDrugreleaseDTO.getState(), "0", "发药"));
+			tDrugreleaseDTO.setState(ChangeUtils.getFormatValue(tDrugreleaseDTO.getState(), "1", "已发"));
 		}
 		// 产生表格标题行
 		XSSFRow row = sheet.createRow(0);

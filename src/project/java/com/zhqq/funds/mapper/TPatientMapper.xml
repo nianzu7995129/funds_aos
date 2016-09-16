@@ -7,6 +7,8 @@
     <result column="state" property="state" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="apply_type" property="applyType" jdbcType="VARCHAR" />
     <result column="idcardnumber" property="idcardnumber" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
@@ -26,11 +28,8 @@
     <result column="recipients_receive_single_drug" property="recipientsReceiveSingleDrug" jdbcType="VARCHAR" />
     <result column="end_of_statement" property="endOfStatement" jdbcType="VARCHAR" />
     <result column="passDate" property="passdate" jdbcType="TIMESTAMP" />
-    <result column="other1" property="other1" jdbcType="VARCHAR" />
-    <result column="other2" property="other2" jdbcType="VARCHAR" />
-    <result column="other3" property="other3" jdbcType="VARCHAR" />
-    <result column="other4" property="other4" jdbcType="VARCHAR" />
-    <result column="other5" property="other5" jdbcType="VARCHAR" />
+    <result column="is_lang_mu_hospital" property="isLangMuHospital" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -91,11 +90,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, archives, state, name, sex, idcardnumber, phone, address, diagnostic_material, 
-    proof_identity, proof_income, purchase_invoice, medical_evaluation_form, informed_consent_of_patients, 
-    patiente_conomic_status, Cold_chain_drug_informed_consent, hr, lang_mu_hospital, 
-    lang_mu_doctor, estimated_time_to_increase_drug_injection, remarks, recipients_receive_single_drug, 
-    end_of_statement, passDate, other1, other2, other3, other4, other5
+    id, archives, state, name, sex, province, apply_type, idcardnumber, phone, address, 
+    diagnostic_material, proof_identity, proof_income, purchase_invoice, medical_evaluation_form, 
+    informed_consent_of_patients, patiente_conomic_status, Cold_chain_drug_informed_consent, 
+    hr, lang_mu_hospital, lang_mu_doctor, estimated_time_to_increase_drug_injection, 
+    remarks, recipients_receive_single_drug, end_of_statement, passDate, is_lang_mu_hospital, 
+    year
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhqq.funds.po.TPatientExample" >
     select
@@ -132,28 +132,26 @@
   </delete>
   <insert id="insert" parameterType="com.zhqq.funds.po.TPatient" >
     insert into t_patient (id, archives, state, 
-      name, sex, idcardnumber, 
-      phone, address, diagnostic_material, 
-      proof_identity, proof_income, purchase_invoice, 
-      medical_evaluation_form, informed_consent_of_patients, 
-      patiente_conomic_status, Cold_chain_drug_informed_consent, 
-      hr, lang_mu_hospital, lang_mu_doctor, 
-      estimated_time_to_increase_drug_injection, remarks, 
-      recipients_receive_single_drug, end_of_statement, 
-      passDate, other1, other2, 
-      other3, other4, other5
+      name, sex, province, 
+      apply_type, idcardnumber, phone, 
+      address, diagnostic_material, proof_identity, 
+      proof_income, purchase_invoice, medical_evaluation_form, 
+      informed_consent_of_patients, patiente_conomic_status, 
+      Cold_chain_drug_informed_consent, hr, lang_mu_hospital, 
+      lang_mu_doctor, estimated_time_to_increase_drug_injection, 
+      remarks, recipients_receive_single_drug, end_of_statement, 
+      passDate, is_lang_mu_hospital, year
       )
     values (#{id,jdbcType=INTEGER}, #{archives,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{idcardnumber,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{diagnosticMaterial,jdbcType=VARCHAR}, 
-      #{proofIdentity,jdbcType=VARCHAR}, #{proofIncome,jdbcType=VARCHAR}, #{purchaseInvoice,jdbcType=VARCHAR}, 
-      #{medicalEvaluationForm,jdbcType=VARCHAR}, #{informedConsentOfPatients,jdbcType=VARCHAR}, 
-      #{patienteConomicStatus,jdbcType=VARCHAR}, #{coldChainDrugInformedConsent,jdbcType=VARCHAR}, 
-      #{hr,jdbcType=VARCHAR}, #{langMuHospital,jdbcType=VARCHAR}, #{langMuDoctor,jdbcType=VARCHAR}, 
-      #{estimatedTimeToIncreaseDrugInjection,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
-      #{recipientsReceiveSingleDrug,jdbcType=VARCHAR}, #{endOfStatement,jdbcType=VARCHAR}, 
-      #{passdate,jdbcType=TIMESTAMP}, #{other1,jdbcType=VARCHAR}, #{other2,jdbcType=VARCHAR}, 
-      #{other3,jdbcType=VARCHAR}, #{other4,jdbcType=VARCHAR}, #{other5,jdbcType=VARCHAR}
+      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{applyType,jdbcType=VARCHAR}, #{idcardnumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{diagnosticMaterial,jdbcType=VARCHAR}, #{proofIdentity,jdbcType=VARCHAR}, 
+      #{proofIncome,jdbcType=VARCHAR}, #{purchaseInvoice,jdbcType=VARCHAR}, #{medicalEvaluationForm,jdbcType=VARCHAR}, 
+      #{informedConsentOfPatients,jdbcType=VARCHAR}, #{patienteConomicStatus,jdbcType=VARCHAR}, 
+      #{coldChainDrugInformedConsent,jdbcType=VARCHAR}, #{hr,jdbcType=VARCHAR}, #{langMuHospital,jdbcType=VARCHAR}, 
+      #{langMuDoctor,jdbcType=VARCHAR}, #{estimatedTimeToIncreaseDrugInjection,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{recipientsReceiveSingleDrug,jdbcType=VARCHAR}, #{endOfStatement,jdbcType=VARCHAR}, 
+      #{passdate,jdbcType=TIMESTAMP}, #{isLangMuHospital,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zhqq.funds.po.TPatient" >
@@ -173,6 +171,12 @@
       </if>
       <if test="sex != null" >
         sex,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="applyType != null" >
+        apply_type,
       </if>
       <if test="idcardnumber != null" >
         idcardnumber,
@@ -231,20 +235,11 @@
       <if test="passdate != null" >
         passDate,
       </if>
-      <if test="other1 != null" >
-        other1,
+      <if test="isLangMuHospital != null" >
+        is_lang_mu_hospital,
       </if>
-      <if test="other2 != null" >
-        other2,
-      </if>
-      <if test="other3 != null" >
-        other3,
-      </if>
-      <if test="other4 != null" >
-        other4,
-      </if>
-      <if test="other5 != null" >
-        other5,
+      <if test="year != null" >
+        year,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -262,6 +257,12 @@
       </if>
       <if test="sex != null" >
         #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="applyType != null" >
+        #{applyType,jdbcType=VARCHAR},
       </if>
       <if test="idcardnumber != null" >
         #{idcardnumber,jdbcType=VARCHAR},
@@ -320,20 +321,11 @@
       <if test="passdate != null" >
         #{passdate,jdbcType=TIMESTAMP},
       </if>
-      <if test="other1 != null" >
-        #{other1,jdbcType=VARCHAR},
+      <if test="isLangMuHospital != null" >
+        #{isLangMuHospital,jdbcType=VARCHAR},
       </if>
-      <if test="other2 != null" >
-        #{other2,jdbcType=VARCHAR},
-      </if>
-      <if test="other3 != null" >
-        #{other3,jdbcType=VARCHAR},
-      </if>
-      <if test="other4 != null" >
-        #{other4,jdbcType=VARCHAR},
-      </if>
-      <if test="other5 != null" >
-        #{other5,jdbcType=VARCHAR},
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -360,6 +352,12 @@
       </if>
       <if test="record.sex != null" >
         sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyType != null" >
+        apply_type = #{record.applyType,jdbcType=VARCHAR},
       </if>
       <if test="record.idcardnumber != null" >
         idcardnumber = #{record.idcardnumber,jdbcType=VARCHAR},
@@ -418,20 +416,11 @@
       <if test="record.passdate != null" >
         passDate = #{record.passdate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.other1 != null" >
-        other1 = #{record.other1,jdbcType=VARCHAR},
+      <if test="record.isLangMuHospital != null" >
+        is_lang_mu_hospital = #{record.isLangMuHospital,jdbcType=VARCHAR},
       </if>
-      <if test="record.other2 != null" >
-        other2 = #{record.other2,jdbcType=VARCHAR},
-      </if>
-      <if test="record.other3 != null" >
-        other3 = #{record.other3,jdbcType=VARCHAR},
-      </if>
-      <if test="record.other4 != null" >
-        other4 = #{record.other4,jdbcType=VARCHAR},
-      </if>
-      <if test="record.other5 != null" >
-        other5 = #{record.other5,jdbcType=VARCHAR},
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -445,6 +434,8 @@
       state = #{record.state,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      apply_type = #{record.applyType,jdbcType=VARCHAR},
       idcardnumber = #{record.idcardnumber,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
@@ -464,11 +455,8 @@
       recipients_receive_single_drug = #{record.recipientsReceiveSingleDrug,jdbcType=VARCHAR},
       end_of_statement = #{record.endOfStatement,jdbcType=VARCHAR},
       passDate = #{record.passdate,jdbcType=TIMESTAMP},
-      other1 = #{record.other1,jdbcType=VARCHAR},
-      other2 = #{record.other2,jdbcType=VARCHAR},
-      other3 = #{record.other3,jdbcType=VARCHAR},
-      other4 = #{record.other4,jdbcType=VARCHAR},
-      other5 = #{record.other5,jdbcType=VARCHAR}
+      is_lang_mu_hospital = #{record.isLangMuHospital,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -487,6 +475,12 @@
       </if>
       <if test="sex != null" >
         sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="applyType != null" >
+        apply_type = #{applyType,jdbcType=VARCHAR},
       </if>
       <if test="idcardnumber != null" >
         idcardnumber = #{idcardnumber,jdbcType=VARCHAR},
@@ -545,20 +539,11 @@
       <if test="passdate != null" >
         passDate = #{passdate,jdbcType=TIMESTAMP},
       </if>
-      <if test="other1 != null" >
-        other1 = #{other1,jdbcType=VARCHAR},
+      <if test="isLangMuHospital != null" >
+        is_lang_mu_hospital = #{isLangMuHospital,jdbcType=VARCHAR},
       </if>
-      <if test="other2 != null" >
-        other2 = #{other2,jdbcType=VARCHAR},
-      </if>
-      <if test="other3 != null" >
-        other3 = #{other3,jdbcType=VARCHAR},
-      </if>
-      <if test="other4 != null" >
-        other4 = #{other4,jdbcType=VARCHAR},
-      </if>
-      <if test="other5 != null" >
-        other5 = #{other5,jdbcType=VARCHAR},
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -569,6 +554,8 @@
       state = #{state,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      apply_type = #{applyType,jdbcType=VARCHAR},
       idcardnumber = #{idcardnumber,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
@@ -588,11 +575,8 @@
       recipients_receive_single_drug = #{recipientsReceiveSingleDrug,jdbcType=VARCHAR},
       end_of_statement = #{endOfStatement,jdbcType=VARCHAR},
       passDate = #{passdate,jdbcType=TIMESTAMP},
-      other1 = #{other1,jdbcType=VARCHAR},
-      other2 = #{other2,jdbcType=VARCHAR},
-      other3 = #{other3,jdbcType=VARCHAR},
-      other4 = #{other4,jdbcType=VARCHAR},
-      other5 = #{other5,jdbcType=VARCHAR}
+      is_lang_mu_hospital = #{isLangMuHospital,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

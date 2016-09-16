@@ -7,7 +7,6 @@ import cn.osworks.aos.core.annotation.Mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-
 @Mapper
 public interface TPatientMapper {
     int countByExample(TPatientExample example);

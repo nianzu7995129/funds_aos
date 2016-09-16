@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhqq.funds.mapper.THospitalMappingMapper" >
+  <resultMap id="BaseResultMap" type="com.zhqq.funds.po.THospitalMapping" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="hospital_name" property="hospitalName" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="hospital_grade" property="hospitalGrade" jdbcType="VARCHAR" />
+    <result column="hospital_level" property="hospitalLevel" jdbcType="VARCHAR" />
+    <result column="hospital_type" property="hospitalType" jdbcType="VARCHAR" />
+    <result column="area_manager" property="areaManager" jdbcType="VARCHAR" />
+    <result column="hr" property="hr" jdbcType="VARCHAR" />
+    <result column="doctor_name" property="doctorName" jdbcType="VARCHAR" />
+    <result column="doctor_title" property="doctorTitle" jdbcType="VARCHAR" />
+    <result column="administrative_post" property="administrativePost" jdbcType="VARCHAR" />
+    <result column="professional_direction" property="professionalDirection" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, area, hospital_name, province, city, hospital_grade, hospital_level, hospital_type, 
+    area_manager, hr, doctor_name, doctor_title, administrative_post, professional_direction, 
+    remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhqq.funds.po.THospitalMappingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_hospital_mapping
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_hospital_mapping
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_hospital_mapping
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zhqq.funds.po.THospitalMappingExample" >
+    delete from t_hospital_mapping
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhqq.funds.po.THospitalMapping" >
+    insert into t_hospital_mapping (id, area, hospital_name, 
+      province, city, hospital_grade, 
+      hospital_level, hospital_type, area_manager, 
+      hr, doctor_name, doctor_title, 
+      administrative_post, professional_direction, 
+      remark)
+    values (#{id,jdbcType=BIGINT}, #{area,jdbcType=VARCHAR}, #{hospitalName,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{hospitalGrade,jdbcType=VARCHAR}, 
+      #{hospitalLevel,jdbcType=VARCHAR}, #{hospitalType,jdbcType=VARCHAR}, #{areaManager,jdbcType=VARCHAR}, 
+      #{hr,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, #{doctorTitle,jdbcType=VARCHAR}, 
+      #{administrativePost,jdbcType=VARCHAR}, #{professionalDirection,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhqq.funds.po.THospitalMapping" >
+    insert into t_hospital_mapping
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="hospitalName != null" >
+        hospital_name,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="hospitalGrade != null" >
+        hospital_grade,
+      </if>
+      <if test="hospitalLevel != null" >
+        hospital_level,
+      </if>
+      <if test="hospitalType != null" >
+        hospital_type,
+      </if>
+      <if test="areaManager != null" >
+        area_manager,
+      </if>
+      <if test="hr != null" >
+        hr,
+      </if>
+      <if test="doctorName != null" >
+        doctor_name,
+      </if>
+      <if test="doctorTitle != null" >
+        doctor_title,
+      </if>
+      <if test="administrativePost != null" >
+        administrative_post,
+      </if>
+      <if test="professionalDirection != null" >
+        professional_direction,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalName != null" >
+        #{hospitalName,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalGrade != null" >
+        #{hospitalGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalLevel != null" >
+        #{hospitalLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalType != null" >
+        #{hospitalType,jdbcType=VARCHAR},
+      </if>
+      <if test="areaManager != null" >
+        #{areaManager,jdbcType=VARCHAR},
+      </if>
+      <if test="hr != null" >
+        #{hr,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTitle != null" >
+        #{doctorTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="administrativePost != null" >
+        #{administrativePost,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalDirection != null" >
+        #{professionalDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zhqq.funds.po.THospitalMappingExample" resultType="java.lang.Integer" >
+    select count(*) from t_hospital_mapping
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_hospital_mapping
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalName != null" >
+        hospital_name = #{record.hospitalName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalGrade != null" >
+        hospital_grade = #{record.hospitalGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalLevel != null" >
+        hospital_level = #{record.hospitalLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalType != null" >
+        hospital_type = #{record.hospitalType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaManager != null" >
+        area_manager = #{record.areaManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hr != null" >
+        hr = #{record.hr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorName != null" >
+        doctor_name = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTitle != null" >
+        doctor_title = #{record.doctorTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.administrativePost != null" >
+        administrative_post = #{record.administrativePost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professionalDirection != null" >
+        professional_direction = #{record.professionalDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_hospital_mapping
+    set id = #{record.id,jdbcType=BIGINT},
+      area = #{record.area,jdbcType=VARCHAR},
+      hospital_name = #{record.hospitalName,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      hospital_grade = #{record.hospitalGrade,jdbcType=VARCHAR},
+      hospital_level = #{record.hospitalLevel,jdbcType=VARCHAR},
+      hospital_type = #{record.hospitalType,jdbcType=VARCHAR},
+      area_manager = #{record.areaManager,jdbcType=VARCHAR},
+      hr = #{record.hr,jdbcType=VARCHAR},
+      doctor_name = #{record.doctorName,jdbcType=VARCHAR},
+      doctor_title = #{record.doctorTitle,jdbcType=VARCHAR},
+      administrative_post = #{record.administrativePost,jdbcType=VARCHAR},
+      professional_direction = #{record.professionalDirection,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhqq.funds.po.THospitalMapping" >
+    update t_hospital_mapping
+    <set >
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalName != null" >
+        hospital_name = #{hospitalName,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalGrade != null" >
+        hospital_grade = #{hospitalGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalLevel != null" >
+        hospital_level = #{hospitalLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalType != null" >
+        hospital_type = #{hospitalType,jdbcType=VARCHAR},
+      </if>
+      <if test="areaManager != null" >
+        area_manager = #{areaManager,jdbcType=VARCHAR},
+      </if>
+      <if test="hr != null" >
+        hr = #{hr,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        doctor_name = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTitle != null" >
+        doctor_title = #{doctorTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="administrativePost != null" >
+        administrative_post = #{administrativePost,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalDirection != null" >
+        professional_direction = #{professionalDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhqq.funds.po.THospitalMapping" >
+    update t_hospital_mapping
+    set area = #{area,jdbcType=VARCHAR},
+      hospital_name = #{hospitalName,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      hospital_grade = #{hospitalGrade,jdbcType=VARCHAR},
+      hospital_level = #{hospitalLevel,jdbcType=VARCHAR},
+      hospital_type = #{hospitalType,jdbcType=VARCHAR},
+      area_manager = #{areaManager,jdbcType=VARCHAR},
+      hr = #{hr,jdbcType=VARCHAR},
+      doctor_name = #{doctorName,jdbcType=VARCHAR},
+      doctor_title = #{doctorTitle,jdbcType=VARCHAR},
+      administrative_post = #{administrativePost,jdbcType=VARCHAR},
+      professional_direction = #{professionalDirection,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

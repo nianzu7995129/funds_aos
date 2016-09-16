@@ -24,6 +24,10 @@ public class TPatientVO {
     private String name;
 
     private String sex;
+    
+    private String province;
+
+    private String applyType;
 
     private String idcardnumber;
 
@@ -63,17 +67,25 @@ public class TPatientVO {
     
     private Date passdate;
 
-    private String other1;
+    private String isLangMuHospital;
 
-    private String other2;
-
-    private String other3;
-
-    private String other4;
-
-    private String other5;
+    private String year;
     
-    
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province == null ? null : province.trim();
+    }
+
+    public String getApplyType() {
+        return applyType;
+    }
+
+    public void setApplyType(String applyType) {
+        this.applyType = applyType == null ? null : applyType.trim();
+    }
 
     public Date getPassdate() {
 		return passdate;
@@ -83,44 +95,20 @@ public class TPatientVO {
 		this.passdate = passdate;
 	}
 
-	public String getOther1() {
-		return other1;
+	public String getIsLangMuHospital() {
+		return isLangMuHospital;
 	}
 
-	public void setOther1(String other1) {
-		this.other1 = other1;
+	public void setIsLangMuHospital(String isLangMuHospital) {
+		this.isLangMuHospital = isLangMuHospital == null ? null : isLangMuHospital.trim();
 	}
 
-	public String getOther2() {
-		return other2;
+	public String getYear() {
+		return year;
 	}
 
-	public void setOther2(String other2) {
-		this.other2 = other2;
-	}
-
-	public String getOther3() {
-		return other3;
-	}
-
-	public void setOther3(String other3) {
-		this.other3 = other3;
-	}
-
-	public String getOther4() {
-		return other4;
-	}
-
-	public void setOther4(String other4) {
-		this.other4 = other4;
-	}
-
-	public String getOther5() {
-		return other5;
-	}
-
-	public void setOther5(String other5) {
-		this.other5 = other5;
+	public void setYear(String year) {
+		this.year = year == null ? null : year.trim();
 	}
 
 	public Integer getAppcode() {

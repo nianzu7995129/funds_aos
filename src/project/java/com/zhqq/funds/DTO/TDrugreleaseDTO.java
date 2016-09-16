@@ -3,7 +3,7 @@ package com.zhqq.funds.DTO;
 import java.util.Date;
 
 public class TDrugreleaseDTO {
-	private Integer id;
+    private Integer id;
 
     private String patientCode;
 

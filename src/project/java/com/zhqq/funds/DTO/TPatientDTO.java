@@ -20,6 +20,10 @@ public class TPatientDTO {
 
     private String sex;
 
+    private String province;
+
+    private String applyType;
+
     private String idcardnumber;
 
     private String phone;
@@ -55,70 +59,14 @@ public class TPatientDTO {
     private String recipientsReceiveSingleDrug;
 
     private String endOfStatement;
-    
+
     private Date passdate;
 
-    private String other1;
+    private String isLangMuHospital;
 
-    private String other2;
+    private String year;
 
-    private String other3;
-
-    private String other4;
-
-    private String other5;
-    
-    
-
-    public Date getPassdate() {
-		return passdate;
-	}
-
-	public void setPassdate(Date passdate) {
-		this.passdate = passdate;
-	}
-
-	public String getOther1() {
-		return other1;
-	}
-
-	public void setOther1(String other1) {
-		this.other1 = other1;
-	}
-
-	public String getOther2() {
-		return other2;
-	}
-
-	public void setOther2(String other2) {
-		this.other2 = other2;
-	}
-
-	public String getOther3() {
-		return other3;
-	}
-
-	public void setOther3(String other3) {
-		this.other3 = other3;
-	}
-
-	public String getOther4() {
-		return other4;
-	}
-
-	public void setOther4(String other4) {
-		this.other4 = other4;
-	}
-
-	public String getOther5() {
-		return other5;
-	}
-
-	public void setOther5(String other5) {
-		this.other5 = other5;
-	}
-
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -156,6 +104,22 @@ public class TPatientDTO {
 
     public void setSex(String sex) {
         this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province == null ? null : province.trim();
+    }
+
+    public String getApplyType() {
+        return applyType;
+    }
+
+    public void setApplyType(String applyType) {
+        this.applyType = applyType == null ? null : applyType.trim();
     }
 
     public String getIdcardnumber() {
@@ -300,5 +264,29 @@ public class TPatientDTO {
 
     public void setEndOfStatement(String endOfStatement) {
         this.endOfStatement = endOfStatement == null ? null : endOfStatement.trim();
+    }
+
+    public Date getPassdate() {
+        return passdate;
+    }
+
+    public void setPassdate(Date passdate) {
+        this.passdate = passdate;
+    }
+
+    public String getIsLangMuHospital() {
+        return isLangMuHospital;
+    }
+
+    public void setIsLangMuHospital(String isLangMuHospital) {
+        this.isLangMuHospital = isLangMuHospital == null ? null : isLangMuHospital.trim();
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year == null ? null : year.trim();
     }
 }

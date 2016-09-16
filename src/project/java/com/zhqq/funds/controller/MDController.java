@@ -22,7 +22,7 @@ import com.zhqq.funds.VO.TDrugreleaseVO;
 import com.zhqq.funds.VO.TPatientVO;
 import com.zhqq.funds.service.MDService;
 import com.zhqq.funds.utils.CopyUtils;
-import com.zhqq.funds.utils.PatientUtils;
+import com.zhqq.funds.utils.ChangeUtils;
 
 import cn.osworks.aos.core.asset.AOSJson;
 import cn.osworks.aos.core.asset.AOSUtils;
@@ -109,8 +109,8 @@ public class MDController {
 		int totalCount = mDService.queryMDCount(hotkey,mdQueryType,mdDateType);
 		List<TDrugreleaseDTO> listTDrugreleaseDTO = mDService.queryMDList(hotkey,mdQueryType,mdDateType,page,start,limit,true);
 		for(TDrugreleaseDTO tPatientDTO : listTDrugreleaseDTO){
-			tPatientDTO.setState(PatientUtils.getFormatValue(tPatientDTO.getState(), "0", "发药"));
-			tPatientDTO.setState(PatientUtils.getFormatValue(tPatientDTO.getState(), "1", "已发"));
+			tPatientDTO.setState(ChangeUtils.getFormatValue(tPatientDTO.getState(), "0", "发药"));
+			tPatientDTO.setState(ChangeUtils.getFormatValue(tPatientDTO.getState(), "1", "已发"));
 		}
 		String outString = AOSJson.toGridJson(listTDrugreleaseDTO, totalCount);
 		WebCxt.write(response, outString);

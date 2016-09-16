@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhqq.funds.mapper.TDoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.zhqq.funds.po.TDoctor" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="hospital" property="hospital" jdbcType="VARCHAR" />
+    <result column="idcard_copy" property="idcardCopy" jdbcType="VARCHAR" />
+    <result column="register_doctor_table" property="registerDoctorTable" jdbcType="VARCHAR" />
+    <result column="register_hospital_consent" property="registerHospitalConsent" jdbcType="VARCHAR" />
+    <result column="register_doctor_consent" property="registerDoctorConsent" jdbcType="VARCHAR" />
+    <result column="resume" property="resume" jdbcType="VARCHAR" />
+    <result column="hospital_profile" property="hospitalProfile" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="is_register" property="isRegister" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, state, province, name, sex, hospital, idcard_copy, register_doctor_table, register_hospital_consent, 
+    register_doctor_consent, resume, hospital_profile, phone, is_register
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhqq.funds.po.TDoctorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_doctor
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_doctor
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zhqq.funds.po.TDoctorExample" >
+    delete from t_doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhqq.funds.po.TDoctor" >
+    insert into t_doctor (id, state, province, 
+      name, sex, hospital, 
+      idcard_copy, register_doctor_table, register_hospital_consent, 
+      register_doctor_consent, resume, hospital_profile, 
+      phone, is_register)
+    values (#{id,jdbcType=BIGINT}, #{state,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{hospital,jdbcType=VARCHAR}, 
+      #{idcardCopy,jdbcType=VARCHAR}, #{registerDoctorTable,jdbcType=VARCHAR}, #{registerHospitalConsent,jdbcType=VARCHAR}, 
+      #{registerDoctorConsent,jdbcType=VARCHAR}, #{resume,jdbcType=VARCHAR}, #{hospitalProfile,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{isRegister,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhqq.funds.po.TDoctor" >
+    insert into t_doctor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="hospital != null" >
+        hospital,
+      </if>
+      <if test="idcardCopy != null" >
+        idcard_copy,
+      </if>
+      <if test="registerDoctorTable != null" >
+        register_doctor_table,
+      </if>
+      <if test="registerHospitalConsent != null" >
+        register_hospital_consent,
+      </if>
+      <if test="registerDoctorConsent != null" >
+        register_doctor_consent,
+      </if>
+      <if test="resume != null" >
+        resume,
+      </if>
+      <if test="hospitalProfile != null" >
+        hospital_profile,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="isRegister != null" >
+        is_register,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardCopy != null" >
+        #{idcardCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDoctorTable != null" >
+        #{registerDoctorTable,jdbcType=VARCHAR},
+      </if>
+      <if test="registerHospitalConsent != null" >
+        #{registerHospitalConsent,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDoctorConsent != null" >
+        #{registerDoctorConsent,jdbcType=VARCHAR},
+      </if>
+      <if test="resume != null" >
+        #{resume,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalProfile != null" >
+        #{hospitalProfile,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isRegister != null" >
+        #{isRegister,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zhqq.funds.po.TDoctorExample" resultType="java.lang.Integer" >
+    select count(*) from t_doctor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_doctor
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospital != null" >
+        hospital = #{record.hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardCopy != null" >
+        idcard_copy = #{record.idcardCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerDoctorTable != null" >
+        register_doctor_table = #{record.registerDoctorTable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerHospitalConsent != null" >
+        register_hospital_consent = #{record.registerHospitalConsent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerDoctorConsent != null" >
+        register_doctor_consent = #{record.registerDoctorConsent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resume != null" >
+        resume = #{record.resume,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalProfile != null" >
+        hospital_profile = #{record.hospitalProfile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isRegister != null" >
+        is_register = #{record.isRegister,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_doctor
+    set id = #{record.id,jdbcType=BIGINT},
+      state = #{record.state,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      hospital = #{record.hospital,jdbcType=VARCHAR},
+      idcard_copy = #{record.idcardCopy,jdbcType=VARCHAR},
+      register_doctor_table = #{record.registerDoctorTable,jdbcType=VARCHAR},
+      register_hospital_consent = #{record.registerHospitalConsent,jdbcType=VARCHAR},
+      register_doctor_consent = #{record.registerDoctorConsent,jdbcType=VARCHAR},
+      resume = #{record.resume,jdbcType=VARCHAR},
+      hospital_profile = #{record.hospitalProfile,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      is_register = #{record.isRegister,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhqq.funds.po.TDoctor" >
+    update t_doctor
+    <set >
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        hospital = #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardCopy != null" >
+        idcard_copy = #{idcardCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDoctorTable != null" >
+        register_doctor_table = #{registerDoctorTable,jdbcType=VARCHAR},
+      </if>
+      <if test="registerHospitalConsent != null" >
+        register_hospital_consent = #{registerHospitalConsent,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDoctorConsent != null" >
+        register_doctor_consent = #{registerDoctorConsent,jdbcType=VARCHAR},
+      </if>
+      <if test="resume != null" >
+        resume = #{resume,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalProfile != null" >
+        hospital_profile = #{hospitalProfile,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isRegister != null" >
+        is_register = #{isRegister,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhqq.funds.po.TDoctor" >
+    update t_doctor
+    set state = #{state,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      hospital = #{hospital,jdbcType=VARCHAR},
+      idcard_copy = #{idcardCopy,jdbcType=VARCHAR},
+      register_doctor_table = #{registerDoctorTable,jdbcType=VARCHAR},
+      register_hospital_consent = #{registerHospitalConsent,jdbcType=VARCHAR},
+      register_doctor_consent = #{registerDoctorConsent,jdbcType=VARCHAR},
+      resume = #{resume,jdbcType=VARCHAR},
+      hospital_profile = #{hospitalProfile,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      is_register = #{isRegister,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

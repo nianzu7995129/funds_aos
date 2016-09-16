@@ -11,16 +11,11 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,27 +24,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.zhqq.funds.DTO.TPatientDTO;
-import com.zhqq.funds.VO.TPatientVO;
-import com.zhqq.funds.service.TPatientService;
-import com.zhqq.funds.utils.CopyUtils;
+import com.zhqq.funds.DTO.TDoctorDTO;
+import com.zhqq.funds.VO.TDoctorVO;
+import com.zhqq.funds.service.AreaService;
+import com.zhqq.funds.service.TDoctorService;
 import com.zhqq.funds.utils.ChangeUtils;
+import com.zhqq.funds.utils.CopyUtils;
 
-import cn.osworks.aos.core.asset.AOSCons;
 import cn.osworks.aos.core.asset.AOSJson;
-import cn.osworks.aos.core.asset.AOSUtils;
 import cn.osworks.aos.core.asset.WebCxt;
 import cn.osworks.aos.core.typewrap.Dto;
 import cn.osworks.aos.core.typewrap.Dtos;
-import cn.osworks.aos.system.dao.po.Aos_sys_orgPO;
-import cn.osworks.aos.system.dao.po.Aos_sys_user_cfgPO;
-import cn.osworks.aos.system.dao.po.Aos_sys_user_extPO;
-import cn.osworks.aos.system.modules.dao.vo.UserInfoVO;
 
 
 
 @Controller
-public class TPatientController {
+public class TDoctorController {
 	/** 导出Excel时临时保存的文件名前缀 */
 	private static final String EXPORT_EXCEL_PREFIX = "tmpExportExcel_";
 
@@ -57,112 +47,73 @@ public class TPatientController {
 	private static final int EXPORT_WAIT_TIME = 1;
 
 	@Autowired
-	private TPatientService tPatientService;
+	private TDoctorService tDoctorService;
 	
-	//funds/patient/dataManagerQueryList
-	//funds/md/mdQueryList
-	//funds/hr/hrQueryList
+	@Autowired
+	private AreaService areaService;
 	
-	@RequestMapping(value="/doQuery")
-	public void queryPatient(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="name_")String name ,@RequestParam(value="cdcard_")String cdcard) throws Exception {
-		TPatientVO rlt = new TPatientVO();
-		// 姓名检查
-		if (!tPatientService.checkName(name)) {
-			rlt.setAppcode(-1);
-			rlt.setAppmsg("患者姓名不存在!");
-			WebCxt.write(response, AOSJson.toJson(rlt));
-			return;
-		}
-		// 身份证检查
-		if (!tPatientService.checkCdCard(name,cdcard)) {
-			rlt.setAppcode(-2);
-			rlt.setAppmsg("患者身份证号不正确!");
-			WebCxt.write(response, AOSJson.toJson(rlt));
-			return;
-		}
-		TPatientDTO dto = tPatientService.queryPatient(name,cdcard); 
-		ChangeUtils.proTPatientDTO(dto);
-		rlt = CopyUtils.copyDTOToVO(dto);
+	@RequestMapping(value="funds/doctor/deleteDoctor")
+	public void deleteDoctor(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="aos_rows_")String ids) throws Exception {
+		TDoctorVO rlt = new TDoctorVO();
+		tDoctorService.deleteDoctors(ids);
+		rlt.setAppcode(1);
+		rlt.setAppmsg("删除医生成功!");
+		WebCxt.write(response, AOSJson.toJson(rlt));
+	}
+	
+	@RequestMapping(value="funds/doctor/updateDoctor")
+	public void updateDoctor(HttpServletRequest request, HttpServletResponse response,TDoctorDTO tDoctorDTO) throws Exception {
+		TDoctorVO rlt = new TDoctorVO();
+		tDoctorService.updateDoctor(tDoctorDTO);
+		rlt.setAppcode(1);
+		rlt.setAppmsg("修改医生成功!");
+		WebCxt.write(response, AOSJson.toJson(rlt));
+	}
+	
+	@RequestMapping(value="funds/doctor/getDoctor")
+	public void getDoctor(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="id")String id) throws Exception {
+		TDoctorVO rlt = new TDoctorVO();
+		TDoctorDTO dto = tDoctorService.getDoctorByID(id); 
+		rlt = CopyUtils.createCopy(dto, TDoctorVO.class);
 		rlt.setAppcode(1);
 		WebCxt.write(response, AOSJson.toJson(rlt));
 	}
 	
-	@RequestMapping(value="funds/patient/deletePatient")
-	public void deletePatient(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="aos_rows_")String ids) throws Exception {
-		TPatientVO rlt = new TPatientVO();
-		tPatientService.deletePatients(ids);
+	@RequestMapping(value="funds/doctor/saveDoctor")
+	public void addDoctor(HttpServletRequest requet, HttpServletResponse response,TDoctorDTO tDoctorDTO) throws Exception {
+		TDoctorVO rlt = new TDoctorVO();
+		tDoctorService.addDoctor(tDoctorDTO);
 		rlt.setAppcode(1);
-		rlt.setAppmsg("删除患者成功!");
-		WebCxt.write(response, AOSJson.toJson(rlt));
-	}
-	
-	@RequestMapping(value="funds/patient/updatePatient")
-	public void updatePatient(HttpServletRequest request, HttpServletResponse response,TPatientDTO tPatientDTO) throws Exception {
-		TPatientVO rlt = new TPatientVO();
-		tPatientService.updatePatient(tPatientDTO);
-		rlt.setAppcode(1);
-		rlt.setAppmsg("修改患者成功!");
-		WebCxt.write(response, AOSJson.toJson(rlt));
-	}
-	
-	@RequestMapping(value="funds/patient/getPatient")
-	public void getPatient(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="id")String id) throws Exception {
-		TPatientVO rlt = new TPatientVO();
-		TPatientDTO dto = tPatientService.getPatientByID(id); 
-		rlt = CopyUtils.copyDTOToVO(dto);
-		rlt.setAppcode(1);
+		rlt.setAppmsg("新增医生成功!");
 		WebCxt.write(response, AOSJson.toJson(rlt));
 	}
 	
 	
-	
-
-	
-	@RequestMapping(value="funds/patient/savePatien")
-	public void addPatient(HttpServletRequest requet, HttpServletResponse response,TPatientDTO tPatientDTO) throws Exception {
-		TPatientVO rlt = new TPatientVO();
-		tPatientService.addPatient(tPatientDTO);
-		rlt.setAppcode(1);
-		rlt.setAppmsg("新增患者成功!");
-		WebCxt.write(response, AOSJson.toJson(rlt));
-	}
-	
-	@RequestMapping(value="funds/patient/queryPatientListHR")
-	public void queryPatientListHR(HttpSession session,HttpServletRequest request, HttpServletResponse response,@RequestParam(value="hotkey")String hotkey ,
+	@RequestMapping(value="funds/doctor/queryDoctorList")
+	public void queryDoctorList(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="hotkey")String hotkey ,
 			@RequestParam(value="patientQueryType")String patientQueryType,
 			@RequestParam(value="limit")String limit,
 			@RequestParam(value="page")String page,
 			@RequestParam(value="start")String start) throws Exception {
+		int totalCount = tDoctorService.queryDoctorCount(hotkey,patientQueryType);
+		List<TDoctorDTO> listTDoctorDTO = tDoctorService.queryDoctorList(hotkey,patientQueryType,page,start,limit,true);
+		if(ChangeUtils.tProvincesDTOList==null){
+			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,areaService.getAllProvinces());
+		}else{
+			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,null);
+		}
 		
-		UserInfoVO userInfoVO = (UserInfoVO)session.getAttribute(AOSCons.USERINFOKEY);
-		String hr = userInfoVO.getName_();
-		
-		int totalCount = tPatientService.queryPatientCountHR(hotkey,patientQueryType,hr);
-		List<TPatientDTO> listTPatientDTO = tPatientService.queryPatientListHR(hotkey,patientQueryType,hr,page,start,limit,true);
-		ChangeUtils.proTPatientDTOList(listTPatientDTO);
-		String outString = AOSJson.toGridJson(listTPatientDTO, totalCount);
-		WebCxt.write(response, outString);
-	}
-	
-	@RequestMapping(value="funds/patient/queryPatientList")
-	public void queryPatientList(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="hotkey")String hotkey ,
-			@RequestParam(value="patientQueryType")String patientQueryType,
-			@RequestParam(value="limit")String limit,
-			@RequestParam(value="page")String page,
-			@RequestParam(value="start")String start) throws Exception {
-		int totalCount = tPatientService.queryPatientCount(hotkey,patientQueryType);
-		List<TPatientDTO> listTPatientDTO = tPatientService.queryPatientList(hotkey,patientQueryType,page,start,limit,true);
-		ChangeUtils.proTPatientDTOList(listTPatientDTO);
-		String outString = AOSJson.toGridJson(listTPatientDTO, totalCount);
+		String outString = AOSJson.toGridJson(CopyUtils.createCopyList(listTDoctorDTO, TDoctorVO.class), totalCount);
 		WebCxt.write(response, outString);
 	}
 
+	
 	/**
 	 * 导出Excel
 	 *
 	 * @return
 	 */
-	@RequestMapping(value = "funds/patient/exportExcel")
+	@RequestMapping(value = "funds/doctor/exportExcel")
 	public void exportExcel(final HttpServletRequest request, HttpServletResponse response) {
 		OutputStream os = null;
 		FileOutputStream fos = null;
@@ -214,7 +165,7 @@ public class TPatientController {
 
 			String tmpFilePath = appPath+excelTmpName+".xls";
 			fos = new FileOutputStream(new File(tmpFilePath));
-			tPatientService.exportExcel(inDto,"导出",fos,"2003");
+			tDoctorService.exportExcel(inDto,"导出",fos,"2003");
 			fos.close();
 			WebCxt.write(response, excelTmpName+".xls");
 		}catch(Exception e){
@@ -263,7 +214,7 @@ public class TPatientController {
 	 *
 	 * @return
 	 */
-	@RequestMapping(value = "funds/patient/importExcel")
+	@RequestMapping(value = "funds/doctor/importExcel")
 	public Dto importExcel(@RequestParam("myFile1") MultipartFile multipartFile,final HttpServletRequest request, HttpServletResponse response) {
 		Dto outDto = Dtos.newOutDto();
 		if(multipartFile==null){
@@ -308,7 +259,7 @@ public class TPatientController {
 	                outDto.setAppMsg("操作被取消，未获得有效的Sheet。");
 	            }
 	            try {
-	            	tPatientService.importPatientExcel(workbook);
+	            	tDoctorService.importDoctorExcel(workbook);
                     outDto.setAppMsg("导入成功");
 	            }catch(Exception e){
 	                outDto.setAppMsg(e.getMessage()==null?"导入异常":e.getMessage());

@@ -3,13 +3,13 @@
 <aos:html>
 <aos:head title="数据管理">
 	<aos:include lib="ext" />
-	<aos:base href="funds/patient" />
+	<aos:base href="funds/" />
 </aos:head>
 <aos:body>
 </aos:body>
 <aos:onready>
 	<aos:viewport layout="border">
-		<aos:gridpanel id="_g_user" region="center" onrender="_g_user_query" url="queryPatientList.jhtml"
+		<aos:gridpanel id="_g_user" region="center" onrender="_g_user_query" url="patient/queryPatientList.jhtml"
 			onitemdblclick="_w_user_u_show">
 			<aos:docked forceBoder="0 0 1 0">
 				<aos:dockeditem xtype="tbseparator" />
@@ -35,6 +35,8 @@
 			<aos:column header="是否通过" dataIndex="state" width="70" celltip="true" />
 			<aos:column header="姓名" dataIndex="name" width="70" celltip="true" />
 			<aos:column header="性别" dataIndex="sex" width="70" celltip="true" />
+			<aos:column header="省份" dataIndex="province" width="70" celltip="true" />
+			<aos:column header="申请类型" dataIndex="applyType" width="70" celltip="true" />
 			<aos:column header="住址" dataIndex="address" width="70" celltip="true" />
 			<aos:column header="联系电话" dataIndex="phone" width="70" celltip="true" />
 			<aos:column header="身份号证" dataIndex="idcardnumber" width="70" celltip="true" />
@@ -51,21 +53,18 @@
 			<aos:column header="朗沐医生" dataIndex="langMuDoctor" width="70" celltip="true" />
 			<aos:column header="预计增药注射时间" dataIndex="estimatedTimeToIncreaseDrugInjection" width="120" celltip="true" />
 			<aos:column header="备注" dataIndex="remarks" width="70" celltip="true" />
+			<aos:column header="诊断医院是否为朗沐医院"  dataIndex="isLangMuHospital" width="130" celltip="true" />
+			<aos:column header="通过日期"  dataIndex="passdate" width="120" celltip="true" />
 			<aos:column header="受助药品领取单" dataIndex="recipientsReceiveSingleDrug" width="120" celltip="true" />
 			<aos:column header="捐助结束声明" dataIndex="endOfStatement" width="120" celltip="true" />
-			<aos:column header="通过日期"  dataIndex="passdate" width="120" celltip="true" />
-			<aos:column header="150/82" dataIndex="other1" width="120" celltip="true" />
-			<aos:column header="1243" dataIndex="other2" width="120" celltip="true" />
-			<aos:column header="2016新申请" dataIndex="other3" width="120" celltip="true" />
-			<aos:column header="2016复申请" dataIndex="other4" width="120" celltip="true" />
-			<aos:column header="1519" dataIndex="other5" width="120" celltip="true" />
+			<aos:column header="年份" dataIndex="year" width="70" celltip="true" />
 			<aos:column header=""   width="1" flex="1"/>
 		</aos:gridpanel>
 	</aos:viewport>
 
 	<aos:window id="_w_user" title="新增患者" maxHeight="-10" width="720" autoScroll="true">
 		<aos:formpanel id="_f_user" width="700" layout="column">
-			<aos:fieldset title="" labelWidth="120" labelAlign="right" center="true" collapsible="false">
+			<aos:fieldset title="" labelWidth="150" labelAlign="right" center="true" collapsible="false">
 				<aos:textfield name="archives" fieldLabel="档案号"  maxLength="100" columnWidth="0.5" />
 				<aos:combobox fieldLabel="是否通过" name="state"  dicField="custom_patient_state" emptyText="未通过" value="0" columnWidth="0.49" />
 					
@@ -74,6 +73,9 @@
 					
 				<aos:textfield name="idcardnumber" fieldLabel="身份证号"   maxLength="20" columnWidth="0.5" />
 				<aos:textfield name="phone" fieldLabel="联系电话"  columnWidth="0.49" />
+				
+				<aos:combobox fieldLabel="省份" name="province" emptyText="请省份..." columnWidth="0.5" url="getProvinces.jhtml" />
+				<aos:combobox fieldLabel="申请类型" name="applyType"  dicField="custom_apply_type" emptyText="正常申请" value="0" columnWidth="0.49" />
 				
 				<aos:textfield name="address" fieldLabel="住址" maxLength="100" columnWidth="0.5" />
 				<aos:combobox name="diagnosticMaterial" fieldLabel="诊断材料" dicField="custom_h_state" emptyText="" editable="true" forceSelection="false" columnWidth="0.49" />
@@ -96,9 +98,14 @@
 				<aos:combobox name="estimatedTimeToIncreaseDrugInjection" fieldLabel="预计增药注射时间"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:textfield name="remarks" fieldLabel="备注" maxLength="100" columnWidth="0.49" />
 				
+				<aos:combobox fieldLabel="诊断医院是否为朗沐医院" name="isLangMuHospital" dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.5" />
+				<aos:datetimefield name="passdate" fieldLabel="审核时间" format="Y-m-d H:i:s" editable="false" columnWidth="0.49" />
+				
+				
 				<aos:combobox name="recipientsReceiveSingleDrug" fieldLabel="受助药品领取单"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:combobox name="endOfStatement" fieldLabel="捐助结束声明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
+				<aos:datefield name="year" fieldLabel="年份" format="Y" editable="false" columnWidth="0.5" />
 			</aos:fieldset>
 		</aos:formpanel>
 		<aos:docked dock="bottom" ui="footer">
@@ -108,7 +115,7 @@
 		</aos:docked>
 	</aos:window>
 
-	<aos:window id="_w_user_u" title="修改用户" onshow="_w_user_u_onshow" width="720" maxHeight="-10" autoScroll="true">
+	<aos:window id="_w_user_u" title="修改患者" onshow="_w_user_u_onshow" width="720" maxHeight="-10" autoScroll="true">
 		<aos:formpanel id="_f_user_u" width="700" layout="column" labelWidth="70">
 			<aos:hiddenfield fieldLabel="xxxxx" name="id" />
 			<aos:fieldset title="" labelWidth="120" labelAlign="right" center="true" collapsible="false">
@@ -195,7 +202,7 @@
                             params: {
                                 model:"medicalRecords"
                             },
-                            url: 'importExcel.jhtml',
+                            url: 'patient/importExcel.jhtml',
                             success: function (form, action) {
                                 AOS.hide();
                                 AOS.tip("导入成功");
@@ -236,7 +243,7 @@
             function _f_user_save() {
                 AOS.ajax({
                     forms: _f_user,
-                    url: 'savePatien.jhtml',
+                    url: 'patient/savePatien.jhtml',
                     ok: function (data) {
                         if (data.appcode === -1) {
                             AOS.err(data.appmsg);
@@ -262,7 +269,7 @@
                 var record = AOS.selectone(_g_user);
                 AOS.ajax({
                     params: {id: record.data.id},
-                    url: 'getPatient.jhtml',
+                    url: 'patient/getPatient.jhtml',
                     ok: function (data) {
                         _f_user_u.form.setValues(data);
                     }
@@ -274,7 +281,7 @@
             	var record = AOS.selectone(_g_user);
                 AOS.ajax({
                     forms: _f_user_u,
-                    url: 'updatePatient.jhtml',
+                    url: 'patient/updatePatient.jhtml',
                     ok: function (data) {
                         if (data.appcode === -1) {
                             AOS.err(data.appmsg);
@@ -301,7 +308,7 @@
                         return;
                     }
                     AOS.ajax({
-                        url: 'deletePatient.jhtml',
+                        url: 'patient/deletePatient.jhtml',
                         params: {
                             aos_rows_: selection
                         },
@@ -322,7 +329,7 @@
 						hotkey: _hotkey.getValue(),
 	               		patientQueryType: patient_query_type.getValue()
 					},
-					url : 'exportExcel.jhtml',
+					url : 'patient/exportExcel.jhtml',
 					wait : false,
 					ok : function(data) {
 						AOS.unmask();
