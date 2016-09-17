@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.common.collect.Lists;
+import com.zhqq.funds.DTO.TCitiesDTO;
 import com.zhqq.funds.DTO.TProvincesDTO;
+import com.zhqq.funds.VO.TCitiesVO;
 import com.zhqq.funds.VO.TProvincesVO;
 import com.zhqq.funds.service.AreaService;
 import com.zhqq.funds.utils.CopyUtils;
@@ -37,6 +39,22 @@ public class CommonController {
 		List<TProvincesVO> rlt = Lists.newArrayList();
 		List<TProvincesDTO> tProvincesDTOList = areaService.getAllProvinces();
 		for(TProvincesDTO dto : tProvincesDTOList){
+			rlt.add(CopyUtils.copyDTOToVO(dto));
+		}
+		WebCxt.write(response, AOSJson.toJson(rlt));
+	}
+	
+	/**
+	 * 获取城市
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value="funds/getCities")
+	public void getCities(HttpServletRequest request, HttpServletResponse response,String provinceID) throws Exception {
+		List<TCitiesVO> rlt = Lists.newArrayList();
+		List<TCitiesDTO> tCitiesDTOList = areaService.getCitiesByProvince(provinceID);
+		for(TCitiesDTO dto : tCitiesDTOList){
 			rlt.add(CopyUtils.copyDTOToVO(dto));
 		}
 		WebCxt.write(response, AOSJson.toJson(rlt));

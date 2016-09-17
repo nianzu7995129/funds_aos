@@ -54,8 +54,8 @@
 				<aos:textfield name="area" fieldLabel="区域"   maxLength="20" columnWidth="0.5" />
 				<aos:textfield name="hospitalName" fieldLabel="医院"   maxLength="20" columnWidth="0.49" />
 					
-				<aos:combobox  fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.5" url="getProvinces.jhtml" />
-				<aos:combobox  fieldLabel="城市" name="city" emptyText="请选择城市..." columnWidth="0.49" url="getProvinces.jhtml" />
+				<aos:combobox id="provinceNew" onselect="provinceNew_onselect" fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.5" url="getProvinces.jhtml" />
+				<aos:combobox id="cityNew" fieldLabel="城市" name="city" emptyText="请选择城市..." columnWidth="0.49" url="getCities.jhtml" />
 					
 				<aos:textfield name="hospitalGrade" fieldLabel="医院分级"   maxLength="20" columnWidth="0.5" />
 				<aos:textfield name="hospitalLevel" fieldLabel="医院级别"   maxLength="20" columnWidth="0.49" />
@@ -87,8 +87,8 @@
 				<aos:textfield name="area" fieldLabel="区域"   maxLength="20" columnWidth="0.5" />
 				<aos:textfield name="hospitalName" fieldLabel="医院"   maxLength="20" columnWidth="0.49" />
 					
-				<aos:combobox id="province" fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.5" url="getProvinces.jhtml" />
-				<aos:combobox id="city" fieldLabel="城市" name="city" emptyText="请选择城市..." columnWidth="0.49" url="getProvinces.jhtml" />
+				<aos:combobox id="provinceModify" onselect="provinceModify_onselect" fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.5" url="getProvinces.jhtml" />
+				<aos:combobox id="cityModify" fieldLabel="城市" name="city" emptyText="请选择城市..." columnWidth="0.49" url="getCities.jhtml" />
 					
 				<aos:textfield name="hospitalGrade" fieldLabel="医院分级"   maxLength="20" columnWidth="0.5" />
 				<aos:textfield name="hospitalLevel" fieldLabel="医院级别"   maxLength="20" columnWidth="0.49" />
@@ -126,6 +126,38 @@
         </aos:window>
 
 	<script type="text/javascript">
+	
+			function provinceNew_onselect(me, records) {
+				var provinceID = me.getValue();
+				cityNew_store.getProxy().extraParams = {
+					provinceID : provinceID
+				};
+				cityNew_store.load({
+					callback : function(records, operation, success) {
+						if (records.length > 0) {
+							AOS.edit(cityNew);
+						} else {
+							AOS.read(cityNew);
+						}
+					}
+				});
+			}
+			
+			function provinceModify_onselect(me, records) {
+				var provinceID = me.getValue();
+				cityModify_store.getProxy().extraParams = {
+					provinceID : provinceID
+				};
+				cityModify_store.load({
+					callback : function(records, operation, success) {
+						if (records.length > 0) {
+							AOS.edit(cityModify);
+						} else {
+							AOS.read(cityModify);
+						}
+					}
+				});
+			}
 	
 			var importSumType = 0;
 		    function importExcel(){
@@ -219,15 +251,28 @@
 
             //监听弹出修改用户窗口事件
             function _w_user_u_onshow() {
-            	province_store.load();
-                var record = AOS.selectone(_g_user);
-                AOS.ajax({
-                    params: {id: record.data.id},
-                    url: 'hd/getHd.jhtml',
-                    ok: function (data) {
-                        _f_user_u.form.setValues(data);
-                    }
-                });
+            	provinceModify_store.load({
+					callback : function(records, operation, success) {
+						var record = AOS.selectone(_g_user);
+		                AOS.ajax({
+		                    params: {id: record.data.id},
+		                    url: 'hd/getHd.jhtml',
+		                    ok: function (data) {
+		                        _f_user_u.form.setValues(data);
+		                        var provinceID = data.province;
+								cityModify_store.getProxy().extraParams = {
+									provinceID : provinceID
+								};
+								cityModify_store.load({
+									callback : function(records, operation, success) {
+										_f_user_u.form.setValues(data);
+									}
+								});
+								
+		                    }
+		                });
+					}
+				});
             }
 
             //修改用户保存

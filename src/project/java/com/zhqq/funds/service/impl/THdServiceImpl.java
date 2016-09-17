@@ -232,9 +232,9 @@ public class THdServiceImpl implements THdService {
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<THospitalMappingDTO> listTHospitalMappingDTO = queryHospitalMappingList(hotkey, patientQueryType, "", "", "", false);
 		if(ChangeUtils.tProvincesDTOList==null){
-			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,areaService.getAllCities());
+			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,areaService.getAllProvinces(),areaService.getAllCities());
 		}else{
-			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,null);
+			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,null,null);
 		}
 		// 产生表格标题行
 		HSSFRow row = sheet.createRow(0);
@@ -364,9 +364,9 @@ public class THdServiceImpl implements THdService {
 		List<THospitalMappingDTO> listTHospitalMappingDTO = queryHospitalMappingList(hotkey, patientQueryType, "", "", "", false);
 		
 		if(ChangeUtils.tProvincesDTOList==null){
-			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,areaService.getAllCities());
+			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,areaService.getAllProvinces(),areaService.getAllCities());
 		}else{
-			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,null);
+			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,null,null);
 		}
 		
 		// 产生表格标题行

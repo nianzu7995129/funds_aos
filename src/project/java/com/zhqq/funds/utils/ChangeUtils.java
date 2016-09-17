@@ -107,9 +107,12 @@ public final class ChangeUtils {
 		}
 	}
 	
-	public static void proTHospitalMappingDTOList(List<THospitalMappingDTO> listTHospitalMappingDTO,List<TCitiesDTO> tCitiesDTOList) {
+	public static void proTHospitalMappingDTOList(List<THospitalMappingDTO> listTHospitalMappingDTO,List<TProvincesDTO> tProvincesDTOList,List<TCitiesDTO> tCitiesDTOList) {
 		if(ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.tCitiesDTOList = tCitiesDTOList;
+		}
+		if(ChangeUtils.tProvincesDTOList==null){
+			ChangeUtils.tProvincesDTOList = tProvincesDTOList;
 		}
 		for(THospitalMappingDTO tHospitalMappingDTO : listTHospitalMappingDTO){
 			proTHospitalMappingDTO(tHospitalMappingDTO);

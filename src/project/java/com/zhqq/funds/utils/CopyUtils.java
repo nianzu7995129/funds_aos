@@ -11,9 +11,11 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
+import com.zhqq.funds.DTO.TCitiesDTO;
 import com.zhqq.funds.DTO.TDrugreleaseDTO;
 import com.zhqq.funds.DTO.TPatientDTO;
 import com.zhqq.funds.DTO.TProvincesDTO;
+import com.zhqq.funds.VO.TCitiesVO;
 import com.zhqq.funds.VO.TDrugreleaseVO;
 import com.zhqq.funds.VO.TPatientVO;
 import com.zhqq.funds.VO.TProvincesVO;
@@ -202,6 +204,13 @@ public final class CopyUtils {
 		TProvincesVO rlt = new TProvincesVO();
 		rlt.setDisplay(tProvincesDTO.getProvince());
 		rlt.setValue(tProvincesDTO.getProvinceid());
+		return rlt;
+	}
+	
+	public static TCitiesVO copyDTOToVO(TCitiesDTO tCitiesDTO){
+		TCitiesVO rlt = new TCitiesVO();
+		rlt.setDisplay(tCitiesDTO.getCity());
+		rlt.setValue(tCitiesDTO.getCityid());
 		return rlt;
 	}
 	

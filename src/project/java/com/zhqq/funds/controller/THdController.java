@@ -98,9 +98,9 @@ public class THdController {
 		int totalCount = tHdService.queryHospitalMappingCount(hotkey,patientQueryType);
 		List<THospitalMappingDTO> listTHospitalMappingDTO = tHdService.queryHospitalMappingList(hotkey,patientQueryType,page,start,limit,true);
 		if(ChangeUtils.tProvincesDTOList==null){
-			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,areaService.getAllCities());
+			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,areaService.getAllProvinces(),areaService.getAllCities());
 		}else{
-			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,null);
+			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,null,null);
 		}
 		
 		String outString = AOSJson.toGridJson(CopyUtils.createCopyList(listTHospitalMappingDTO, THospitalMappingVO.class), totalCount);
