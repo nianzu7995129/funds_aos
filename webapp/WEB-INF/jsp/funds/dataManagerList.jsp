@@ -70,12 +70,14 @@
 					
 				<aos:textfield name="name" fieldLabel="姓名"  maxLength="100" columnWidth="0.5" />
 				<aos:combobox fieldLabel="性别" name="sex" dicField="custom_sex" emptyText="男" value="0" columnWidth="0.49" />
+				
+				<aos:combobox fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.5" url="getProvinces.jhtml" />
+				<aos:combobox fieldLabel="申请类型" name="applyType"  dicField="custom_apply_type" emptyText="正常申请" value="0" columnWidth="0.49" />
+				
 					
 				<aos:textfield name="idcardnumber" fieldLabel="身份证号"   maxLength="20" columnWidth="0.5" />
 				<aos:textfield name="phone" fieldLabel="联系电话"  columnWidth="0.49" />
 				
-				<aos:combobox fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.5" url="getProvinces.jhtml" />
-				<aos:combobox fieldLabel="申请类型" name="applyType"  dicField="custom_apply_type" emptyText="正常申请" value="0" columnWidth="0.49" />
 				
 				<aos:textfield name="address" fieldLabel="住址" maxLength="100" columnWidth="0.5" />
 				<aos:combobox name="diagnosticMaterial" fieldLabel="诊断材料" dicField="custom_h_state" emptyText="" editable="true" forceSelection="false" columnWidth="0.49" />
