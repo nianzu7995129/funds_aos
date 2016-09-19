@@ -113,6 +113,7 @@ public final class CopyUtils {
 		rlt.setProofIncome(tPatient.getProofIncome());
 		rlt.setPurchaseInvoice(tPatient.getPurchaseInvoice());
 		rlt.setMedicalEvaluationForm(tPatient.getMedicalEvaluationForm());
+		rlt.setInformedConsentOfPatients(tPatient.getInformedConsentOfPatients());
 		rlt.setPatienteConomicStatus(tPatient.getPatienteConomicStatus());
 		rlt.setColdChainDrugInformedConsent(tPatient.getColdChainDrugInformedConsent());
 		rlt.setHr(tPatient.getHr());
@@ -145,6 +146,7 @@ public final class CopyUtils {
 		rlt.setProofIncome(tPatient.getProofIncome());
 		rlt.setPurchaseInvoice(tPatient.getPurchaseInvoice());
 		rlt.setMedicalEvaluationForm(tPatient.getMedicalEvaluationForm());
+		rlt.setInformedConsentOfPatients(tPatient.getInformedConsentOfPatients());
 		rlt.setPatienteConomicStatus(tPatient.getPatienteConomicStatus());
 		rlt.setColdChainDrugInformedConsent(tPatient.getColdChainDrugInformedConsent());
 		rlt.setHr(tPatient.getHr());
@@ -185,6 +187,7 @@ public final class CopyUtils {
 		rlt.setProofIncome(tPatient.getProofIncome());
 		rlt.setPurchaseInvoice(tPatient.getPurchaseInvoice());
 		rlt.setMedicalEvaluationForm(tPatient.getMedicalEvaluationForm());
+		rlt.setInformedConsentOfPatients(tPatient.getInformedConsentOfPatients());
 		rlt.setPatienteConomicStatus(tPatient.getPatienteConomicStatus());
 		rlt.setColdChainDrugInformedConsent(tPatient.getColdChainDrugInformedConsent());
 		rlt.setHr(tPatient.getHr());

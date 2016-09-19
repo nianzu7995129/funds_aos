@@ -12,6 +12,8 @@ import cn.osworks.aos.core.typewrap.Dto;
 
 public interface TPatientService {
 	
+	public int getMaxArchives();
+	
 	/**
 	 * 导出Excel
 	 * @param inDto
@@ -32,7 +34,7 @@ public interface TPatientService {
 	 * @return
 	 * @throws Exception
 	 */
-	public TPatientDTO queryPatient(String name ,String idcardnumber) throws Exception;
+	public TPatientDTO queryPatient(String name ,String idcardnumber,String appplyType) throws Exception;
 	
 	/**
 	 * 检查患者姓名是否存在
@@ -40,7 +42,7 @@ public interface TPatientService {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean checkName(String name ) throws Exception;
+	public boolean checkName(String name ,String appplyType) throws Exception;
 	
 	/**
 	 * 检查患者身份证号是否存在
@@ -49,7 +51,7 @@ public interface TPatientService {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean checkCdCard(String name ,String idcardnumber) throws Exception;
+	public boolean checkCdCard(String name ,String idcardnumber,String appplyType) throws Exception;
 	
 	/**
 	 * 
@@ -119,6 +121,14 @@ public interface TPatientService {
 	 * @throws Exception
 	 */
 	public void importPatientExcel(Workbook workbook) throws Exception;
+	
+	/**
+	 * 根据条件查询患者
+	 * @param key
+	 * @param patientQueryType
+	 * @return
+	 */
+	public List<TPatientDTO> getPatientListByCondition(String key ,String patientQueryType);
 	
 	
 }

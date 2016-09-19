@@ -62,10 +62,10 @@
 		</aos:gridpanel>
 	</aos:viewport>
 
-	<aos:window id="_w_user" title="新增患者" maxHeight="-10" width="720" autoScroll="true">
+	<aos:window id="_w_user" title="新增患者" onshow="_w_user_onshow"  maxHeight="-10" width="720" autoScroll="true">
 		<aos:formpanel id="_f_user" width="700" layout="column">
 			<aos:fieldset title="" labelWidth="150" labelAlign="right" center="true" collapsible="false">
-				<aos:textfield name="archives" fieldLabel="档案号"  maxLength="100" columnWidth="0.5" />
+				<aos:textfield id="archives" name="archives" fieldLabel="档案号"  maxLength="100" columnWidth="0.5" />
 				<aos:combobox fieldLabel="是否通过" name="state"  dicField="custom_patient_state" emptyText="未通过" value="0" columnWidth="0.49" />
 					
 				<aos:textfield name="name" fieldLabel="姓名"  maxLength="100" columnWidth="0.5" />
@@ -74,12 +74,10 @@
 				<aos:combobox fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.5" url="getProvinces.jhtml" />
 				<aos:combobox fieldLabel="申请类型" name="applyType"  dicField="custom_apply_type" emptyText="正常申请" value="0" columnWidth="0.49" />
 				
-					
-				<aos:textfield name="idcardnumber" fieldLabel="身份证号"   maxLength="20" columnWidth="0.5" />
-				<aos:textfield name="phone" fieldLabel="联系电话"  columnWidth="0.49" />
-				
-				
 				<aos:textfield name="address" fieldLabel="住址" maxLength="100" columnWidth="0.5" />
+				<aos:textfield id="phone"  name="phone" fieldLabel="联系电话"  columnWidth="0.49" />
+				
+				<aos:textfield id="idcardnumber"  name="idcardnumber" fieldLabel="身份证号"   maxLength="20" columnWidth="0.5" />
 				<aos:combobox name="diagnosticMaterial" fieldLabel="诊断材料" dicField="custom_h_state" emptyText="" editable="true" forceSelection="false" columnWidth="0.49" />
 				
 				<aos:combobox name="proofIdentity" fieldLabel="身份证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
@@ -92,10 +90,10 @@
 				<aos:combobox name="patienteConomicStatus" fieldLabel="患者经济状况填报表"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
 				<aos:combobox name="coldChainDrugInformedConsent" fieldLabel="冷链药品知情同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
-				<aos:textfield name="hr" fieldLabel="项目专员" maxLength="100" columnWidth="0.49" />
+				<aos:textfield id="hrNew" onblur="initHospitalAndDoctor" name="hr" fieldLabel="项目专员" maxLength="100" columnWidth="0.49" />
 				
-				<aos:textfield name="langMuHospital" fieldLabel="朗沐医院" maxLength="100" columnWidth="0.5" />
-				<aos:textfield name="langMuDoctor" fieldLabel="朗沐医生" maxLength="100" columnWidth="0.49" />
+				<aos:combobox id="langMuHospitalNew" fieldLabel="朗沐医院" name="langMuHospital"  onselect="langMuHospitalChange" emptyText="请选择医院..." columnWidth="0.5" url="hd/getHospital.jhtml" />
+				<aos:combobox id="langMuDoctorNew" fieldLabel="朗沐医生" name="langMuDoctor" emptyText="请选择医生..." columnWidth="0.49" url="hd/getDoctor.jhtml" />
 				
 				<aos:combobox name="estimatedTimeToIncreaseDrugInjection" fieldLabel="预计增药注射时间"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:textfield name="remarks" fieldLabel="备注" maxLength="100" columnWidth="0.49" />
@@ -108,6 +106,7 @@
 				<aos:combobox name="endOfStatement" fieldLabel="捐助结束声明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
 				<aos:datefield name="year" fieldLabel="年份" format="Y" editable="false" columnWidth="0.5" />
+				<aos:column header=""   width="1" flex="1"/>
 			</aos:fieldset>
 		</aos:formpanel>
 		<aos:docked dock="bottom" ui="footer">
@@ -126,11 +125,14 @@
 					
 				<aos:textfield name="name" fieldLabel="姓名"  maxLength="100" columnWidth="0.5" />
 				<aos:combobox fieldLabel="性别" name="sex" dicField="custom_sex" emptyText="男" value="0" columnWidth="0.49" />
-					
-				<aos:textfield name="idcardnumber" fieldLabel="身份证号"   maxLength="20" columnWidth="0.5" />
-				<aos:textfield name="phone" fieldLabel="联系电话"  columnWidth="0.49" />
+				
+				<aos:combobox id="provinceModify" fieldLabel="省份" name="province" emptyText="请选择省份..." columnWidth="0.5" url="getProvinces.jhtml" />
+				<aos:combobox fieldLabel="申请类型" name="applyType"  dicField="custom_apply_type" emptyText="正常申请" value="0" columnWidth="0.49"  editable="false"/>
 				
 				<aos:textfield name="address" fieldLabel="住址" maxLength="100" columnWidth="0.5" />
+				<aos:textfield id="phoneModify" name="phone" fieldLabel="联系电话"  columnWidth="0.49" />
+				
+				<aos:textfield id="idcardnumberModify" name="idcardnumber" fieldLabel="身份证号"   maxLength="20" columnWidth="0.5" />
 				<aos:combobox name="diagnosticMaterial" fieldLabel="诊断材料" dicField="custom_h_state" emptyText="" editable="true" forceSelection="false" columnWidth="0.49" />
 				
 				<aos:combobox name="proofIdentity" fieldLabel="身份证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
@@ -143,17 +145,23 @@
 				<aos:combobox name="patienteConomicStatus" fieldLabel="患者经济状况填报表"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
 				<aos:combobox name="coldChainDrugInformedConsent" fieldLabel="冷链药品知情同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
-				<aos:textfield name="hr" fieldLabel="项目专员" maxLength="100" columnWidth="0.49" />
+				<aos:textfield id="hrModify" onblur="initHospitalAndDoctorModify" name="hr" fieldLabel="项目专员" maxLength="100" columnWidth="0.49" />
 				
-				<aos:textfield name="langMuHospital" fieldLabel="朗沐医院" maxLength="100" columnWidth="0.5" />
-				<aos:textfield name="langMuDoctor" fieldLabel="朗沐医生" maxLength="100" columnWidth="0.49" />
+				<aos:combobox id="langMuHospitalModify" fieldLabel="朗沐医院" name="langMuHospital"  onselect="langMuHospitalModifyChange" emptyText="请选择医院..." columnWidth="0.5" url="hd/getHospital.jhtml" />
+				<aos:combobox id="langMuDoctorModify" fieldLabel="朗沐医生" name="langMuDoctor" emptyText="请选择医生..." columnWidth="0.49" url="hd/getDoctor.jhtml" />
 				
 				<aos:combobox name="estimatedTimeToIncreaseDrugInjection" fieldLabel="预计增药注射时间"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:textfield name="remarks" fieldLabel="备注" maxLength="100" columnWidth="0.49" />
 				
+				<aos:combobox fieldLabel="诊断医院是否为朗沐医院" name="isLangMuHospital" dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.5" />
+				<aos:datetimefield name="passdate" fieldLabel="审核时间" format="Y-m-d H:i:s" editable="false" columnWidth="0.49" />
+				
+				
 				<aos:combobox name="recipientsReceiveSingleDrug" fieldLabel="受助药品领取单"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:combobox name="endOfStatement" fieldLabel="捐助结束声明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
+				<aos:datefield name="year" fieldLabel="年份" format="Y" editable="false" columnWidth="0.5" />
+				<aos:column header=""   width="1" flex="1"/>
 			</aos:fieldset>
 		</aos:formpanel>
 		<aos:docked dock="bottom" ui="footer">
@@ -176,6 +184,114 @@
         </aos:window>
 
 	<script type="text/javascript">
+	
+			function langMuHospitalChange(me, records) {
+				var hospital = me.getValue();
+				langMuDoctorNew_store.getProxy().extraParams = {
+					hospital : hospital
+				};
+				langMuDoctorNew_store.load({
+					callback : function(records, operation, success) {
+						if (records.length > 0) {
+							AOS.edit(langMuDoctorNew);
+						} else {
+							AOS.read(langMuDoctorNew);
+						}
+						//设置选中值
+						Ext.getCmp("langMuDoctorNew").setValue(records[0].data.value);
+					}
+				});
+			}
+			
+			function langMuHospitalModifyChange(me, records) {
+				var hospital = me.getValue();
+				langMuDoctorModify_store.getProxy().extraParams = {
+					hospital : hospital
+				};
+				langMuDoctorModify_store.load({
+					callback : function(records, operation, success) {
+						if (records.length > 0) {
+							AOS.edit(langMuDoctorModify);
+						} else {
+							AOS.read(langMuDoctorModify);
+						}
+						//设置选中值
+						Ext.getCmp("langMuDoctorModify").setValue(records[0].data.value);
+					}
+				});
+			}
+			
+			function initHospitalAndDoctorModify(me,records){
+				var hr = me.getValue();
+				langMuHospitalModify_store.getProxy().extraParams = {
+					hr : hr
+				};
+				langMuHospitalModify_store.load({
+					callback : function(records, operation, success) {
+						if (records.length > 0) {
+							AOS.edit(langMuHospitalModify);
+						} else {
+							AOS.read(langMuHospitalModify);
+						}
+						//设置选中值
+						Ext.getCmp("langMuHospitalModify").setValue(records[0].data.value);
+						
+						var hospital = Ext.getCmp("langMuHospitalModify").getValue();
+						langMuDoctorModify_store.getProxy().extraParams = {
+							hospital : hospital
+						};
+						langMuDoctorModify_store.load({
+							callback : function(records, operation, success) {
+								if (records.length > 0) {
+									AOS.edit(langMuDoctorModify);
+								} else {
+									AOS.read(langMuDoctorModify);
+								}
+								//设置选中值
+								Ext.getCmp("langMuDoctorModify").setValue(records[0].data.value);
+							}
+						});
+						
+					}
+				});
+			}
+			
+			
+			
+			function initHospitalAndDoctor(me,records){
+				var hr = me.getValue();
+				langMuHospitalNew_store.getProxy().extraParams = {
+					hr : hr
+				};
+				langMuHospitalNew_store.load({
+					callback : function(records, operation, success) {
+						if (records.length > 0) {
+							AOS.edit(langMuHospitalNew);
+						} else {
+							AOS.read(langMuHospitalNew);
+						}
+						//设置选中值
+						Ext.getCmp("langMuHospitalNew").setValue(records[0].data.value);
+						
+						var hospital = Ext.getCmp("langMuHospitalNew").getValue();
+						langMuDoctorNew_store.getProxy().extraParams = {
+							hospital : hospital
+						};
+						langMuDoctorNew_store.load({
+							callback : function(records, operation, success) {
+								if (records.length > 0) {
+									AOS.edit(langMuDoctorNew);
+								} else {
+									AOS.read(langMuDoctorNew);
+								}
+								//设置选中值
+								Ext.getCmp("langMuDoctorNew").setValue(records[0].data.value);
+							}
+						});
+						
+					}
+				});
+			}
 	
 			var importSumType = 0;
 		    function importExcel(){
@@ -240,22 +356,59 @@
                 AOS.reset(_f_user);
                 _w_user.show();
             }
+            
+            function _w_user_onshow() {
+                AOS.ajax({
+                    url: 'patient/getMaxArchives.jhtml',
+                    ok: function (data) {
+                        _f_user.form.setValues(data);
+						
+                    }
+                });
+            }
+
+            function isCardNo(card){  
+               // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X  
+               var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
+               if(reg.test(card) === false)  
+               {  
+            	   AOS.tip("身份证输入不合法");  
+                   return  false;  
+               }else{
+            	   return true;
+               }  
+            } 
+            
+            function isPhoneNo(phone){  
+            	var reg = /^1\d{10}$/; //定义正则表达式
+            	 if(reg.test(phone)) {  
+                    return  true;  
+                }  else{
+                	 AOS.tip("电话号码需为11位数字");  
+                     return  false;  
+                }
+             } 
+            
 
             //新增用户保存
             function _f_user_save() {
-                AOS.ajax({
-                    forms: _f_user,
-                    url: 'patient/savePatien.jhtml',
-                    ok: function (data) {
-                        if (data.appcode === -1) {
-                            AOS.err(data.appmsg);
-                        } else {
-                            _w_user.hide();
-                            _g_user_store.reload();
-                            AOS.tip(data.appmsg);
+            	var idCard = Ext.getCmp("idcardnumber").getValue();
+            	var phoneStr = Ext.getCmp("phone").getValue();
+            	if(isCardNo(idCard) && isPhoneNo(phoneStr)){
+            		AOS.ajax({
+                        forms: _f_user,
+                        url: 'patient/savePatien.jhtml',
+                        ok: function (data) {
+                            if (data.appcode === -1) {
+                                AOS.err(data.appmsg);
+                            } else {
+                                _w_user.hide();
+                                _g_user_store.reload();
+                                AOS.tip(data.appmsg);
+                            }
                         }
-                    }
-                });
+                    });
+            	}
             }
 
             //弹出修改用户窗口
@@ -268,32 +421,64 @@
 
             //监听弹出修改用户窗口事件
             function _w_user_u_onshow() {
-                var record = AOS.selectone(_g_user);
-                AOS.ajax({
-                    params: {id: record.data.id},
-                    url: 'patient/getPatient.jhtml',
-                    ok: function (data) {
-                        _f_user_u.form.setValues(data);
-                    }
-                });
+            	provinceModify_store.load({
+					callback : function(records, operation, success) {
+						 var record = AOS.selectone(_g_user);
+			                AOS.ajax({
+			                    params: {id: record.data.id},
+			                    url: 'patient/getPatient.jhtml',
+			                    ok: function (data) {
+			                        _f_user_u.form.setValues(data);
+			                        var hr = data.hr;
+									cityModify_store.getProxy().extraParams = {
+			                        	hr : hr
+									};
+									cityModify_store.load({
+										callback : function(records, operation, success) {
+											var hospital = data.langMuHospital;
+											langMuDoctorModify_store.getProxy().extraParams = {
+												hospital : hospital
+											};
+											langMuDoctorModify_store.load({
+												callback : function(records, operation, success) {
+													if (records.length > 0) {
+														AOS.edit(langMuDoctorModify);
+													} else {
+														AOS.read(langMuDoctorModify);
+													}
+													 _f_user_u.form.setValues(data);
+												}
+											});
+											
+										}
+									});
+									
+			                    }
+			                });
+					}
+				});
             }
 
             //修改用户保存
             function _f_user_u_save() {
-            	var record = AOS.selectone(_g_user);
-                AOS.ajax({
-                    forms: _f_user_u,
-                    url: 'patient/updatePatient.jhtml',
-                    ok: function (data) {
-                        if (data.appcode === -1) {
-                            AOS.err(data.appmsg);
-                            return;
-                        }
-                        _w_user_u.hide();
-                        _g_user_store.reload();
-                        AOS.tip(data.appmsg);
-                    }
-                });
+            	var idCard = Ext.getCmp("idcardnumberModify").getValue();
+            	var phoneStr = Ext.getCmp("phoneModify").getValue();
+            	if(isCardNo(idCard) && isPhoneNo(phoneStr)){
+	            	var record = AOS.selectone(_g_user);
+	                AOS.ajax({
+	                    forms: _f_user_u,
+	                    url: 'patient/updatePatient.jhtml',
+	                    ok: function (data) {
+	                        if (data.appcode === -1) {
+	                            AOS.err(data.appmsg);
+	                            return;
+	                        }
+	                        _w_user_u.hide();
+	                        _g_user_store.reload();
+	                        AOS.tip(data.appmsg);
+	                    }
+	                });
+            	}
             }
 
             //删除用户

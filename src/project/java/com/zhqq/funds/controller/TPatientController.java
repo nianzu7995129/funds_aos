@@ -29,7 +29,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.collect.Lists;
+import com.zhqq.funds.DTO.TCitiesDTO;
 import com.zhqq.funds.DTO.TPatientDTO;
+import com.zhqq.funds.VO.TCitiesVO;
 import com.zhqq.funds.VO.TPatientVO;
 import com.zhqq.funds.service.AreaService;
 import com.zhqq.funds.service.TPatientService;
@@ -64,23 +67,23 @@ public class TPatientController {
 	private AreaService areaService;
 	
 	@RequestMapping(value="/doQuery")
-	public void queryPatient(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="name_")String name ,@RequestParam(value="cdcard_")String cdcard) throws Exception {
+	public void queryPatient(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="name_")String name ,@RequestParam(value="cdcard_")String cdcard,@RequestParam(value="applyType_")String applyType) throws Exception {
 		TPatientVO rlt = new TPatientVO();
 		// 姓名检查
-		if (!tPatientService.checkName(name)) {
+		if (!tPatientService.checkName(name,applyType)) {
 			rlt.setAppcode(-1);
 			rlt.setAppmsg("患者姓名不存在!");
 			WebCxt.write(response, AOSJson.toJson(rlt));
 			return;
 		}
 		// 身份证检查
-		if (!tPatientService.checkCdCard(name,cdcard)) {
+		if (!tPatientService.checkCdCard(name,cdcard,applyType)) {
 			rlt.setAppcode(-2);
 			rlt.setAppmsg("患者身份证号不正确!");
 			WebCxt.write(response, AOSJson.toJson(rlt));
 			return;
 		}
-		TPatientDTO dto = tPatientService.queryPatient(name,cdcard); 
+		TPatientDTO dto = tPatientService.queryPatient(name,cdcard,applyType); 
 		ChangeUtils.proTPatientDTO(dto);
 		rlt = CopyUtils.copyDTOToVO(dto);
 		rlt.setAppcode(1);
@@ -99,6 +102,15 @@ public class TPatientController {
 	@RequestMapping(value="funds/patient/updatePatient")
 	public void updatePatient(HttpServletRequest request, HttpServletResponse response,TPatientDTO tPatientDTO) throws Exception {
 		TPatientVO rlt = new TPatientVO();
+		//检查档案号是否重复
+		List<TPatientDTO> tPatientDTOList =  tPatientService.getPatientListByCondition(tPatientDTO.getArchives(), "0");
+		if(tPatientDTOList!=null && tPatientDTOList.size()>0 && (int)(tPatientDTOList.get(0).getId())!=(int)(tPatientDTO.getId())){
+			rlt.setAppcode(-1);
+			rlt.setAppmsg("档案号重复!");
+			WebCxt.write(response, AOSJson.toJson(rlt));
+			return;
+			
+		}
 		tPatientService.updatePatient(tPatientDTO);
 		rlt.setAppcode(1);
 		rlt.setAppmsg("修改患者成功!");
@@ -121,10 +133,33 @@ public class TPatientController {
 	@RequestMapping(value="funds/patient/savePatien")
 	public void addPatient(HttpServletRequest requet, HttpServletResponse response,TPatientDTO tPatientDTO) throws Exception {
 		TPatientVO rlt = new TPatientVO();
+		//检查档案号是否重复
+		List<TPatientDTO> tPatientDTOList =  tPatientService.getPatientListByCondition(tPatientDTO.getArchives(), "0");
+		if(tPatientDTOList!=null && tPatientDTOList.size()>0){
+			rlt.setAppcode(-1);
+			rlt.setAppmsg("档案号重复!");
+			WebCxt.write(response, AOSJson.toJson(rlt));
+			return;
+			
+		}
+		//如果未正常申请--检查身份证号重复
+		if("0".equals(tPatientDTO.getApplyType())){
+			tPatientDTOList =  tPatientService.getPatientListByCondition(tPatientDTO.getIdcardnumber(), "8");
+			if(tPatientDTOList!=null && tPatientDTOList.size()>0){
+				rlt.setAppcode(-1);
+				rlt.setAppmsg("身份证号重复!");
+				WebCxt.write(response, AOSJson.toJson(rlt));
+				return;
+			}
+		}
 		tPatientService.addPatient(tPatientDTO);
 		rlt.setAppcode(1);
 		rlt.setAppmsg("新增患者成功!");
 		WebCxt.write(response, AOSJson.toJson(rlt));
+		
+		
+		
+		
 	}
 	
 	@RequestMapping(value="funds/patient/queryPatientListHR")
@@ -326,4 +361,12 @@ public class TPatientController {
 		return outDto;
 	}
 	
+	@RequestMapping(value="funds/patient/getMaxArchives")
+	public void getMaxArchives(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		TPatientVO rlt = new TPatientVO();
+		int maxArchives = tPatientService.getMaxArchives();
+		rlt.setAppcode(1);
+		rlt.setArchives(++maxArchives + "");
+		WebCxt.write(response, AOSJson.toJson(rlt));
+	}
 }

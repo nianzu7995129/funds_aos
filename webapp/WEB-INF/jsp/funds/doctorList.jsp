@@ -65,7 +65,7 @@
 				<aos:combobox name="registerDoctorConsent" fieldLabel="注册医生同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:combobox name="resume" fieldLabel="个人简历"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:textfield name="phone" fieldLabel="联系电话"  maxLength="100" columnWidth="0.5" />
+				<aos:textfield id="phone" name="phone" fieldLabel="联系电话"  maxLength="100" columnWidth="0.5" />
 				<aos:combobox name="isRegister" fieldLabel="是否在册" dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.49" />
 			</aos:fieldset>
 		</aos:formpanel>
@@ -95,7 +95,7 @@
 				<aos:combobox name="registerDoctorConsent" fieldLabel="注册医生同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:combobox name="resume" fieldLabel="个人简历"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:textfield name="phone" fieldLabel="联系电话"  maxLength="100" columnWidth="0.5" />
+				<aos:textfield id="phoneModify" name="phone" fieldLabel="联系电话"  maxLength="100" columnWidth="0.5" />
 				<aos:combobox name="isRegister" fieldLabel="是否在册" dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.49" />
 			</aos:fieldset>
 		</aos:formpanel>
@@ -185,21 +185,34 @@
                 _w_user.show();
             }
 
+            function isPhoneNo(phone){  
+            	var reg = /^1\d{10}$/; //定义正则表达式
+            	 if(reg.test(phone)) {  
+                    return  true;  
+                }  else{
+                	 AOS.tip("电话号码需为11位数字");  
+                     return  false;  
+                }
+             } 
+            
             //新增用户保存
             function _f_user_save() {
-                AOS.ajax({
-                    forms: _f_user,
-                    url: 'doctor/saveDoctor.jhtml',
-                    ok: function (data) {
-                        if (data.appcode === -1) {
-                            AOS.err(data.appmsg);
-                        } else {
-                            _w_user.hide();
-                            _g_user_store.reload();
-                            AOS.tip(data.appmsg);
-                        }
-                    }
-                });
+            	var phoneStr = Ext.getCmp("phone").getValue();
+            	if(isPhoneNo(phoneStr)){
+	                AOS.ajax({
+	                    forms: _f_user,
+	                    url: 'doctor/saveDoctor.jhtml',
+	                    ok: function (data) {
+	                        if (data.appcode === -1) {
+	                            AOS.err(data.appmsg);
+	                        } else {
+	                            _w_user.hide();
+	                            _g_user_store.reload();
+	                            AOS.tip(data.appmsg);
+	                        }
+	                    }
+	                });
+            	}
             }
 
             //弹出修改用户窗口
@@ -212,7 +225,7 @@
 
             //监听弹出修改用户窗口事件
             function _w_user_u_onshow() {
-            	province_store.load();
+        		province_store.load();
                 var record = AOS.selectone(_g_user);
                 AOS.ajax({
                     params: {id: record.data.id},
@@ -221,24 +234,28 @@
                         _f_user_u.form.setValues(data);
                     }
                 });
+            	
             }
 
             //修改用户保存
             function _f_user_u_save() {
-            	var record = AOS.selectone(_g_user);
-                AOS.ajax({
-                    forms: _f_user_u,
-                    url: 'doctor/updateDoctor.jhtml',
-                    ok: function (data) {
-                        if (data.appcode === -1) {
-                            AOS.err(data.appmsg);
-                            return;
-                        }
-                        _w_user_u.hide();
-                        _g_user_store.reload();
-                        AOS.tip(data.appmsg);
-                    }
-                });
+            	var phoneStr = Ext.getCmp("phoneModify").getValue();
+            	if(isPhoneNo(phoneStr)){
+	            	var record = AOS.selectone(_g_user);
+	                AOS.ajax({
+	                    forms: _f_user_u,
+	                    url: 'doctor/updateDoctor.jhtml',
+	                    ok: function (data) {
+	                        if (data.appcode === -1) {
+	                            AOS.err(data.appmsg);
+	                            return;
+	                        }
+	                        _w_user_u.hide();
+	                        _g_user_store.reload();
+	                        AOS.tip(data.appmsg);
+	                    }
+	                });
+            	}
             }
 
             //删除用户

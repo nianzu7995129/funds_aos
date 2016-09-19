@@ -70,7 +70,7 @@
 					dicField="custom_h_state" emptyText="" editable="true"
 					forceSelection="false" columnWidth="0.49" />
 
-				<aos:textfield name="phone" fieldLabel="联系电话" maxLength="100"
+				<aos:textfield id="phone" name="phone" fieldLabel="联系电话" maxLength="100"
 					columnWidth="0.5" />
 				<aos:textfield name="email" fieldLabel="邮箱" maxLength="100"
 					columnWidth="0.49" />
@@ -109,7 +109,7 @@
 					dicField="custom_h_state" emptyText="" editable="true"
 					forceSelection="false" columnWidth="0.49" />
 
-				<aos:textfield name="phone" fieldLabel="联系电话" maxLength="100"
+				<aos:textfield id="phoneModify"  name="phone" fieldLabel="联系电话" maxLength="100"
 					columnWidth="0.5" />
 				<aos:textfield name="email" fieldLabel="邮箱" maxLength="100"
 					columnWidth="0.49" />
@@ -211,21 +211,34 @@
                 _w_user.show();
             }
 
+            function isPhoneNo(phone){  
+            	var reg = /^1\d{10}$/; //定义正则表达式
+            	 if(reg.test(phone)) {  
+                    return  true;  
+                }  else{
+                	 AOS.tip("电话号码需为11位数字");  
+                     return  false;  
+                }
+             } 
+            
             //新增用户保存
             function _f_user_save() {
-                AOS.ajax({
-                    forms: _f_user,
-                    url: 'hr/saveHr.jhtml',
-                    ok: function (data) {
-                        if (data.appcode === -1) {
-                            AOS.err(data.appmsg);
-                        } else {
-                            _w_user.hide();
-                            _g_user_store.reload();
-                            AOS.tip(data.appmsg);
-                        }
-                    }
-                });
+            	var phoneStr = Ext.getCmp("phone").getValue();
+            	if(isPhoneNo(phoneStr)){
+	                AOS.ajax({
+	                    forms: _f_user,
+	                    url: 'hr/saveHr.jhtml',
+	                    ok: function (data) {
+	                        if (data.appcode === -1) {
+	                            AOS.err(data.appmsg);
+	                        } else {
+	                            _w_user.hide();
+	                            _g_user_store.reload();
+	                            AOS.tip(data.appmsg);
+	                        }
+	                    }
+	                });
+            	}
             }
 
             //弹出修改用户窗口
@@ -250,20 +263,23 @@
 
             //修改用户保存
             function _f_user_u_save() {
-            	var record = AOS.selectone(_g_user);
-                AOS.ajax({
-                    forms: _f_user_u,
-                    url: 'hr/updateHr.jhtml',
-                    ok: function (data) {
-                        if (data.appcode === -1) {
-                            AOS.err(data.appmsg);
-                            return;
-                        }
-                        _w_user_u.hide();
-                        _g_user_store.reload();
-                        AOS.tip(data.appmsg);
-                    }
-                });
+            	var phoneStr = Ext.getCmp("phoneModify").getValue();
+            	if(isPhoneNo(phoneStr)){
+	            	var record = AOS.selectone(_g_user);
+	                AOS.ajax({
+	                    forms: _f_user_u,
+	                    url: 'hr/updateHr.jhtml',
+	                    ok: function (data) {
+	                        if (data.appcode === -1) {
+	                            AOS.err(data.appmsg);
+	                            return;
+	                        }
+	                        _w_user_u.hide();
+	                        _g_user_store.reload();
+	                        AOS.tip(data.appmsg);
+	                    }
+	                });
+            	}
             }
 
             //删除用户

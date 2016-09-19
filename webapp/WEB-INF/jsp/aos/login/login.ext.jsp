@@ -48,7 +48,8 @@
 					onenterkey="fn_query_enter" columnWidth="1" margin="0 60 0 0" />
 				<aos:textfield fieldLabel="身份证" name="cdcard_" maxLength="20" allowBlank="false" star="false"
 					onenterkey="fn_query_enter" height="28" columnWidth="1" margin="0 60 0 0" />
-					
+				<aos:combobox fieldLabel="申请类型" name="applyType_"  dicField="custom_apply_type" emptyText="正常申请" value="0" star="false"
+					onenterkey="fn_query_enter" columnWidth="1" margin="0 60 0 0" />	
 				<aos:docked dock="bottom" ui="footer">
 					<aos:dockeditem xtype="tbfill" />
 					<aos:dockeditem xtype="button" onclick="_fn_query" icon="user6.png" text="查 询" tooltip="查询信息" />
@@ -102,16 +103,6 @@
 				<aos:textfield name="patienteConomicStatus_" fieldLabel="患者经济状况填报表"   readOnly="true"   columnWidth="0.49" />
 				
 				<aos:textfield name="coldChainDrugInformedConsent_" fieldLabel="冷链药品知情同意书"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="hr_" fieldLabel="项目专员" maxLength="100"  readOnly="true" columnWidth="0.49" />
-				
-				<aos:textfield name="langMuHospital_" fieldLabel="朗沐医院" maxLength="100"  readOnly="true" columnWidth="0.5" />
-				<aos:textfield name="langMuDoctor_" fieldLabel="朗沐医生" maxLength="100"  readOnly="true" columnWidth="0.49" />
-				
-				<aos:textfield name="estimatedTimeToIncreaseDrugInjection_" fieldLabel="预计增药注射时间"   readOnly="true"   columnWidth="0.5" />
-				<aos:textfield name="remarks_" fieldLabel="备注" maxLength="100"  readOnly="true" columnWidth="0.49" />
-				
-				<aos:textfield name="recipientsReceiveSingleDrug_" fieldLabel="受助药品领取单"   readOnly="true"  columnWidth="0.5" />
-				<aos:textfield name="endOfStatement_" fieldLabel="捐助结束声明"   readOnly="true"  columnWidth="0.49" />
 				
 			</aos:fieldset>
 		</aos:formpanel>
@@ -262,13 +253,6 @@
 					 	AOS.field(_f_p_query, 'informedConsentOfPatients_').setValue(data.informedConsentOfPatients);
 					 	AOS.field(_f_p_query, 'patienteConomicStatus_').setValue(data.patienteConomicStatus);
 					 	AOS.field(_f_p_query, 'coldChainDrugInformedConsent_').setValue(data.coldChainDrugInformedConsent);
-					 	AOS.field(_f_p_query, 'langMuHospital_').setValue(data.langMuHospital);
-					 	AOS.field(_f_p_query, 'langMuDoctor_').setValue(data.langMuDoctor);
-					 	AOS.field(_f_p_query, 'estimatedTimeToIncreaseDrugInjection_').setValue(data.estimatedTimeToIncreaseDrugInjection);
-					 	AOS.field(_f_p_query, 'remarks_').setValue(data.remarks);
-					 	AOS.field(_f_p_query, 'hr_').setValue(data.hr);
-					 	AOS.field(_f_p_query, 'recipientsReceiveSingleDrug_').setValue(data.recipientsReceiveSingleDrug);
-					 	AOS.field(_f_p_query, 'endOfStatement_').setValue(data.endOfStatement);
 			            _w_p_query.show();
 					} else {
 						AOS.unmask();

@@ -9,6 +9,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface TPatientMapper {
+	int selectMaxArchives();
+	
     int countByExample(TPatientExample example);
 
     int deleteByExample(TPatientExample example);

@@ -73,5 +73,13 @@ public interface THdService {
 	 */
 	public void importHospitalMappingExcel(Workbook workbook) throws Exception;
 	
+	/**
+	 * 根据条件查询医院医生关系
+	 * @param key
+	 * @param doctorQueryType
+	 * @return
+	 */
+	public List<THospitalMappingDTO> getHospitalMappingListByCondition(String key ,String doctorQueryType);
+	
 	
 }

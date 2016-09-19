@@ -62,6 +62,10 @@ public final class ChangeUtils {
 		tPatientDTO.setState(ChangeUtils.getFormatValue(tPatientDTO.getState(), "1", "已通过"));
 		tPatientDTO.setSex(ChangeUtils.getFormatValue(tPatientDTO.getSex(), "0", "男"));
 		tPatientDTO.setSex(ChangeUtils.getFormatValue(tPatientDTO.getSex(), "1", "女"));
+		tPatientDTO.setApplyType(ChangeUtils.getFormatValue(tPatientDTO.getApplyType(), "0", "正常申请"));
+		tPatientDTO.setApplyType(ChangeUtils.getFormatValue(tPatientDTO.getApplyType(), "1", "复申请"));
+		tPatientDTO.setIsLangMuHospital(ChangeUtils.getFormatValue(tPatientDTO.getIsLangMuHospital(), "0", "是"));
+		tPatientDTO.setIsLangMuHospital(ChangeUtils.getFormatValue(tPatientDTO.getIsLangMuHospital(), "1", "否"));
 		tPatientDTO.setDiagnosticMaterial(ChangeUtils.getFormatValue(tPatientDTO.getDiagnosticMaterial(), "-999", "√"));
 		tPatientDTO.setProofIdentity(ChangeUtils.getFormatValue(tPatientDTO.getProofIdentity(), "-999", "√"));
 		tPatientDTO.setProofIncome(ChangeUtils.getFormatValue(tPatientDTO.getProofIncome(), "-999", "√"));
@@ -73,7 +77,6 @@ public final class ChangeUtils {
 		tPatientDTO.setEstimatedTimeToIncreaseDrugInjection(ChangeUtils.getFormatValue(tPatientDTO.getEstimatedTimeToIncreaseDrugInjection(), "-999", "√"));
 		tPatientDTO.setRecipientsReceiveSingleDrug(ChangeUtils.getFormatValue(tPatientDTO.getRecipientsReceiveSingleDrug(), "-999", "√"));
 		tPatientDTO.setEndOfStatement(ChangeUtils.getFormatValue(tPatientDTO.getEndOfStatement(), "-999", "√"));
-		tPatientDTO.setIsLangMuHospital(ChangeUtils.getFormatValue(tPatientDTO.getIsLangMuHospital(), "-999", "√"));
 		tPatientDTO.setProvince(getProviceNameByCode(tPatientDTO.getProvince()));
 	}
 	
@@ -82,6 +85,10 @@ public final class ChangeUtils {
 		tPatientDTO.setState(ChangeUtils.getFormatValue(tPatientDTO.getState(), "已通过", "1"));
 		tPatientDTO.setSex(ChangeUtils.getFormatValue(tPatientDTO.getSex(), "男", "0"));
 		tPatientDTO.setSex(ChangeUtils.getFormatValue(tPatientDTO.getSex(), "女", "1"));
+		tPatientDTO.setApplyType(ChangeUtils.getFormatValue(tPatientDTO.getApplyType(), "正常申请", "0"));
+		tPatientDTO.setApplyType(ChangeUtils.getFormatValue(tPatientDTO.getApplyType(), "复申请", "1"));
+		tPatientDTO.setIsLangMuHospital(ChangeUtils.getFormatValue(tPatientDTO.getIsLangMuHospital(), "是", "0"));
+		tPatientDTO.setIsLangMuHospital(ChangeUtils.getFormatValue(tPatientDTO.getIsLangMuHospital(), "否", "1"));
 		tPatientDTO.setDiagnosticMaterial(ChangeUtils.getFormatValue(tPatientDTO.getDiagnosticMaterial(), "√", "-999"));
 		tPatientDTO.setProofIdentity(ChangeUtils.getFormatValue(tPatientDTO.getProofIdentity(), "√", "-999"));
 		tPatientDTO.setProofIncome(ChangeUtils.getFormatValue(tPatientDTO.getProofIncome(), "√", "-999"));
@@ -93,7 +100,6 @@ public final class ChangeUtils {
 		tPatientDTO.setEstimatedTimeToIncreaseDrugInjection(ChangeUtils.getFormatValue(tPatientDTO.getEstimatedTimeToIncreaseDrugInjection(), "√", "-999"));
 		tPatientDTO.setRecipientsReceiveSingleDrug(ChangeUtils.getFormatValue(tPatientDTO.getRecipientsReceiveSingleDrug(), "√", "-999"));
 		tPatientDTO.setEndOfStatement(ChangeUtils.getFormatValue(tPatientDTO.getEndOfStatement(), "√", "-999"));
-		tPatientDTO.setIsLangMuHospital(ChangeUtils.getFormatValue(tPatientDTO.getIsLangMuHospital(), "√", "-999"));
 		tPatientDTO.setProvince(getProviceCodeByName(tPatientDTO.getProvince()));
 	}
 	

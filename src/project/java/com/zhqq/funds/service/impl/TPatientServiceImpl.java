@@ -57,35 +57,38 @@ public class TPatientServiceImpl implements TPatientService {
 	}
 
 	@Override
-	public TPatientDTO queryPatient(String name, String idcardnumber) throws Exception {
+	public TPatientDTO queryPatient(String name, String idcardnumber,String appplyType) throws Exception {
 		TPatientDTO rlt = new TPatientDTO();
 		TPatientExample example = new TPatientExample();  
 		TPatientExample.Criteria criteria = example.createCriteria();  
 		criteria.andNameEqualTo(name);
 		criteria.andIdcardnumberEqualTo(idcardnumber);
+		criteria.andApplyTypeEqualTo(appplyType);
 		List<TPatient> list = tPatientMapper.selectByExample(example);
 		if(list!=null && list.size()>0){
-			TPatient po = list.get(0);
-			
+			TPatient po = list.get(list.size()-1);
 			rlt = CopyUtils.copyPOToDTO(po);
 		}
 		return rlt;
 	}
 
 	@Override
-	public boolean checkName(String name) throws Exception {
+	public boolean checkName(String name,String appplyType) throws Exception {
 		TPatientExample example = new TPatientExample();
-		example.createCriteria().andNameEqualTo(name);
+		TPatientExample.Criteria criteria = example.createCriteria();  
+		criteria.andNameEqualTo(name);
+		criteria.andApplyTypeEqualTo(appplyType);
 		int count = tPatientMapper.countByExample(example);
 		return count==0 ? false : true;
 	}
 
 	@Override
-	public boolean checkCdCard(String name, String idcardnumber) throws Exception {
+	public boolean checkCdCard(String name, String idcardnumber,String appplyType) throws Exception {
 		TPatientExample example = new TPatientExample();  
 		TPatientExample.Criteria criteria = example.createCriteria();  
 		criteria.andNameEqualTo(name);
 		criteria.andIdcardnumberEqualTo(idcardnumber);
+		criteria.andApplyTypeEqualTo(appplyType);
 		int count = tPatientMapper.countByExample(example);
 		return count==0 ? false : true;
 	}
@@ -117,6 +120,10 @@ public class TPatientServiceImpl implements TPatientService {
 				criteria.andLangMuHospitalLike(hotkey);
 			}else if("7".equals(patientQueryType)){
 				criteria.andLangMuDoctorLike(hotkey);
+			}else if("8".equals(patientQueryType)){
+				criteria.andIdcardnumberLike(hotkey);
+			}else if("9".equals(patientQueryType)){
+				criteria.andApplyTypeLike(hotkey);
 			}
 		}
 		if(pageFlag){
@@ -155,6 +162,10 @@ public class TPatientServiceImpl implements TPatientService {
 				criteria.andLangMuHospitalLike(hotkey);
 			}else if("7".equals(patientQueryType)){
 				criteria.andLangMuDoctorLike(hotkey);
+			}else if("8".equals(patientQueryType)){
+				criteria.andIdcardnumberLike(hotkey);
+			}else if("9".equals(patientQueryType)){
+				criteria.andApplyTypeLike(hotkey);
 			}
 		}
 		rlt = tPatientMapper.countByExample(example);
@@ -777,4 +788,46 @@ public class TPatientServiceImpl implements TPatientService {
         }
         return tmpValue;
     }
+
+	@Override
+	public List<TPatientDTO> getPatientListByCondition(String key, String patientQueryType) {
+		List<TPatientDTO> rlt = new ArrayList<TPatientDTO>();
+		TPatientExample example = new TPatientExample();  
+		TPatientExample.Criteria criteria = example.createCriteria();
+		if(!StringUtils.isEmpty(key)){
+			if("0".equals(patientQueryType)){
+				criteria.andArchivesEqualTo(key);
+			}else if("1".equals(patientQueryType)){
+				criteria.andStateEqualTo(key);
+			}else if("2".equals(patientQueryType)){
+				criteria.andNameEqualTo(key);
+			}else if("3".equals(patientQueryType)){
+				criteria.andSexEqualTo(key);
+			}else if("4".equals(patientQueryType)){
+				criteria.andPhoneEqualTo(key);
+			}else if("5".equals(patientQueryType)){
+				criteria.andHrEqualTo(key);
+			}else if("6".equals(patientQueryType)){
+				criteria.andLangMuHospitalEqualTo(key);
+			}else if("7".equals(patientQueryType)){
+				criteria.andLangMuDoctorEqualTo(key);
+			}else if("8".equals(patientQueryType)){
+				criteria.andIdcardnumberEqualTo(key);
+			}else if("9".equals(patientQueryType)){
+				criteria.andApplyTypeEqualTo(key);
+			}
+		}
+		List<TPatient> list = tPatientMapper.selectByExample(example);
+		if(list!=null && list.size()>0){
+			for(TPatient po : list){
+				rlt.add(CopyUtils.copyPOToDTO(po));
+			}
+		}
+		return rlt;
+	}
+
+	@Override
+	public int getMaxArchives() {
+		return tPatientMapper.selectMaxArchives();
+	}
 }

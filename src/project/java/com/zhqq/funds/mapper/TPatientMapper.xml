@@ -97,6 +97,7 @@
     remarks, recipients_receive_single_drug, end_of_statement, passDate, is_lang_mu_hospital, 
     year
   </sql>
+  
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhqq.funds.po.TPatientExample" >
     select
     <if test="distinct" >
@@ -579,4 +580,8 @@
       year = #{year,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+   <select id="selectMaxArchives" resultType="java.lang.Integer" >
+    	select max(CONVERT(archives,SIGNED)) from t_patient
+  </select>
 </mapper>

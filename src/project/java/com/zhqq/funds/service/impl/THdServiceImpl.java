@@ -539,4 +539,47 @@ public class THdServiceImpl implements THdService {
         }
         return tmpValue;
     }
+
+	@Override
+	public List<THospitalMappingDTO> getHospitalMappingListByCondition(String key, String doctorQueryType) {
+		List<THospitalMappingDTO> rlt = new ArrayList<THospitalMappingDTO>();
+		THospitalMappingExample example = new THospitalMappingExample();  
+		THospitalMappingExample.Criteria criteria = example.createCriteria();
+		if(!StringUtils.isEmpty(key)){
+			if("0".equals(doctorQueryType)){
+				criteria.andAreaEqualTo(key);
+			}else if("1".equals(doctorQueryType)){
+				criteria.andHospitalNameEqualTo(key);
+			}else if("2".equals(doctorQueryType)){
+				criteria.andProvinceEqualTo(key);
+			}else if("3".equals(doctorQueryType)){
+				criteria.andCityEqualTo(key);
+			}else if("4".equals(doctorQueryType)){
+				criteria.andHospitalGradeEqualTo(key);
+			}else if("5".equals(doctorQueryType)){
+				criteria.andHospitalLevelEqualTo(key);
+			}else if("6".equals(doctorQueryType)){
+				criteria.andHospitalTypeEqualTo(key);
+			}else if("7".equals(doctorQueryType)){
+				criteria.andAreaManagerEqualTo(key);
+			}else if("8".equals(doctorQueryType)){
+				criteria.andHrEqualTo(key);
+			}else if("9".equals(doctorQueryType)){
+				criteria.andDoctorNameEqualTo(key);
+			}else if("10".equals(doctorQueryType)){
+				criteria.andDoctorTitleEqualTo(key);
+			}else if("11".equals(doctorQueryType)){
+				criteria.andAdministrativePostEqualTo(key);
+			}else if("12".equals(doctorQueryType)){
+				criteria.andProfessionalDirectionEqualTo(key);
+			}
+		}
+		List<THospitalMapping> list = tHospitalMappingMapper.selectByExample(example);
+		if(list!=null && list.size()>0){
+			for(THospitalMapping po : list){
+				rlt.add(CopyUtils.createCopy(po, THospitalMappingDTO.class));
+			}
+		}
+		return rlt;
+	}
 }

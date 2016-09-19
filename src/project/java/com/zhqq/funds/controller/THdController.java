@@ -24,7 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.collect.Lists;
+import com.zhqq.funds.DTO.TCitiesDTO;
 import com.zhqq.funds.DTO.THospitalMappingDTO;
+import com.zhqq.funds.VO.TCommComboBoxVO;
 import com.zhqq.funds.VO.THospitalMappingVO;
 import com.zhqq.funds.service.AreaService;
 import com.zhqq.funds.service.THdService;
@@ -269,4 +272,41 @@ public class THdController {
 		return outDto;
 	}
 	
+	/**
+	 * 根据专员获取医院
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value="funds/hd/getHospital")
+	public void getHospital(HttpServletRequest request, HttpServletResponse response,String hr) throws Exception {
+		List<TCommComboBoxVO> rlt = Lists.newArrayList();
+		List<THospitalMappingDTO> THospitalMappingDTOList = tHdService.getHospitalMappingListByCondition(hr, "8");
+		for(THospitalMappingDTO dto : THospitalMappingDTOList){
+			TCommComboBoxVO tCommComboBoxVO = new TCommComboBoxVO();
+			tCommComboBoxVO.setDisplay(dto.getHospitalName());
+			tCommComboBoxVO.setValue(dto.getHospitalName());
+			rlt.add(tCommComboBoxVO);
+		}
+		WebCxt.write(response, AOSJson.toJson(rlt));
+	}
+	
+	/**
+	 * 根据医院获取医生
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value="funds/hd/getDoctor")
+	public void getDoctor(HttpServletRequest request, HttpServletResponse response,String hospital) throws Exception {
+		List<TCommComboBoxVO> rlt = Lists.newArrayList();
+		List<THospitalMappingDTO> THospitalMappingDTOList = tHdService.getHospitalMappingListByCondition(hospital, "1");
+		for(THospitalMappingDTO dto : THospitalMappingDTOList){
+			TCommComboBoxVO tCommComboBoxVO = new TCommComboBoxVO();
+			tCommComboBoxVO.setDisplay(dto.getDoctorName());
+			tCommComboBoxVO.setValue(dto.getDoctorName());
+			rlt.add(tCommComboBoxVO);
+		}
+		WebCxt.write(response, AOSJson.toJson(rlt));
+	}
 }
