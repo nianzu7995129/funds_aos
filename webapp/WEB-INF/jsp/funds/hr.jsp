@@ -25,6 +25,8 @@
 			<aos:column header="是否通过" dataIndex="state" width="70" celltip="true" />
 			<aos:column header="姓名" dataIndex="name" width="70" celltip="true" />
 			<aos:column header="性别" dataIndex="sex" width="70" celltip="true" />
+			<aos:column header="省份" dataIndex="province" width="70" celltip="true" />
+			<aos:column header="申请类型" dataIndex="applyType" width="70" celltip="true" />
 			<aos:column header="住址" dataIndex="address" width="70" celltip="true" />
 			<aos:column header="联系电话" dataIndex="phone" width="70" celltip="true" />
 			<aos:column header="身份号证" dataIndex="idcardnumber" width="70" celltip="true" />
@@ -41,14 +43,11 @@
 			<aos:column header="朗沐医生" dataIndex="langMuDoctor" width="70" celltip="true" />
 			<aos:column header="预计增药注射时间" dataIndex="estimatedTimeToIncreaseDrugInjection" width="120" celltip="true" />
 			<aos:column header="备注" dataIndex="remarks" width="70" celltip="true" />
+			<aos:column header="诊断医院是否为朗沐医院"  dataIndex="isLangMuHospital" width="130" celltip="true" />
+			<aos:column header="通过日期"  dataIndex="passdate" width="120" celltip="true" />
 			<aos:column header="受助药品领取单" dataIndex="recipientsReceiveSingleDrug" width="120" celltip="true" />
 			<aos:column header="捐助结束声明" dataIndex="endOfStatement" width="120" celltip="true" />
-			<aos:column header="通过日期"  dataIndex="passdate" width="120" celltip="true" />
-			<aos:column header="150/82" dataIndex="other1" width="120" celltip="true" />
-			<aos:column header="1243" dataIndex="other2" width="120" celltip="true" />
-			<aos:column header="2016新申请" dataIndex="other3" width="120" celltip="true" />
-			<aos:column header="2016复申请" dataIndex="other4" width="120" celltip="true" />
-			<aos:column header="1519" dataIndex="other5" width="120" celltip="true" />
+			<aos:column header="年份" dataIndex="year" width="70" celltip="true" />
 			<aos:column header=""   width="1" flex="1"/>
 		</aos:gridpanel>
 	</aos:viewport>

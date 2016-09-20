@@ -92,8 +92,8 @@
 				<aos:combobox name="coldChainDrugInformedConsent" fieldLabel="冷链药品知情同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:textfield id="hrNew" onblur="initHospitalAndDoctor" name="hr" fieldLabel="项目专员" maxLength="100" columnWidth="0.49" />
 				
-				<aos:combobox id="langMuHospitalNew" fieldLabel="朗沐医院" name="langMuHospital"  onselect="langMuHospitalChange" emptyText="请选择医院..." columnWidth="0.5" url="hd/getHospital.jhtml" />
-				<aos:combobox id="langMuDoctorNew" fieldLabel="朗沐医生" name="langMuDoctor" emptyText="请选择医生..." columnWidth="0.49" url="hd/getDoctor.jhtml" />
+				<aos:combobox id="langMuHospitalNew" fieldLabel="朗沐医院" name="langMuHospital"   editable="true" onselect="langMuHospitalChange" emptyText="请选择医院..." columnWidth="0.5" url="hd/getHospital.jhtml" />
+				<aos:combobox id="langMuDoctorNew" fieldLabel="朗沐医生" name="langMuDoctor"  editable="true" emptyText="请选择医生..." columnWidth="0.49" url="hd/getDoctor.jhtml" />
 				
 				<aos:combobox name="estimatedTimeToIncreaseDrugInjection" fieldLabel="预计增药注射时间"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:textfield name="remarks" fieldLabel="备注" maxLength="100" columnWidth="0.49" />
@@ -147,8 +147,8 @@
 				<aos:combobox name="coldChainDrugInformedConsent" fieldLabel="冷链药品知情同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:textfield id="hrModify" onblur="initHospitalAndDoctorModify" name="hr" fieldLabel="项目专员" maxLength="100" columnWidth="0.49" />
 				
-				<aos:combobox id="langMuHospitalModify" fieldLabel="朗沐医院" name="langMuHospital"  onselect="langMuHospitalModifyChange" emptyText="请选择医院..." columnWidth="0.5" url="hd/getHospital.jhtml" />
-				<aos:combobox id="langMuDoctorModify" fieldLabel="朗沐医生" name="langMuDoctor" emptyText="请选择医生..." columnWidth="0.49" url="hd/getDoctor.jhtml" />
+				<aos:combobox id="langMuHospitalModify" fieldLabel="朗沐医院" name="langMuHospital"  onselect="langMuHospitalModifyChange" editable="true" emptyText="请选择医院..." columnWidth="0.5" url="hd/getHospital.jhtml" />
+				<aos:combobox id="langMuDoctorModify" fieldLabel="朗沐医生" name="langMuDoctor" emptyText="请选择医生..."  editable="true" columnWidth="0.49" url="hd/getDoctor.jhtml" />
 				
 				<aos:combobox name="estimatedTimeToIncreaseDrugInjection" fieldLabel="预计增药注射时间"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:textfield name="remarks" fieldLabel="备注" maxLength="100" columnWidth="0.49" />
@@ -230,27 +230,29 @@
 					callback : function(records, operation, success) {
 						if (records.length > 0) {
 							AOS.edit(langMuHospitalModify);
-						} else {
-							AOS.read(langMuHospitalModify);
-						}
-						//设置选中值
-						Ext.getCmp("langMuHospitalModify").setValue(records[0].data.value);
-						
-						var hospital = Ext.getCmp("langMuHospitalModify").getValue();
-						langMuDoctorModify_store.getProxy().extraParams = {
-							hospital : hospital
-						};
-						langMuDoctorModify_store.load({
-							callback : function(records, operation, success) {
-								if (records.length > 0) {
-									AOS.edit(langMuDoctorModify);
-								} else {
-									AOS.read(langMuDoctorModify);
+							//设置选中值
+							Ext.getCmp("langMuHospitalModify").setValue(records[0].data.value);
+							
+							var hospital = Ext.getCmp("langMuHospitalModify").getValue();
+							langMuDoctorModify_store.getProxy().extraParams = {
+								hospital : hospital
+							};
+							langMuDoctorModify_store.load({
+								callback : function(records, operation, success) {
+									if (records.length > 0) {
+										AOS.edit(langMuDoctorModify);
+									} else {
+										AOS.read(langMuDoctorModify);
+									}
+									//设置选中值
+									Ext.getCmp("langMuDoctorModify").setValue(records[0].data.value);
 								}
-								//设置选中值
-								Ext.getCmp("langMuDoctorModify").setValue(records[0].data.value);
-							}
-						});
+							});
+						} else {
+							langMuHospitalModify_store.removeAll();
+							Ext.getCmp("langMuDoctorModify").reset();
+						}
+						
 						
 					}
 				});
@@ -267,28 +269,27 @@
 					callback : function(records, operation, success) {
 						if (records.length > 0) {
 							AOS.edit(langMuHospitalNew);
-						} else {
-							AOS.read(langMuHospitalNew);
-						}
-						//设置选中值
-						Ext.getCmp("langMuHospitalNew").setValue(records[0].data.value);
-						
-						var hospital = Ext.getCmp("langMuHospitalNew").getValue();
-						langMuDoctorNew_store.getProxy().extraParams = {
-							hospital : hospital
-						};
-						langMuDoctorNew_store.load({
-							callback : function(records, operation, success) {
-								if (records.length > 0) {
-									AOS.edit(langMuDoctorNew);
-								} else {
-									AOS.read(langMuDoctorNew);
+							//设置选中值
+							Ext.getCmp("langMuHospitalNew").setValue(records[0].data.value);
+							var hospital = Ext.getCmp("langMuHospitalNew").getValue();
+							langMuDoctorNew_store.getProxy().extraParams = {
+								hospital : hospital
+							};
+							langMuDoctorNew_store.load({
+								callback : function(records, operation, success) {
+									if (records.length > 0) {
+										AOS.edit(langMuDoctorNew);
+									} else {
+										AOS.read(langMuDoctorNew);
+									}
+									//设置选中值
+									Ext.getCmp("langMuDoctorNew").setValue(records[0].data.value);
 								}
-								//设置选中值
-								Ext.getCmp("langMuDoctorNew").setValue(records[0].data.value);
-							}
-						});
-						
+							});
+						} else {
+							langMuHospitalNew_store.removeAll();
+							Ext.getCmp("langMuDoctorNew").reset();
+						}
 					}
 				});
 			}
@@ -379,9 +380,9 @@
                }  
             } 
             
-            function isPhoneNo(phone){  
+            function isPhoneNo(phone){ 
             	var reg = /^1\d{10}$/; //定义正则表达式
-            	 if(reg.test(phone)) {  
+            	 if(""==phone || reg.test(phone)) {  
                     return  true;  
                 }  else{
                 	 AOS.tip("电话号码需为11位数字");  

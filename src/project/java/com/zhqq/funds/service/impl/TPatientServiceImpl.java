@@ -57,13 +57,12 @@ public class TPatientServiceImpl implements TPatientService {
 	}
 
 	@Override
-	public TPatientDTO queryPatient(String name, String idcardnumber,String appplyType) throws Exception {
+	public TPatientDTO queryPatient(String name, String idcardnumber) throws Exception {
 		TPatientDTO rlt = new TPatientDTO();
 		TPatientExample example = new TPatientExample();  
 		TPatientExample.Criteria criteria = example.createCriteria();  
 		criteria.andNameEqualTo(name);
 		criteria.andIdcardnumberEqualTo(idcardnumber);
-		criteria.andApplyTypeEqualTo(appplyType);
 		List<TPatient> list = tPatientMapper.selectByExample(example);
 		if(list!=null && list.size()>0){
 			TPatient po = list.get(list.size()-1);
@@ -73,22 +72,20 @@ public class TPatientServiceImpl implements TPatientService {
 	}
 
 	@Override
-	public boolean checkName(String name,String appplyType) throws Exception {
+	public boolean checkName(String name) throws Exception {
 		TPatientExample example = new TPatientExample();
 		TPatientExample.Criteria criteria = example.createCriteria();  
 		criteria.andNameEqualTo(name);
-		criteria.andApplyTypeEqualTo(appplyType);
 		int count = tPatientMapper.countByExample(example);
 		return count==0 ? false : true;
 	}
 
 	@Override
-	public boolean checkCdCard(String name, String idcardnumber,String appplyType) throws Exception {
+	public boolean checkCdCard(String name, String idcardnumber) throws Exception {
 		TPatientExample example = new TPatientExample();  
 		TPatientExample.Criteria criteria = example.createCriteria();  
 		criteria.andNameEqualTo(name);
 		criteria.andIdcardnumberEqualTo(idcardnumber);
-		criteria.andApplyTypeEqualTo(appplyType);
 		int count = tPatientMapper.countByExample(example);
 		return count==0 ? false : true;
 	}
@@ -123,7 +120,14 @@ public class TPatientServiceImpl implements TPatientService {
 			}else if("8".equals(patientQueryType)){
 				criteria.andIdcardnumberLike(hotkey);
 			}else if("9".equals(patientQueryType)){
-				criteria.andApplyTypeLike(hotkey);
+				if("%正常申请%".equals(hotkey)){
+					criteria.andApplyTypeEqualTo("0");
+				}else if("%复申请%".equals(hotkey)){
+					criteria.andApplyTypeEqualTo("1");
+				}else{
+					criteria.andApplyTypeEqualTo("hotkey");
+				}
+				
 			}
 		}
 		if(pageFlag){
@@ -165,7 +169,13 @@ public class TPatientServiceImpl implements TPatientService {
 			}else if("8".equals(patientQueryType)){
 				criteria.andIdcardnumberLike(hotkey);
 			}else if("9".equals(patientQueryType)){
-				criteria.andApplyTypeLike(hotkey);
+				if("%正常申请%".equals(hotkey)){
+					criteria.andApplyTypeEqualTo("0");
+				}else if("%复申请%".equals(hotkey)){
+					criteria.andApplyTypeEqualTo("1");
+				}else{
+					criteria.andApplyTypeEqualTo("hotkey");
+				}
 			}
 		}
 		rlt = tPatientMapper.countByExample(example);

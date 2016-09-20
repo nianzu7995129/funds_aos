@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ include file="/WEB-INF/jsp/common/tags.jsp"%>
 <aos:html>
-<aos:head title="医院医生关联管理">
+<aos:head title="专员关系表管理">
 	<aos:include lib="ext" />
 	<aos:base href="funds/" />
 </aos:head>
@@ -13,13 +13,13 @@
 			onitemdblclick="_w_user_u_show">
 			<aos:docked forceBoder="0 0 1 0">
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:dockeditem text="新增" tooltip="新增医院医生关联" onclick="_w_user_show" icon="add.png" />
-				<aos:dockeditem text="修改" tooltip="修改医院医生关联" onclick="_w_user_u_show" icon="edit.png" />
-				<aos:dockeditem text="删除" tooltip="删除医院医生关联" onclick="_g_user_del" icon="del.png" />
+				<aos:dockeditem text="新增" tooltip="新增专员关系" onclick="_w_user_show" icon="add.png" />
+				<aos:dockeditem text="修改" tooltip="修改专员关系" onclick="_w_user_u_show" icon="edit.png" />
+				<aos:dockeditem text="删除" tooltip="删除专员关系" onclick="_g_user_del" icon="del.png" />
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:dockeditem text="导入" tooltip="导入医院医生关联信息" onclick="importExcel()" icon="edit.png"/>
+				<aos:dockeditem text="导入" tooltip="导入专员关系信息" onclick="importExcel()" icon="edit.png"/>
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:dockeditem text="导出" tooltip="导出医院医生关联信息成Excel" onclick="_g_user_export" icon="icon9.png" />
+				<aos:dockeditem text="导出" tooltip="导出专员关系信息成Excel" onclick="_g_user_export" icon="icon9.png" />
 				<aos:dockeditem xtype="tbseparator" />
 				<aos:combobox id="patient_query_type" name="patient_query_type" dicField="custom_hd_query" value="0"  width="90"/>
 				<aos:triggerfield emptyText="请输入关键字" name="hotkey" id="_hotkey" onenterkey="_g_user_query"
@@ -48,7 +48,7 @@
 		</aos:gridpanel>
 	</aos:viewport>
 
-	<aos:window id="_w_user" title="新增医院医生关联" maxHeight="-10" width="720" autoScroll="true">
+	<aos:window id="_w_user" title="新增专员关系" maxHeight="-10" width="720" autoScroll="true">
 		<aos:formpanel id="_f_user" width="700" layout="column">
 			<aos:fieldset title="" labelWidth="150" labelAlign="right" center="true" collapsible="false">
 				<aos:textfield name="area" fieldLabel="区域"   maxLength="20" columnWidth="0.5" />
@@ -80,7 +80,7 @@
 		</aos:docked>
 	</aos:window>
 
-	<aos:window id="_w_user_u" title="修改医院医生关联" onshow="_w_user_u_onshow" width="720" maxHeight="-10" autoScroll="true">
+	<aos:window id="_w_user_u" title="修改专员关系" onshow="_w_user_u_onshow" width="720" maxHeight="-10" autoScroll="true">
 		<aos:formpanel id="_f_user_u" width="700" layout="column" labelWidth="70">
 			<aos:hiddenfield fieldLabel="xxxxx" name="id" />
 			<aos:fieldset title="" labelWidth="120" labelAlign="right" center="true" collapsible="false">

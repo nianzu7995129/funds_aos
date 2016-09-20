@@ -48,8 +48,6 @@
 					onenterkey="fn_query_enter" columnWidth="1" margin="0 60 0 0" />
 				<aos:textfield fieldLabel="身份证" name="cdcard_" maxLength="20" allowBlank="false" star="false"
 					onenterkey="fn_query_enter" height="28" columnWidth="1" margin="0 60 0 0" />
-				<aos:combobox fieldLabel="申请类型" name="applyType_"  dicField="custom_apply_type" emptyText="正常申请" value="0" star="false"
-					onenterkey="fn_query_enter" columnWidth="1" margin="0 60 0 0" />	
 				<aos:docked dock="bottom" ui="footer">
 					<aos:dockeditem xtype="tbfill" />
 					<aos:dockeditem xtype="button" onclick="_fn_query" icon="user6.png" text="查 询" tooltip="查询信息" />

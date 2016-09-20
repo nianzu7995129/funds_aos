@@ -187,7 +187,7 @@
 
             function isPhoneNo(phone){  
             	var reg = /^1\d{10}$/; //定义正则表达式
-            	 if(reg.test(phone)) {  
+            	 if(""==phone || reg.test(phone)) {  
                     return  true;  
                 }  else{
                 	 AOS.tip("电话号码需为11位数字");  

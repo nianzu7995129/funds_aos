@@ -40,6 +40,10 @@ public final class ChangeUtils {
 			if(rlt.equals(format)){
 				rlt = target;
 			}
+		}else{
+			if(format.equals(rlt)){
+				rlt = target;
+			}
 		}
 		return rlt;
 	}
@@ -78,6 +82,17 @@ public final class ChangeUtils {
 		tPatientDTO.setRecipientsReceiveSingleDrug(ChangeUtils.getFormatValue(tPatientDTO.getRecipientsReceiveSingleDrug(), "-999", "√"));
 		tPatientDTO.setEndOfStatement(ChangeUtils.getFormatValue(tPatientDTO.getEndOfStatement(), "-999", "√"));
 		tPatientDTO.setProvince(getProviceNameByCode(tPatientDTO.getProvince()));
+		tPatientDTO.setDiagnosticMaterial(ChangeUtils.getFormatValue(tPatientDTO.getDiagnosticMaterial(), "", "无"));
+		tPatientDTO.setProofIdentity(ChangeUtils.getFormatValue(tPatientDTO.getProofIdentity(), "", "无"));
+		tPatientDTO.setProofIncome(ChangeUtils.getFormatValue(tPatientDTO.getProofIncome(), "", "无"));
+		tPatientDTO.setPurchaseInvoice(ChangeUtils.getFormatValue(tPatientDTO.getPurchaseInvoice(), "", "无"));
+		tPatientDTO.setMedicalEvaluationForm(ChangeUtils.getFormatValue(tPatientDTO.getMedicalEvaluationForm(), "", "无"));
+		tPatientDTO.setInformedConsentOfPatients(ChangeUtils.getFormatValue(tPatientDTO.getInformedConsentOfPatients(), "", "无"));
+		tPatientDTO.setPatienteConomicStatus(ChangeUtils.getFormatValue(tPatientDTO.getPatienteConomicStatus(), "", "无"));
+		tPatientDTO.setColdChainDrugInformedConsent(ChangeUtils.getFormatValue(tPatientDTO.getColdChainDrugInformedConsent(), "", "无"));
+		tPatientDTO.setEstimatedTimeToIncreaseDrugInjection(ChangeUtils.getFormatValue(tPatientDTO.getEstimatedTimeToIncreaseDrugInjection(), "", "无"));
+		tPatientDTO.setRecipientsReceiveSingleDrug(ChangeUtils.getFormatValue(tPatientDTO.getRecipientsReceiveSingleDrug(), "", "无"));
+		tPatientDTO.setEndOfStatement(ChangeUtils.getFormatValue(tPatientDTO.getEndOfStatement(), "", "无"));
 	}
 	
 	public static void proTPatientReverse(TPatient tPatientDTO) {
@@ -150,6 +165,12 @@ public final class ChangeUtils {
 		tDoctorDTO.setIsRegister(ChangeUtils.getFormatValue(tDoctorDTO.getIsRegister(), "0", "是"));
 		tDoctorDTO.setIsRegister(ChangeUtils.getFormatValue(tDoctorDTO.getIsRegister(), "1", "否"));
 		tDoctorDTO.setProvince(getProviceNameByCode(tDoctorDTO.getProvince()));
+		tDoctorDTO.setIdcardCopy(ChangeUtils.getFormatValue(tDoctorDTO.getIdcardCopy(), "", "无"));
+		tDoctorDTO.setRegisterDoctorTable(ChangeUtils.getFormatValue(tDoctorDTO.getRegisterDoctorTable(), "", "无"));
+		tDoctorDTO.setRegisterHospitalConsent(ChangeUtils.getFormatValue(tDoctorDTO.getRegisterHospitalConsent(), "", "无"));
+		tDoctorDTO.setRegisterDoctorConsent(ChangeUtils.getFormatValue(tDoctorDTO.getRegisterDoctorConsent(), "", "无"));
+		tDoctorDTO.setResume(ChangeUtils.getFormatValue(tDoctorDTO.getResume(), "", "无"));
+		tDoctorDTO.setHospitalProfile(ChangeUtils.getFormatValue(tDoctorDTO.getHospitalProfile(), "", "无"));
 	}
 	
 	
@@ -167,6 +188,8 @@ public final class ChangeUtils {
 		tHrDTO.setCompanyProfile(ChangeUtils.getFormatValue(tHrDTO.getCompanyProfile(), "-999", "√"));
 		tHrDTO.setIsRegister(ChangeUtils.getFormatValue(tHrDTO.getIsRegister(), "0", "是"));
 		tHrDTO.setIsRegister(ChangeUtils.getFormatValue(tHrDTO.getIsRegister(), "1", "否"));
+		tHrDTO.setIdcardCopy(ChangeUtils.getFormatValue(tHrDTO.getIdcardCopy(), "", "无"));
+		tHrDTO.setCompanyProfile(ChangeUtils.getFormatValue(tHrDTO.getCompanyProfile(), "", "无"));
 	}
 	
 	public static void proTHrReverse(THr tHr) {

@@ -34,7 +34,7 @@ public interface TPatientService {
 	 * @return
 	 * @throws Exception
 	 */
-	public TPatientDTO queryPatient(String name ,String idcardnumber,String appplyType) throws Exception;
+	public TPatientDTO queryPatient(String name ,String idcardnumber) throws Exception;
 	
 	/**
 	 * 检查患者姓名是否存在
@@ -42,7 +42,7 @@ public interface TPatientService {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean checkName(String name ,String appplyType) throws Exception;
+	public boolean checkName(String name) throws Exception;
 	
 	/**
 	 * 检查患者身份证号是否存在
@@ -51,7 +51,7 @@ public interface TPatientService {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean checkCdCard(String name ,String idcardnumber,String appplyType) throws Exception;
+	public boolean checkCdCard(String name ,String idcardnumber) throws Exception;
 	
 	/**
 	 * 

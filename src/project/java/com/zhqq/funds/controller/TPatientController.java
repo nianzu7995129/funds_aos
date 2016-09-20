@@ -67,23 +67,23 @@ public class TPatientController {
 	private AreaService areaService;
 	
 	@RequestMapping(value="/doQuery")
-	public void queryPatient(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="name_")String name ,@RequestParam(value="cdcard_")String cdcard,@RequestParam(value="applyType_")String applyType) throws Exception {
+	public void queryPatient(HttpServletRequest request, HttpServletResponse response,@RequestParam(value="name_")String name ,@RequestParam(value="cdcard_")String cdcard) throws Exception {
 		TPatientVO rlt = new TPatientVO();
 		// 姓名检查
-		if (!tPatientService.checkName(name,applyType)) {
+		if (!tPatientService.checkName(name)) {
 			rlt.setAppcode(-1);
 			rlt.setAppmsg("患者姓名不存在!");
 			WebCxt.write(response, AOSJson.toJson(rlt));
 			return;
 		}
 		// 身份证检查
-		if (!tPatientService.checkCdCard(name,cdcard,applyType)) {
+		if (!tPatientService.checkCdCard(name,cdcard)) {
 			rlt.setAppcode(-2);
 			rlt.setAppmsg("患者身份证号不正确!");
 			WebCxt.write(response, AOSJson.toJson(rlt));
 			return;
 		}
-		TPatientDTO dto = tPatientService.queryPatient(name,cdcard,applyType); 
+		TPatientDTO dto = tPatientService.queryPatient(name,cdcard); 
 		ChangeUtils.proTPatientDTO(dto);
 		rlt = CopyUtils.copyDTOToVO(dto);
 		rlt.setAppcode(1);
@@ -364,9 +364,13 @@ public class TPatientController {
 	@RequestMapping(value="funds/patient/getMaxArchives")
 	public void getMaxArchives(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		TPatientVO rlt = new TPatientVO();
-		int maxArchives = tPatientService.getMaxArchives();
+		try{
+			int maxArchives = tPatientService.getMaxArchives();
+			rlt.setArchives(++maxArchives + "");
+		}catch(Exception e){
+			
+		}
 		rlt.setAppcode(1);
-		rlt.setArchives(++maxArchives + "");
 		WebCxt.write(response, AOSJson.toJson(rlt));
 	}
 }
