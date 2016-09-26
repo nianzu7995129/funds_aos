@@ -97,7 +97,7 @@ public class TDoctorController {
 			@RequestParam(value="start")String start) throws Exception {
 		int totalCount = tDoctorService.queryDoctorCount(hotkey,patientQueryType);
 		List<TDoctorDTO> listTDoctorDTO = tDoctorService.queryDoctorList(hotkey,patientQueryType,page,start,limit,true);
-		if(ChangeUtils.tProvincesDTOList==null){
+		if(ChangeUtils.tProvincesDTOList==null||ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,areaService.getAllProvinces());
 		}else{
 			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,null);

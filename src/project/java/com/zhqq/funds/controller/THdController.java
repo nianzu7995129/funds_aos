@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -100,7 +101,7 @@ public class THdController {
 			@RequestParam(value="start")String start) throws Exception {
 		int totalCount = tHdService.queryHospitalMappingCount(hotkey,patientQueryType);
 		List<THospitalMappingDTO> listTHospitalMappingDTO = tHdService.queryHospitalMappingList(hotkey,patientQueryType,page,start,limit,true);
-		if(ChangeUtils.tProvincesDTOList==null){
+		if(ChangeUtils.tProvincesDTOList==null||ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,areaService.getAllProvinces(),areaService.getAllCities());
 		}else{
 			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,null,null);
@@ -281,13 +282,17 @@ public class THdController {
 	@RequestMapping(value="funds/hd/getHospital")
 	public void getHospital(HttpServletRequest request, HttpServletResponse response,String hr) throws Exception {
 		List<TCommComboBoxVO> rlt = Lists.newArrayList();
-		List<THospitalMappingDTO> THospitalMappingDTOList = tHdService.getHospitalMappingListByCondition(hr, "8");
-		for(THospitalMappingDTO dto : THospitalMappingDTOList){
-			TCommComboBoxVO tCommComboBoxVO = new TCommComboBoxVO();
-			tCommComboBoxVO.setDisplay(dto.getHospitalName());
-			tCommComboBoxVO.setValue(dto.getHospitalName());
-			rlt.add(tCommComboBoxVO);
+		if(!StringUtils.isEmpty(hr)){
+			hr = URLDecoder.decode(hr,"utf-8");
+			List<THospitalMappingDTO> THospitalMappingDTOList = tHdService.getHospitalMappingListByCondition(hr, "8");
+			for(THospitalMappingDTO dto : THospitalMappingDTOList){
+				TCommComboBoxVO tCommComboBoxVO = new TCommComboBoxVO();
+				tCommComboBoxVO.setDisplay(dto.getHospitalName());
+				tCommComboBoxVO.setValue(dto.getHospitalName());
+				rlt.add(tCommComboBoxVO);
+			}
 		}
+		
 		WebCxt.write(response, AOSJson.toJson(rlt));
 	}
 	
@@ -300,13 +305,17 @@ public class THdController {
 	@RequestMapping(value="funds/hd/getDoctor")
 	public void getDoctor(HttpServletRequest request, HttpServletResponse response,String hospital) throws Exception {
 		List<TCommComboBoxVO> rlt = Lists.newArrayList();
-		List<THospitalMappingDTO> THospitalMappingDTOList = tHdService.getHospitalMappingListByCondition(hospital, "1");
-		for(THospitalMappingDTO dto : THospitalMappingDTOList){
-			TCommComboBoxVO tCommComboBoxVO = new TCommComboBoxVO();
-			tCommComboBoxVO.setDisplay(dto.getDoctorName());
-			tCommComboBoxVO.setValue(dto.getDoctorName());
-			rlt.add(tCommComboBoxVO);
+		if(!StringUtils.isEmpty(hospital)){
+			hospital = URLDecoder.decode(hospital,"utf-8");
+			List<THospitalMappingDTO> THospitalMappingDTOList = tHdService.getHospitalMappingListByCondition(hospital, "1");
+			for(THospitalMappingDTO dto : THospitalMappingDTOList){
+				TCommComboBoxVO tCommComboBoxVO = new TCommComboBoxVO();
+				tCommComboBoxVO.setDisplay(dto.getDoctorName());
+				tCommComboBoxVO.setValue(dto.getDoctorName());
+				rlt.add(tCommComboBoxVO);
+			}
 		}
+		
 		WebCxt.write(response, AOSJson.toJson(rlt));
 	}
 }

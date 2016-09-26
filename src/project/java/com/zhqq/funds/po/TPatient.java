@@ -19,6 +19,8 @@ public class TPatient {
 
     private String idcardnumber;
 
+    private String patientType;
+
     private String phone;
 
     private String address;
@@ -121,6 +123,14 @@ public class TPatient {
 
     public void setIdcardnumber(String idcardnumber) {
         this.idcardnumber = idcardnumber == null ? null : idcardnumber.trim();
+    }
+
+    public String getPatientType() {
+        return patientType;
+    }
+
+    public void setPatientType(String patientType) {
+        this.patientType = patientType == null ? null : patientType.trim();
     }
 
     public String getPhone() {

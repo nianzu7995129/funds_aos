@@ -231,7 +231,7 @@ public class THdServiceImpl implements THdService {
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<THospitalMappingDTO> listTHospitalMappingDTO = queryHospitalMappingList(hotkey, patientQueryType, "", "", "", false);
-		if(ChangeUtils.tProvincesDTOList==null){
+		if(ChangeUtils.tProvincesDTOList==null||ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,areaService.getAllProvinces(),areaService.getAllCities());
 		}else{
 			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,null,null);
@@ -363,7 +363,7 @@ public class THdServiceImpl implements THdService {
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<THospitalMappingDTO> listTHospitalMappingDTO = queryHospitalMappingList(hotkey, patientQueryType, "", "", "", false);
 		
-		if(ChangeUtils.tProvincesDTOList==null){
+		if(ChangeUtils.tProvincesDTOList==null||ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,areaService.getAllProvinces(),areaService.getAllCities());
 		}else{
 			ChangeUtils.proTHospitalMappingDTOList(listTHospitalMappingDTO,null,null);

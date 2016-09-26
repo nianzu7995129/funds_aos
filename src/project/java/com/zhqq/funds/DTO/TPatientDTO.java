@@ -25,8 +25,18 @@ public class TPatientDTO {
     private String applyType;
 
     private String idcardnumber;
+    
+    private String patientType;
 
-    private String phone;
+    public String getPatientType() {
+		return patientType;
+	}
+
+	public void setPatientType(String patientType) {
+		this.patientType = patientType;
+	}
+
+	private String phone;
 
     private String address;
 

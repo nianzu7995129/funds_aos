@@ -174,7 +174,7 @@ public class TPatientController {
 		
 		int totalCount = tPatientService.queryPatientCountHR(hotkey,patientQueryType,hr);
 		List<TPatientDTO> listTPatientDTO = tPatientService.queryPatientListHR(hotkey,patientQueryType,hr,page,start,limit,true);
-		if(ChangeUtils.tProvincesDTOList==null){
+		if(ChangeUtils.tProvincesDTOList==null||ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.proTPatientDTOList(listTPatientDTO,areaService.getAllProvinces());
 		}else{
 			ChangeUtils.proTPatientDTOList(listTPatientDTO,null);
@@ -191,7 +191,7 @@ public class TPatientController {
 			@RequestParam(value="start")String start) throws Exception {
 		int totalCount = tPatientService.queryPatientCount(hotkey,patientQueryType);
 		List<TPatientDTO> listTPatientDTO = tPatientService.queryPatientList(hotkey,patientQueryType,page,start,limit,true);
-		if(ChangeUtils.tProvincesDTOList==null){
+		if(ChangeUtils.tProvincesDTOList==null||ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.proTPatientDTOList(listTPatientDTO,areaService.getAllProvinces());
 		}else{
 			ChangeUtils.proTPatientDTOList(listTPatientDTO,null);

@@ -106,6 +106,7 @@ public final class CopyUtils {
 		rlt.setProvince(tPatient.getProvince());
 		rlt.setApplyType(tPatient.getApplyType());
 		rlt.setIdcardnumber(tPatient.getIdcardnumber());
+		rlt.setPatientType(tPatient.getPatientType());
 		rlt.setPhone(tPatient.getPhone());
 		rlt.setAddress(tPatient.getAddress());
 		rlt.setDiagnosticMaterial(tPatient.getDiagnosticMaterial());
@@ -139,6 +140,7 @@ public final class CopyUtils {
 		rlt.setProvince(tPatient.getProvince());
 		rlt.setApplyType(tPatient.getApplyType());
 		rlt.setIdcardnumber(tPatient.getIdcardnumber());
+		rlt.setPatientType(tPatient.getPatientType());
 		rlt.setPhone(tPatient.getPhone());
 		rlt.setAddress(tPatient.getAddress());
 		rlt.setDiagnosticMaterial(tPatient.getDiagnosticMaterial());
@@ -180,6 +182,7 @@ public final class CopyUtils {
 		rlt.setProvince(tPatient.getProvince());
 		rlt.setApplyType(tPatient.getApplyType());
 		rlt.setIdcardnumber(tPatient.getIdcardnumber());
+		rlt.setPatientType(tPatient.getPatientType());
 		rlt.setPhone(tPatient.getPhone());
 		rlt.setAddress(tPatient.getAddress());
 		rlt.setDiagnosticMaterial(tPatient.getDiagnosticMaterial());

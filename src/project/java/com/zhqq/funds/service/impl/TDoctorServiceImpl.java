@@ -207,7 +207,7 @@ public class TDoctorServiceImpl implements TDoctorService {
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<TDoctorDTO> listTDoctorDTO = queryDoctorList(hotkey, patientQueryType, "", "", "", false);
-		if(ChangeUtils.tProvincesDTOList==null){
+		if(ChangeUtils.tProvincesDTOList==null||ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,areaService.getAllProvinces());
 		}else{
 			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,null);
@@ -335,7 +335,7 @@ public class TDoctorServiceImpl implements TDoctorService {
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<TDoctorDTO> listTDoctorDTO = queryDoctorList(hotkey, patientQueryType, "", "", "", false);
 		
-		if(ChangeUtils.tProvincesDTOList==null){
+		if(ChangeUtils.tProvincesDTOList==null||ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,areaService.getAllProvinces());
 		}else{
 			ChangeUtils.proTDoctorDTOList(listTDoctorDTO,null);

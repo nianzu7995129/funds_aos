@@ -30,6 +30,7 @@
 			<aos:column header="住址" dataIndex="address" width="70" celltip="true" />
 			<aos:column header="联系电话" dataIndex="phone" width="70" celltip="true" />
 			<aos:column header="身份号证" dataIndex="idcardnumber" width="70" celltip="true" />
+			<aos:column header="患者类型" dataIndex="patientType" width="70" celltip="true" />
 			<aos:column header="诊断材料" dataIndex="diagnosticMaterial" width="70" celltip="true" />
 			<aos:column header="身份证明" dataIndex="proofIdentity" width="70" celltip="true" />
 			<aos:column header="收入证明" dataIndex="proofIncome" width="70" celltip="true" />

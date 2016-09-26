@@ -1,55 +1,56 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zhqq.funds.mapper.TPatientMapper" >
-  <resultMap id="BaseResultMap" type="com.zhqq.funds.po.TPatient" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="archives" property="archives" jdbcType="VARCHAR" />
-    <result column="state" property="state" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="VARCHAR" />
-    <result column="province" property="province" jdbcType="VARCHAR" />
-    <result column="apply_type" property="applyType" jdbcType="VARCHAR" />
-    <result column="idcardnumber" property="idcardnumber" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="diagnostic_material" property="diagnosticMaterial" jdbcType="VARCHAR" />
-    <result column="proof_identity" property="proofIdentity" jdbcType="VARCHAR" />
-    <result column="proof_income" property="proofIncome" jdbcType="VARCHAR" />
-    <result column="purchase_invoice" property="purchaseInvoice" jdbcType="VARCHAR" />
-    <result column="medical_evaluation_form" property="medicalEvaluationForm" jdbcType="VARCHAR" />
-    <result column="informed_consent_of_patients" property="informedConsentOfPatients" jdbcType="VARCHAR" />
-    <result column="patiente_conomic_status" property="patienteConomicStatus" jdbcType="VARCHAR" />
-    <result column="Cold_chain_drug_informed_consent" property="coldChainDrugInformedConsent" jdbcType="VARCHAR" />
-    <result column="hr" property="hr" jdbcType="VARCHAR" />
-    <result column="lang_mu_hospital" property="langMuHospital" jdbcType="VARCHAR" />
-    <result column="lang_mu_doctor" property="langMuDoctor" jdbcType="VARCHAR" />
-    <result column="estimated_time_to_increase_drug_injection" property="estimatedTimeToIncreaseDrugInjection" jdbcType="VARCHAR" />
-    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
-    <result column="recipients_receive_single_drug" property="recipientsReceiveSingleDrug" jdbcType="VARCHAR" />
-    <result column="end_of_statement" property="endOfStatement" jdbcType="VARCHAR" />
-    <result column="passDate" property="passdate" jdbcType="TIMESTAMP" />
-    <result column="is_lang_mu_hospital" property="isLangMuHospital" jdbcType="VARCHAR" />
-    <result column="year" property="year" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhqq.funds.mapper.TPatientMapper">
+  <resultMap id="BaseResultMap" type="com.zhqq.funds.po.TPatient">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="archives" jdbcType="VARCHAR" property="archives" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="apply_type" jdbcType="VARCHAR" property="applyType" />
+    <result column="idcardnumber" jdbcType="VARCHAR" property="idcardnumber" />
+    <result column="patient_type" jdbcType="VARCHAR" property="patientType" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="diagnostic_material" jdbcType="VARCHAR" property="diagnosticMaterial" />
+    <result column="proof_identity" jdbcType="VARCHAR" property="proofIdentity" />
+    <result column="proof_income" jdbcType="VARCHAR" property="proofIncome" />
+    <result column="purchase_invoice" jdbcType="VARCHAR" property="purchaseInvoice" />
+    <result column="medical_evaluation_form" jdbcType="VARCHAR" property="medicalEvaluationForm" />
+    <result column="informed_consent_of_patients" jdbcType="VARCHAR" property="informedConsentOfPatients" />
+    <result column="patiente_conomic_status" jdbcType="VARCHAR" property="patienteConomicStatus" />
+    <result column="Cold_chain_drug_informed_consent" jdbcType="VARCHAR" property="coldChainDrugInformedConsent" />
+    <result column="hr" jdbcType="VARCHAR" property="hr" />
+    <result column="lang_mu_hospital" jdbcType="VARCHAR" property="langMuHospital" />
+    <result column="lang_mu_doctor" jdbcType="VARCHAR" property="langMuDoctor" />
+    <result column="estimated_time_to_increase_drug_injection" jdbcType="VARCHAR" property="estimatedTimeToIncreaseDrugInjection" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="recipients_receive_single_drug" jdbcType="VARCHAR" property="recipientsReceiveSingleDrug" />
+    <result column="end_of_statement" jdbcType="VARCHAR" property="endOfStatement" />
+    <result column="passDate" jdbcType="TIMESTAMP" property="passdate" />
+    <result column="is_lang_mu_hospital" jdbcType="VARCHAR" property="isLangMuHospital" />
+    <result column="year" jdbcType="VARCHAR" property="year" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -60,25 +61,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -89,346 +90,356 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
-    id, archives, state, name, sex, province, apply_type, idcardnumber, phone, address, 
-    diagnostic_material, proof_identity, proof_income, purchase_invoice, medical_evaluation_form, 
-    informed_consent_of_patients, patiente_conomic_status, Cold_chain_drug_informed_consent, 
+  <sql id="Base_Column_List">
+    id, archives, state, name, sex, province, apply_type, idcardnumber, patient_type, 
+    phone, address, diagnostic_material, proof_identity, proof_income, purchase_invoice, 
+    medical_evaluation_form, informed_consent_of_patients, patiente_conomic_status, Cold_chain_drug_informed_consent, 
     hr, lang_mu_hospital, lang_mu_doctor, estimated_time_to_increase_drug_injection, 
     remarks, recipients_receive_single_drug, end_of_statement, passDate, is_lang_mu_hospital, 
     year
   </sql>
-  
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhqq.funds.po.TPatientExample" >
+  <select id="selectByExample" parameterType="com.zhqq.funds.po.TPatientExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from t_patient
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
-    <if test="limitStart != null and limitStart>=0" >
+    <if test="limitStart != null and limitStart&gt;=0">
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_patient
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_patient
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.zhqq.funds.po.TPatientExample" >
+  <delete id="deleteByExample" parameterType="com.zhqq.funds.po.TPatientExample">
     delete from t_patient
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.zhqq.funds.po.TPatient" >
+  <insert id="insert" parameterType="com.zhqq.funds.po.TPatient">
     insert into t_patient (id, archives, state, 
       name, sex, province, 
-      apply_type, idcardnumber, phone, 
-      address, diagnostic_material, proof_identity, 
-      proof_income, purchase_invoice, medical_evaluation_form, 
-      informed_consent_of_patients, patiente_conomic_status, 
-      Cold_chain_drug_informed_consent, hr, lang_mu_hospital, 
-      lang_mu_doctor, estimated_time_to_increase_drug_injection, 
-      remarks, recipients_receive_single_drug, end_of_statement, 
+      apply_type, idcardnumber, patient_type, 
+      phone, address, diagnostic_material, 
+      proof_identity, proof_income, purchase_invoice, 
+      medical_evaluation_form, informed_consent_of_patients, 
+      patiente_conomic_status, Cold_chain_drug_informed_consent, 
+      hr, lang_mu_hospital, lang_mu_doctor, 
+      estimated_time_to_increase_drug_injection, remarks, 
+      recipients_receive_single_drug, end_of_statement, 
       passDate, is_lang_mu_hospital, year
       )
     values (#{id,jdbcType=INTEGER}, #{archives,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{applyType,jdbcType=VARCHAR}, #{idcardnumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{diagnosticMaterial,jdbcType=VARCHAR}, #{proofIdentity,jdbcType=VARCHAR}, 
-      #{proofIncome,jdbcType=VARCHAR}, #{purchaseInvoice,jdbcType=VARCHAR}, #{medicalEvaluationForm,jdbcType=VARCHAR}, 
-      #{informedConsentOfPatients,jdbcType=VARCHAR}, #{patienteConomicStatus,jdbcType=VARCHAR}, 
-      #{coldChainDrugInformedConsent,jdbcType=VARCHAR}, #{hr,jdbcType=VARCHAR}, #{langMuHospital,jdbcType=VARCHAR}, 
-      #{langMuDoctor,jdbcType=VARCHAR}, #{estimatedTimeToIncreaseDrugInjection,jdbcType=VARCHAR}, 
-      #{remarks,jdbcType=VARCHAR}, #{recipientsReceiveSingleDrug,jdbcType=VARCHAR}, #{endOfStatement,jdbcType=VARCHAR}, 
+      #{applyType,jdbcType=VARCHAR}, #{idcardnumber,jdbcType=VARCHAR}, #{patientType,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{diagnosticMaterial,jdbcType=VARCHAR}, 
+      #{proofIdentity,jdbcType=VARCHAR}, #{proofIncome,jdbcType=VARCHAR}, #{purchaseInvoice,jdbcType=VARCHAR}, 
+      #{medicalEvaluationForm,jdbcType=VARCHAR}, #{informedConsentOfPatients,jdbcType=VARCHAR}, 
+      #{patienteConomicStatus,jdbcType=VARCHAR}, #{coldChainDrugInformedConsent,jdbcType=VARCHAR}, 
+      #{hr,jdbcType=VARCHAR}, #{langMuHospital,jdbcType=VARCHAR}, #{langMuDoctor,jdbcType=VARCHAR}, 
+      #{estimatedTimeToIncreaseDrugInjection,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{recipientsReceiveSingleDrug,jdbcType=VARCHAR}, #{endOfStatement,jdbcType=VARCHAR}, 
       #{passdate,jdbcType=TIMESTAMP}, #{isLangMuHospital,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zhqq.funds.po.TPatient" >
+  <insert id="insertSelective" parameterType="com.zhqq.funds.po.TPatient">
     insert into t_patient
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="archives != null" >
+      <if test="archives != null">
         archives,
       </if>
-      <if test="state != null" >
+      <if test="state != null">
         state,
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         name,
       </if>
-      <if test="sex != null" >
+      <if test="sex != null">
         sex,
       </if>
-      <if test="province != null" >
+      <if test="province != null">
         province,
       </if>
-      <if test="applyType != null" >
+      <if test="applyType != null">
         apply_type,
       </if>
-      <if test="idcardnumber != null" >
+      <if test="idcardnumber != null">
         idcardnumber,
       </if>
-      <if test="phone != null" >
+      <if test="patientType != null">
+        patient_type,
+      </if>
+      <if test="phone != null">
         phone,
       </if>
-      <if test="address != null" >
+      <if test="address != null">
         address,
       </if>
-      <if test="diagnosticMaterial != null" >
+      <if test="diagnosticMaterial != null">
         diagnostic_material,
       </if>
-      <if test="proofIdentity != null" >
+      <if test="proofIdentity != null">
         proof_identity,
       </if>
-      <if test="proofIncome != null" >
+      <if test="proofIncome != null">
         proof_income,
       </if>
-      <if test="purchaseInvoice != null" >
+      <if test="purchaseInvoice != null">
         purchase_invoice,
       </if>
-      <if test="medicalEvaluationForm != null" >
+      <if test="medicalEvaluationForm != null">
         medical_evaluation_form,
       </if>
-      <if test="informedConsentOfPatients != null" >
+      <if test="informedConsentOfPatients != null">
         informed_consent_of_patients,
       </if>
-      <if test="patienteConomicStatus != null" >
+      <if test="patienteConomicStatus != null">
         patiente_conomic_status,
       </if>
-      <if test="coldChainDrugInformedConsent != null" >
+      <if test="coldChainDrugInformedConsent != null">
         Cold_chain_drug_informed_consent,
       </if>
-      <if test="hr != null" >
+      <if test="hr != null">
         hr,
       </if>
-      <if test="langMuHospital != null" >
+      <if test="langMuHospital != null">
         lang_mu_hospital,
       </if>
-      <if test="langMuDoctor != null" >
+      <if test="langMuDoctor != null">
         lang_mu_doctor,
       </if>
-      <if test="estimatedTimeToIncreaseDrugInjection != null" >
+      <if test="estimatedTimeToIncreaseDrugInjection != null">
         estimated_time_to_increase_drug_injection,
       </if>
-      <if test="remarks != null" >
+      <if test="remarks != null">
         remarks,
       </if>
-      <if test="recipientsReceiveSingleDrug != null" >
+      <if test="recipientsReceiveSingleDrug != null">
         recipients_receive_single_drug,
       </if>
-      <if test="endOfStatement != null" >
+      <if test="endOfStatement != null">
         end_of_statement,
       </if>
-      <if test="passdate != null" >
+      <if test="passdate != null">
         passDate,
       </if>
-      <if test="isLangMuHospital != null" >
+      <if test="isLangMuHospital != null">
         is_lang_mu_hospital,
       </if>
-      <if test="year != null" >
+      <if test="year != null">
         year,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="archives != null" >
+      <if test="archives != null">
         #{archives,jdbcType=VARCHAR},
       </if>
-      <if test="state != null" >
+      <if test="state != null">
         #{state,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
+      <if test="sex != null">
         #{sex,jdbcType=VARCHAR},
       </if>
-      <if test="province != null" >
+      <if test="province != null">
         #{province,jdbcType=VARCHAR},
       </if>
-      <if test="applyType != null" >
+      <if test="applyType != null">
         #{applyType,jdbcType=VARCHAR},
       </if>
-      <if test="idcardnumber != null" >
+      <if test="idcardnumber != null">
         #{idcardnumber,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
+      <if test="patientType != null">
+        #{patientType,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="address != null" >
+      <if test="address != null">
         #{address,jdbcType=VARCHAR},
       </if>
-      <if test="diagnosticMaterial != null" >
+      <if test="diagnosticMaterial != null">
         #{diagnosticMaterial,jdbcType=VARCHAR},
       </if>
-      <if test="proofIdentity != null" >
+      <if test="proofIdentity != null">
         #{proofIdentity,jdbcType=VARCHAR},
       </if>
-      <if test="proofIncome != null" >
+      <if test="proofIncome != null">
         #{proofIncome,jdbcType=VARCHAR},
       </if>
-      <if test="purchaseInvoice != null" >
+      <if test="purchaseInvoice != null">
         #{purchaseInvoice,jdbcType=VARCHAR},
       </if>
-      <if test="medicalEvaluationForm != null" >
+      <if test="medicalEvaluationForm != null">
         #{medicalEvaluationForm,jdbcType=VARCHAR},
       </if>
-      <if test="informedConsentOfPatients != null" >
+      <if test="informedConsentOfPatients != null">
         #{informedConsentOfPatients,jdbcType=VARCHAR},
       </if>
-      <if test="patienteConomicStatus != null" >
+      <if test="patienteConomicStatus != null">
         #{patienteConomicStatus,jdbcType=VARCHAR},
       </if>
-      <if test="coldChainDrugInformedConsent != null" >
+      <if test="coldChainDrugInformedConsent != null">
         #{coldChainDrugInformedConsent,jdbcType=VARCHAR},
       </if>
-      <if test="hr != null" >
+      <if test="hr != null">
         #{hr,jdbcType=VARCHAR},
       </if>
-      <if test="langMuHospital != null" >
+      <if test="langMuHospital != null">
         #{langMuHospital,jdbcType=VARCHAR},
       </if>
-      <if test="langMuDoctor != null" >
+      <if test="langMuDoctor != null">
         #{langMuDoctor,jdbcType=VARCHAR},
       </if>
-      <if test="estimatedTimeToIncreaseDrugInjection != null" >
+      <if test="estimatedTimeToIncreaseDrugInjection != null">
         #{estimatedTimeToIncreaseDrugInjection,jdbcType=VARCHAR},
       </if>
-      <if test="remarks != null" >
+      <if test="remarks != null">
         #{remarks,jdbcType=VARCHAR},
       </if>
-      <if test="recipientsReceiveSingleDrug != null" >
+      <if test="recipientsReceiveSingleDrug != null">
         #{recipientsReceiveSingleDrug,jdbcType=VARCHAR},
       </if>
-      <if test="endOfStatement != null" >
+      <if test="endOfStatement != null">
         #{endOfStatement,jdbcType=VARCHAR},
       </if>
-      <if test="passdate != null" >
+      <if test="passdate != null">
         #{passdate,jdbcType=TIMESTAMP},
       </if>
-      <if test="isLangMuHospital != null" >
+      <if test="isLangMuHospital != null">
         #{isLangMuHospital,jdbcType=VARCHAR},
       </if>
-      <if test="year != null" >
+      <if test="year != null">
         #{year,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.zhqq.funds.po.TPatientExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.zhqq.funds.po.TPatientExample" resultType="java.lang.Integer">
     select count(*) from t_patient
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update t_patient
-    <set >
-      <if test="record.id != null" >
+    <set>
+      <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.archives != null" >
+      <if test="record.archives != null">
         archives = #{record.archives,jdbcType=VARCHAR},
       </if>
-      <if test="record.state != null" >
+      <if test="record.state != null">
         state = #{record.state,jdbcType=VARCHAR},
       </if>
-      <if test="record.name != null" >
+      <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.sex != null" >
+      <if test="record.sex != null">
         sex = #{record.sex,jdbcType=VARCHAR},
       </if>
-      <if test="record.province != null" >
+      <if test="record.province != null">
         province = #{record.province,jdbcType=VARCHAR},
       </if>
-      <if test="record.applyType != null" >
+      <if test="record.applyType != null">
         apply_type = #{record.applyType,jdbcType=VARCHAR},
       </if>
-      <if test="record.idcardnumber != null" >
+      <if test="record.idcardnumber != null">
         idcardnumber = #{record.idcardnumber,jdbcType=VARCHAR},
       </if>
-      <if test="record.phone != null" >
+      <if test="record.patientType != null">
+        patient_type = #{record.patientType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="record.address != null" >
+      <if test="record.address != null">
         address = #{record.address,jdbcType=VARCHAR},
       </if>
-      <if test="record.diagnosticMaterial != null" >
+      <if test="record.diagnosticMaterial != null">
         diagnostic_material = #{record.diagnosticMaterial,jdbcType=VARCHAR},
       </if>
-      <if test="record.proofIdentity != null" >
+      <if test="record.proofIdentity != null">
         proof_identity = #{record.proofIdentity,jdbcType=VARCHAR},
       </if>
-      <if test="record.proofIncome != null" >
+      <if test="record.proofIncome != null">
         proof_income = #{record.proofIncome,jdbcType=VARCHAR},
       </if>
-      <if test="record.purchaseInvoice != null" >
+      <if test="record.purchaseInvoice != null">
         purchase_invoice = #{record.purchaseInvoice,jdbcType=VARCHAR},
       </if>
-      <if test="record.medicalEvaluationForm != null" >
+      <if test="record.medicalEvaluationForm != null">
         medical_evaluation_form = #{record.medicalEvaluationForm,jdbcType=VARCHAR},
       </if>
-      <if test="record.informedConsentOfPatients != null" >
+      <if test="record.informedConsentOfPatients != null">
         informed_consent_of_patients = #{record.informedConsentOfPatients,jdbcType=VARCHAR},
       </if>
-      <if test="record.patienteConomicStatus != null" >
+      <if test="record.patienteConomicStatus != null">
         patiente_conomic_status = #{record.patienteConomicStatus,jdbcType=VARCHAR},
       </if>
-      <if test="record.coldChainDrugInformedConsent != null" >
+      <if test="record.coldChainDrugInformedConsent != null">
         Cold_chain_drug_informed_consent = #{record.coldChainDrugInformedConsent,jdbcType=VARCHAR},
       </if>
-      <if test="record.hr != null" >
+      <if test="record.hr != null">
         hr = #{record.hr,jdbcType=VARCHAR},
       </if>
-      <if test="record.langMuHospital != null" >
+      <if test="record.langMuHospital != null">
         lang_mu_hospital = #{record.langMuHospital,jdbcType=VARCHAR},
       </if>
-      <if test="record.langMuDoctor != null" >
+      <if test="record.langMuDoctor != null">
         lang_mu_doctor = #{record.langMuDoctor,jdbcType=VARCHAR},
       </if>
-      <if test="record.estimatedTimeToIncreaseDrugInjection != null" >
+      <if test="record.estimatedTimeToIncreaseDrugInjection != null">
         estimated_time_to_increase_drug_injection = #{record.estimatedTimeToIncreaseDrugInjection,jdbcType=VARCHAR},
       </if>
-      <if test="record.remarks != null" >
+      <if test="record.remarks != null">
         remarks = #{record.remarks,jdbcType=VARCHAR},
       </if>
-      <if test="record.recipientsReceiveSingleDrug != null" >
+      <if test="record.recipientsReceiveSingleDrug != null">
         recipients_receive_single_drug = #{record.recipientsReceiveSingleDrug,jdbcType=VARCHAR},
       </if>
-      <if test="record.endOfStatement != null" >
+      <if test="record.endOfStatement != null">
         end_of_statement = #{record.endOfStatement,jdbcType=VARCHAR},
       </if>
-      <if test="record.passdate != null" >
+      <if test="record.passdate != null">
         passDate = #{record.passdate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.isLangMuHospital != null" >
+      <if test="record.isLangMuHospital != null">
         is_lang_mu_hospital = #{record.isLangMuHospital,jdbcType=VARCHAR},
       </if>
-      <if test="record.year != null" >
+      <if test="record.year != null">
         year = #{record.year,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update t_patient
     set id = #{record.id,jdbcType=INTEGER},
       archives = #{record.archives,jdbcType=VARCHAR},
@@ -438,6 +449,7 @@
       province = #{record.province,jdbcType=VARCHAR},
       apply_type = #{record.applyType,jdbcType=VARCHAR},
       idcardnumber = #{record.idcardnumber,jdbcType=VARCHAR},
+      patient_type = #{record.patientType,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       diagnostic_material = #{record.diagnosticMaterial,jdbcType=VARCHAR},
@@ -458,98 +470,101 @@
       passDate = #{record.passdate,jdbcType=TIMESTAMP},
       is_lang_mu_hospital = #{record.isLangMuHospital,jdbcType=VARCHAR},
       year = #{record.year,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhqq.funds.po.TPatient" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhqq.funds.po.TPatient">
     update t_patient
-    <set >
-      <if test="archives != null" >
+    <set>
+      <if test="archives != null">
         archives = #{archives,jdbcType=VARCHAR},
       </if>
-      <if test="state != null" >
+      <if test="state != null">
         state = #{state,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
+      <if test="sex != null">
         sex = #{sex,jdbcType=VARCHAR},
       </if>
-      <if test="province != null" >
+      <if test="province != null">
         province = #{province,jdbcType=VARCHAR},
       </if>
-      <if test="applyType != null" >
+      <if test="applyType != null">
         apply_type = #{applyType,jdbcType=VARCHAR},
       </if>
-      <if test="idcardnumber != null" >
+      <if test="idcardnumber != null">
         idcardnumber = #{idcardnumber,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
+      <if test="patientType != null">
+        patient_type = #{patientType,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="address != null" >
+      <if test="address != null">
         address = #{address,jdbcType=VARCHAR},
       </if>
-      <if test="diagnosticMaterial != null" >
+      <if test="diagnosticMaterial != null">
         diagnostic_material = #{diagnosticMaterial,jdbcType=VARCHAR},
       </if>
-      <if test="proofIdentity != null" >
+      <if test="proofIdentity != null">
         proof_identity = #{proofIdentity,jdbcType=VARCHAR},
       </if>
-      <if test="proofIncome != null" >
+      <if test="proofIncome != null">
         proof_income = #{proofIncome,jdbcType=VARCHAR},
       </if>
-      <if test="purchaseInvoice != null" >
+      <if test="purchaseInvoice != null">
         purchase_invoice = #{purchaseInvoice,jdbcType=VARCHAR},
       </if>
-      <if test="medicalEvaluationForm != null" >
+      <if test="medicalEvaluationForm != null">
         medical_evaluation_form = #{medicalEvaluationForm,jdbcType=VARCHAR},
       </if>
-      <if test="informedConsentOfPatients != null" >
+      <if test="informedConsentOfPatients != null">
         informed_consent_of_patients = #{informedConsentOfPatients,jdbcType=VARCHAR},
       </if>
-      <if test="patienteConomicStatus != null" >
+      <if test="patienteConomicStatus != null">
         patiente_conomic_status = #{patienteConomicStatus,jdbcType=VARCHAR},
       </if>
-      <if test="coldChainDrugInformedConsent != null" >
+      <if test="coldChainDrugInformedConsent != null">
         Cold_chain_drug_informed_consent = #{coldChainDrugInformedConsent,jdbcType=VARCHAR},
       </if>
-      <if test="hr != null" >
+      <if test="hr != null">
         hr = #{hr,jdbcType=VARCHAR},
       </if>
-      <if test="langMuHospital != null" >
+      <if test="langMuHospital != null">
         lang_mu_hospital = #{langMuHospital,jdbcType=VARCHAR},
       </if>
-      <if test="langMuDoctor != null" >
+      <if test="langMuDoctor != null">
         lang_mu_doctor = #{langMuDoctor,jdbcType=VARCHAR},
       </if>
-      <if test="estimatedTimeToIncreaseDrugInjection != null" >
+      <if test="estimatedTimeToIncreaseDrugInjection != null">
         estimated_time_to_increase_drug_injection = #{estimatedTimeToIncreaseDrugInjection,jdbcType=VARCHAR},
       </if>
-      <if test="remarks != null" >
+      <if test="remarks != null">
         remarks = #{remarks,jdbcType=VARCHAR},
       </if>
-      <if test="recipientsReceiveSingleDrug != null" >
+      <if test="recipientsReceiveSingleDrug != null">
         recipients_receive_single_drug = #{recipientsReceiveSingleDrug,jdbcType=VARCHAR},
       </if>
-      <if test="endOfStatement != null" >
+      <if test="endOfStatement != null">
         end_of_statement = #{endOfStatement,jdbcType=VARCHAR},
       </if>
-      <if test="passdate != null" >
+      <if test="passdate != null">
         passDate = #{passdate,jdbcType=TIMESTAMP},
       </if>
-      <if test="isLangMuHospital != null" >
+      <if test="isLangMuHospital != null">
         is_lang_mu_hospital = #{isLangMuHospital,jdbcType=VARCHAR},
       </if>
-      <if test="year != null" >
+      <if test="year != null">
         year = #{year,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zhqq.funds.po.TPatient" >
+  <update id="updateByPrimaryKey" parameterType="com.zhqq.funds.po.TPatient">
     update t_patient
     set archives = #{archives,jdbcType=VARCHAR},
       state = #{state,jdbcType=VARCHAR},
@@ -558,6 +573,7 @@
       province = #{province,jdbcType=VARCHAR},
       apply_type = #{applyType,jdbcType=VARCHAR},
       idcardnumber = #{idcardnumber,jdbcType=VARCHAR},
+      patient_type = #{patientType,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       diagnostic_material = #{diagnosticMaterial,jdbcType=VARCHAR},
@@ -580,8 +596,7 @@
       year = #{year,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
-   <select id="selectMaxArchives" resultType="java.lang.Integer" >
+  <select id="selectMaxArchives" resultType="java.lang.Integer" >
     	select max(CONVERT(archives,SIGNED)) from t_patient
   </select>
 </mapper>

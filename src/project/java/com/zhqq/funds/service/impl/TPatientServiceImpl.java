@@ -104,7 +104,13 @@ public class TPatientServiceImpl implements TPatientService {
 			if("0".equals(patientQueryType)){
 				criteria.andArchivesLike(hotkey);
 			}else if("1".equals(patientQueryType)){
-				criteria.andStateLike(hotkey);
+				if("%是%".equals(hotkey)){
+					criteria.andStateEqualTo("1");
+				}else if("%否%".equals(hotkey)){
+					criteria.andStateEqualTo("0");
+				}else{
+					criteria.andStateEqualTo(hotkey);
+				}
 			}else if("2".equals(patientQueryType)){
 				criteria.andNameLike(hotkey);
 			}else if("3".equals(patientQueryType)){
@@ -125,7 +131,7 @@ public class TPatientServiceImpl implements TPatientService {
 				}else if("%复申请%".equals(hotkey)){
 					criteria.andApplyTypeEqualTo("1");
 				}else{
-					criteria.andApplyTypeEqualTo("hotkey");
+					criteria.andApplyTypeEqualTo(hotkey);
 				}
 				
 			}
@@ -153,7 +159,13 @@ public class TPatientServiceImpl implements TPatientService {
 			if("0".equals(patientQueryType)){
 				criteria.andArchivesLike(hotkey);
 			}else if("1".equals(patientQueryType)){
-				criteria.andStateLike(hotkey);
+				if("%是%".equals(hotkey)){
+					criteria.andStateEqualTo("1");
+				}else if("%否%".equals(hotkey)){
+					criteria.andStateEqualTo("0");
+				}else{
+					criteria.andStateEqualTo(hotkey);
+				}
 			}else if("2".equals(patientQueryType)){
 				criteria.andNameLike(hotkey);
 			}else if("3".equals(patientQueryType)){
@@ -174,7 +186,7 @@ public class TPatientServiceImpl implements TPatientService {
 				}else if("%复申请%".equals(hotkey)){
 					criteria.andApplyTypeEqualTo("1");
 				}else{
-					criteria.andApplyTypeEqualTo("hotkey");
+					criteria.andApplyTypeEqualTo(hotkey);
 				}
 			}
 		}
@@ -271,7 +283,7 @@ public class TPatientServiceImpl implements TPatientService {
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<TPatientDTO> patientList = queryPatientList(hotkey, patientQueryType, "", "", "", false);
-		if(ChangeUtils.tProvincesDTOList==null){
+		if(ChangeUtils.tProvincesDTOList==null||ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.proTPatientDTOList(patientList,areaService.getAllProvinces());
 		}else{
 			ChangeUtils.proTPatientDTOList(patientList,null);
@@ -312,6 +324,8 @@ public class TPatientServiceImpl implements TPatientService {
 		cell.setCellValue(tPatientDTO.getPhone());
 		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getIdcardnumber());
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getPatientType());
 		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getDiagnosticMaterial());
 		cell = row.createCell(index++);
@@ -375,6 +389,8 @@ public class TPatientServiceImpl implements TPatientService {
 		cell.setCellValue("联系电话");
 		cell = row.createCell(index++);
 		cell.setCellValue("身份号证");
+		cell = row.createCell(index++);
+		cell.setCellValue("患者类型");
 		cell = row.createCell(index++);
 		cell.setCellValue("诊断材料");
 		cell = row.createCell(index++);
@@ -457,7 +473,7 @@ public class TPatientServiceImpl implements TPatientService {
 		String hotkey = inDto.getString("hotkey");
 		String patientQueryType = inDto.getString("patientQueryType");
 		List<TPatientDTO> patientList = queryPatientList(hotkey, patientQueryType, "", "", "", false);
-		if(ChangeUtils.tProvincesDTOList==null){
+		if(ChangeUtils.tProvincesDTOList==null||ChangeUtils.tCitiesDTOList==null){
 			ChangeUtils.proTPatientDTOList(patientList,areaService.getAllProvinces());
 		}else{
 			ChangeUtils.proTPatientDTOList(patientList,null);
@@ -500,6 +516,8 @@ public class TPatientServiceImpl implements TPatientService {
 		cell.setCellValue(tPatientDTO.getPhone());
 		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getIdcardnumber());
+		cell = row.createCell(index++);
+		cell.setCellValue(tPatientDTO.getPatientType());
 		cell = row.createCell(index++);
 		cell.setCellValue(tPatientDTO.getDiagnosticMaterial());
 		cell = row.createCell(index++);
@@ -564,6 +582,8 @@ public class TPatientServiceImpl implements TPatientService {
 		cell.setCellValue("联系电话");
 		cell = row.createCell(index++);
 		cell.setCellValue("身份号证");
+		cell = row.createCell(index++);
+		cell.setCellValue("患者类型");
 		cell = row.createCell(index++);
 		cell.setCellValue("诊断材料");
 		cell = row.createCell(index++);
@@ -725,6 +745,7 @@ public class TPatientServiceImpl implements TPatientService {
 		record.setAddress(getStringCellValue(ssfRow.getCell(index++)));
 		record.setPhone(getStringCellValue(ssfRow.getCell(index++)));
 		record.setIdcardnumber(getStringCellValue(ssfRow.getCell(index++)));
+		record.setPatientType(getStringCellValue(ssfRow.getCell(index++)));
 		record.setDiagnosticMaterial(getStringCellValue(ssfRow.getCell(index++)));
 		record.setProofIdentity(getStringCellValue(ssfRow.getCell(index++)));
 		record.setProofIncome(getStringCellValue(ssfRow.getCell(index++)));

@@ -675,6 +675,76 @@ public class TPatientExample {
             return (Criteria) this;
         }
 
+        public Criteria andPatientTypeIsNull() {
+            addCriterion("patient_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeIsNotNull() {
+            addCriterion("patient_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeEqualTo(String value) {
+            addCriterion("patient_type =", value, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeNotEqualTo(String value) {
+            addCriterion("patient_type <>", value, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeGreaterThan(String value) {
+            addCriterion("patient_type >", value, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("patient_type >=", value, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeLessThan(String value) {
+            addCriterion("patient_type <", value, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeLessThanOrEqualTo(String value) {
+            addCriterion("patient_type <=", value, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeLike(String value) {
+            addCriterion("patient_type like", value, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeNotLike(String value) {
+            addCriterion("patient_type not like", value, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeIn(List<String> values) {
+            addCriterion("patient_type in", values, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeNotIn(List<String> values) {
+            addCriterion("patient_type not in", values, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeBetween(String value1, String value2) {
+            addCriterion("patient_type between", value1, value2, "patientType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPatientTypeNotBetween(String value1, String value2) {
+            addCriterion("patient_type not between", value1, value2, "patientType");
+            return (Criteria) this;
+        }
+
         public Criteria andPhoneIsNull() {
             addCriterion("phone is null");
             return (Criteria) this;
