@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface TPatientMapper {
 	int selectMaxArchives();
+	
+	List<TPatient> selectByWeekPassDate(@Param("limitStart")Integer limitStart, @Param("limitEnd")Integer limitEnd);
 	 
     int countByExample(TPatientExample example);
 

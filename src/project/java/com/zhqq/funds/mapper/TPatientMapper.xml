@@ -599,4 +599,19 @@
   <select id="selectMaxArchives" resultType="java.lang.Integer" >
     	select max(CONVERT(archives,SIGNED)) from t_patient
   </select>
+  
+   <select id="selectByWeekPassDate" resultMap="BaseResultMap">
+    select
+    	<include refid="Base_Column_List" />
+    from 
+    	t_patient
+    where 
+    	YEARWEEK(date_format(passDate,'%Y-%m-%d')) = YEARWEEK(now())
+    order by 
+    	passDate desc
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  
 </mapper>

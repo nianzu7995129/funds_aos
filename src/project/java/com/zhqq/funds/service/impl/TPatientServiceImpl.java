@@ -27,6 +27,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
 import com.zhqq.funds.DTO.TPatientDTO;
 import com.zhqq.funds.mapper.TPatientMapper;
 import com.zhqq.funds.po.TPatient;
@@ -133,14 +134,23 @@ public class TPatientServiceImpl implements TPatientService {
 				}else{
 					criteria.andApplyTypeEqualTo(hotkey);
 				}
-				
 			}
 		}
 		if(pageFlag){
 			example.setLimitStart(Integer.valueOf(start));
 			example.setLimitEnd(Integer.valueOf(start)+Integer.valueOf(limit));
 		}
-		List<TPatient> list = tPatientMapper.selectByExample(example);
+		List<TPatient> list = Lists.newArrayList();
+		if("10".equals(patientQueryType)){
+			if(pageFlag){
+				list = tPatientMapper.selectByWeekPassDate(Integer.valueOf(start), Integer.valueOf(start)+Integer.valueOf(limit));
+			}else{
+				list = tPatientMapper.selectByWeekPassDate(null, null);
+			}
+			
+		}else{
+			list = tPatientMapper.selectByExample(example);
+		}
 		if(list!=null && list.size()>0){
 			for(TPatient po : list){
 				rlt.add(CopyUtils.copyPOToDTO(po));
@@ -190,7 +200,16 @@ public class TPatientServiceImpl implements TPatientService {
 				}
 			}
 		}
-		rlt = tPatientMapper.countByExample(example);
+		if("10".equals(patientQueryType)){
+			List<TPatient> list =tPatientMapper.selectByWeekPassDate(null, null);
+			if(list!=null){
+				rlt = list.size();
+			}
+		}else{
+			rlt = tPatientMapper.countByExample(example);
+		}
+		
+		
 		return rlt;
 	}
 
