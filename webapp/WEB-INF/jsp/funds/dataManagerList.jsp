@@ -95,7 +95,7 @@
 				<aos:combobox name="coldChainDrugInformedConsent" fieldLabel="冷链药品知情同意书"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
 				<aos:textfield id="hr" onblur="initHospitalAndDoctor" name="hr" fieldLabel="项目专员" maxLength="100" columnWidth="0.5" />
-				<aos:combobox id="langMuHospital" fieldLabel="朗沐医院" name="langMuHospital"  onselect="langMuHospitalChange" editable="true" forceSelection="false" emptyText="请选择医院..." columnWidth="0.49"  />
+				<aos:combobox id="langMuHospital" fieldLabel="朗沐医院" name="langMuHospital"  onselect="langMuHospitalChange" editable="true" forceSelection="false" emptyText="请选择医院..." columnWidth="0.49"  url="hd/getHospital.jhtml" />
 				
 				<aos:combobox id="langMuDoctor" fieldLabel="朗沐医生" name="langMuDoctor" emptyText="请选择医生..."  forceSelection="false" editable="true" columnWidth="0.5" url="hd/getDoctor.jhtml" />
 				<aos:combobox name="estimatedTimeToIncreaseDrugInjection" fieldLabel="预计增药注射时间"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
@@ -191,18 +191,18 @@
 				var hospital = me.getValue();
 				alert(hospital);
 				 if(hospital!="" && hospital!=null){
-					 langMuDoctorNew_store.getProxy().extraParams = {
+					 langMuDoctor_store.getProxy().extraParams = {
 							hospital : encodeURI(hospital)
 						};
-						langMuDoctorNew_store.load({
+						langMuDoctor_store.load({
 							callback : function(records, operation, success) {
 								if (records.length > 0) {
-									AOS.edit(langMuDoctorNew);
+									AOS.edit(langMuDoctor);
 								} else {
-									AOS.read(langMuDoctorNew);
+									AOS.read(langMuDoctor);
 								}
 								//设置选中值
-								Ext.getCmp("langMuDoctorNew").setValue(records[0].data.value);
+								Ext.getCmp("langMuDoctor").setValue(records[0].data.value);
 							}
 						});
 				 }
@@ -276,36 +276,36 @@
 			function initHospitalAndDoctor(me,records){
 				var hr = me.getValue();
 				if(hr!="" && hr!=null){
-					langMuHospitalNew_store.getProxy().extraParams = {
+					langMuHospital_store.getProxy().extraParams = {
 						hr : encodeURI(hr)
 					};
-					langMuHospitalNew_store.load({
+					langMuHospital_store.load({
 						callback : function(records, operation, success) {
 							if (records.length > 0) {
-								AOS.edit(langMuHospitalNew);
+								AOS.edit(langMuHospital);
 								//设置选中值
-								Ext.getCmp("langMuHospitalNew").setValue(records[0].data.value);
-								var hospital = Ext.getCmp("langMuHospitalNew").getValue();
+								Ext.getCmp("langMuHospital").setValue(records[0].data.value);
+								var hospital = Ext.getCmp("langMuHospital").getValue();
 								if(hospital!="" && hospital!=null){
-									langMuDoctorNew_store.getProxy().extraParams = {
+									langMuDoctor_store.getProxy().extraParams = {
 		                                hospital : encodeURI(hospital)
 									};
-									langMuDoctorNew_store.load({
+									langMuDoctor_store.load({
 										callback : function(records, operation, success) {
 											if (records.length > 0) {
-												AOS.edit(langMuDoctorNew);
+												AOS.edit(langMuDoctor);
 											} else {
-												AOS.read(langMuDoctorNew);
+												AOS.read(langMuDoctor);
 											}
 											//设置选中值
-											Ext.getCmp("langMuDoctorNew").setValue(records[0].data.value);
+											Ext.getCmp("langMuDoctor").setValue(records[0].data.value);
 										}
 									});
 								}
 								
 							} else {
-								langMuHospitalNew_store.removeAll();
-								Ext.getCmp("langMuDoctorNew").reset();
+								langMuHospital_store.removeAll();
+								Ext.getCmp("langMuDoctor").reset();
 							}
 						}
 					});

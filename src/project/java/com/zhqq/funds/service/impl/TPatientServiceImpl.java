@@ -418,9 +418,9 @@ public class TPatientServiceImpl implements TPatientService {
 		cell = row.createCell(index++);
 		cell.setCellValue("备注");
 		cell = row.createCell(index++);
-		cell.setCellValue("通过日期");
-		cell = row.createCell(index++);
 		cell.setCellValue("诊断医院是否为朗沐医院");
+		cell = row.createCell(index++);
+		cell.setCellValue("通过日期");
 		cell = row.createCell(index++);
 		cell.setCellValue("受助药品领取单");
 		cell = row.createCell(index++);
@@ -611,9 +611,9 @@ public class TPatientServiceImpl implements TPatientService {
 		cell = row.createCell(index++);
 		cell.setCellValue("备注");
 		cell = row.createCell(index++);
-		cell.setCellValue("通过日期");
-		cell = row.createCell(index++);
 		cell.setCellValue("诊断医院是否为朗沐医院");
+		cell = row.createCell(index++);
+		cell.setCellValue("通过日期");
 		cell = row.createCell(index++);
 		cell.setCellValue("受助药品领取单");
 		cell = row.createCell(index++);
