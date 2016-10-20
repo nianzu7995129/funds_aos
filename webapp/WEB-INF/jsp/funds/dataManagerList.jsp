@@ -21,7 +21,7 @@
 				<aos:dockeditem xtype="tbseparator" />
 				<aos:dockeditem text="导出" tooltip="导出患者信息成Excel" onclick="_g_user_export" icon="icon9.png" />
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:combobox id="patient_query_type" name="patient_query_type" dicField="custom_patient_query" value="0"  width="90"/>
+				<aos:combobox editable="false"  id="patient_query_type" name="patient_query_type" dicField="custom_patient_query" value="0"  width="90"/>
 				<aos:triggerfield emptyText="请输入关键字" name="hotkey" id="_hotkey" onenterkey="_g_user_query"
 					trigger1Cls="x-form-search-trigger" onTrigger1Click="_g_user_query" width="180" />
 				<aos:dockeditem xtype="tbfill" />
@@ -29,37 +29,37 @@
 			
 			<aos:selmodel type="checkbox" mode="multi" />
 			<aos:column type="rowno" />
-			<aos:column header="流水号" dataIndex="id" hidden="true" />
-			<aos:column header="是否通过" dataIndex="catalog_id_" hidden="true" />
-			<aos:column header="档案编号" dataIndex="archives" width="70" celltip="true" />
-			<aos:column header="是否通过" dataIndex="state" width="70" celltip="true" />
-			<aos:column header="姓名" dataIndex="name" width="70" celltip="true" />
-			<aos:column header="性别" dataIndex="sex" width="70" celltip="true" />
-			<aos:column header="省份" dataIndex="province" width="70" celltip="true" />
-			<aos:column header="申请类型" dataIndex="applyType" width="70" celltip="true" />
-			<aos:column header="住址" dataIndex="address" width="70" celltip="true" />
-			<aos:column header="联系电话" dataIndex="phone" width="70" celltip="true" />
-			<aos:column header="身份号证" dataIndex="idcardnumber" width="70" celltip="true" />
-			<aos:column header="患者类型" dataIndex="patientType" width="70" celltip="true" />
-			<aos:column header="诊断材料" dataIndex="diagnosticMaterial" width="70" celltip="true" />
-			<aos:column header="身份证明" dataIndex="proofIdentity" width="70" celltip="true" />
-			<aos:column header="收入证明" dataIndex="proofIncome" width="70" celltip="true" />
-			<aos:column header="购药发票" dataIndex="purchaseInvoice" width="70" celltip="true" />
-			<aos:column header="医学评估表" dataIndex="medicalEvaluationForm" width="80" celltip="true" />
-			<aos:column header="患者知情同意函" dataIndex="informedConsentOfPatients" width="120" celltip="true" />
-			<aos:column header="患者经济状况填报表" dataIndex="patienteConomicStatus" width="120" celltip="true" />
-			<aos:column header="冷链药品知情同意书" dataIndex="coldChainDrugInformedConsent" width="120" celltip="true" />
-			<aos:column header="项目专员" dataIndex="hr" width="70" celltip="true" />
-			<aos:column header="朗沐医院" dataIndex="langMuHospital" width="70" celltip="true" />
-			<aos:column header="朗沐医生" dataIndex="langMuDoctor" width="70" celltip="true" />
-			<aos:column header="预计增药注射时间" dataIndex="estimatedTimeToIncreaseDrugInjection" width="120" celltip="true" />
-			<aos:column header="备注" dataIndex="remarks" width="70" celltip="true" />
-			<aos:column header="诊断医院是否为朗沐医院"  dataIndex="isLangMuHospital" width="130" celltip="true" />
-			<aos:column header="通过日期"  dataIndex="passdate" width="120" celltip="true" />
-			<aos:column header="受助药品领取单" dataIndex="recipientsReceiveSingleDrug" width="120" celltip="true" />
-			<aos:column header="捐助结束声明" dataIndex="endOfStatement" width="120" celltip="true" />
-			<aos:column header="年份" dataIndex="year" width="70" celltip="true" />
-			<aos:column header=""   width="1" flex="1"/>
+			<aos:column header="流水号" dataIndex="id" hidden="true" maxWidth="1000"/>
+			<aos:column header="是否通过" dataIndex="catalog_id_" hidden="true" maxWidth="1000"/>
+			<aos:column header="档案编号" dataIndex="archives" minWidth="70" celltip="true" maxWidth="1000" />
+			<aos:column header="是否通过" dataIndex="state" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="姓名" dataIndex="name" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="性别" dataIndex="sex" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="省份" dataIndex="province" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="申请类型" dataIndex="applyType" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="住址" dataIndex="address" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="联系电话" dataIndex="phone" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="身份号证" dataIndex="idcardnumber" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="患者类型" dataIndex="patientType" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="诊断材料" dataIndex="diagnosticMaterial" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="身份证明" dataIndex="proofIdentity" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="收入证明" dataIndex="proofIncome" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="购药发票" dataIndex="purchaseInvoice" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="医学评估表" dataIndex="medicalEvaluationForm" minWidth="80" celltip="true" maxWidth="1000"/>
+			<aos:column header="患者知情同意函" dataIndex="informedConsentOfPatients" minWidth="120" celltip="true" maxWidth="1000"/>
+			<aos:column header="患者经济状况填报表" dataIndex="patienteConomicStatus" minWidth="120" celltip="true" maxWidth="1000"/>
+			<aos:column header="冷链药品知情同意书" dataIndex="coldChainDrugInformedConsent" minWidth="120" celltip="true" maxWidth="1000"/>
+			<aos:column header="项目专员" dataIndex="hr" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="朗沐医院" dataIndex="langMuHospital" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="朗沐医生" dataIndex="langMuDoctor" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="预计增药注射时间" dataIndex="estimatedTimeToIncreaseDrugInjection" minWidth="120" celltip="true" maxWidth="1000"/>
+			<aos:column header="备注" dataIndex="remarks" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header="诊断医院是否为朗沐医院"  dataIndex="isLangMuHospital" minWidth="130" celltip="true" maxWidth="1000"/>
+			<aos:column header="通过日期"  dataIndex="passdate" minWidth="120" celltip="true"  maxWidth="1000"/>
+			<aos:column header="受助药品领取单" dataIndex="recipientsReceiveSingleDrug" minWidth="120" celltip="true" maxWidth="1000"/>
+			<aos:column header="捐助结束声明" dataIndex="endOfStatement" minWidth="120" celltip="true" maxWidth="1000"/>
+			<aos:column header="年份" dataIndex="year" minWidth="70" celltip="true" maxWidth="1000"/>
+			<aos:column header=""   minWidth="1" flex="1" maxWidth="1000"/>
 		</aos:gridpanel>
 	</aos:viewport>
 
@@ -82,11 +82,11 @@
 				<aos:textfield name="patientType" fieldLabel="患者类型" maxLength="100" columnWidth="0.49" />
 				
 				
-				<aos:combobox name="diagnosticMaterial" fieldLabel="诊断材料" dicField="custom_h_state" emptyText="" editable="true" forceSelection="false" columnWidth="0.5" />
-				<aos:combobox name="proofIdentity" fieldLabel="身份证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				<aos:combobox name="diagnosticMaterial" fieldLabel="诊断材料" dicField="custom_h_state" emptyText="" editable="true" forceSelection="false" columnWidth="0.99"/>
+				<aos:combobox name="proofIdentity" fieldLabel="身份证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.99" />
 				
-				<aos:combobox name="proofIncome" fieldLabel="收入证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
-				<aos:combobox name="purchaseInvoice" fieldLabel="购药发票"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				<aos:combobox name="proofIncome" fieldLabel="收入证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.99"/>
+				<aos:combobox name="purchaseInvoice" fieldLabel="购药发票"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.99" />
 				
 				<aos:combobox name="medicalEvaluationForm" fieldLabel="医学评估表"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:combobox name="informedConsentOfPatients" fieldLabel="患者知情同意函"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
@@ -100,14 +100,15 @@
 				<aos:combobox id="langMuDoctor" fieldLabel="朗沐医生" name="langMuDoctor" emptyText="请选择医生..."  forceSelection="false" editable="true" columnWidth="0.5" url="hd/getDoctor.jhtml" />
 				<aos:combobox name="estimatedTimeToIncreaseDrugInjection" fieldLabel="预计增药注射时间"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:textfield name="remarks" fieldLabel="备注" maxLength="100" columnWidth="0.5" />
+				<aos:datetimefield name="passdate" fieldLabel="审核时间" format="Y-m-d H:i:s" editable="false" columnWidth="0.5" />
 				<aos:combobox fieldLabel="诊断医院是否为朗沐医院" name="isLangMuHospital" dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.49" />
 				
-				<aos:datetimefield name="passdate" fieldLabel="审核时间" format="Y-m-d H:i:s" editable="false" columnWidth="0.5" />
-				<aos:combobox name="recipientsReceiveSingleDrug" fieldLabel="受助药品领取单"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:combobox name="endOfStatement" fieldLabel="捐助结束声明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:combobox name="recipientsReceiveSingleDrug" fieldLabel="受助药品领取单"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:datefield name="year" fieldLabel="年份" format="Y" editable="false" columnWidth="0.49" />
+				
+				<aos:combobox name="endOfStatement" fieldLabel="捐助结束声明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.99" />
+				<aos:textareafield name="remarks" fieldLabel="备注"  height="50" columnWidth="0.99" />
 			</aos:fieldset>
 		</aos:formpanel>
 		<aos:docked dock="bottom" ui="footer">
@@ -136,12 +137,11 @@
 				<aos:textfield id="idcardnumberModify" name="idcardnumber" fieldLabel="身份证号"   maxLength="20" columnWidth="0.5" />
 				<aos:textfield name="patientType" fieldLabel="患者类型" maxLength="100" columnWidth="0.49" />
 				
+				<aos:combobox name="diagnosticMaterial" fieldLabel="诊断材料" dicField="custom_h_state" emptyText="" editable="true" forceSelection="false" columnWidth="0.99"/>
+				<aos:combobox name="proofIdentity" fieldLabel="身份证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.99" />
 				
-				<aos:combobox name="diagnosticMaterial" fieldLabel="诊断材料" dicField="custom_h_state" emptyText="" editable="true" forceSelection="false" columnWidth="0.5" />
-				<aos:combobox name="proofIdentity" fieldLabel="身份证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
-				
-				<aos:combobox name="proofIncome" fieldLabel="收入证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
-				<aos:combobox name="purchaseInvoice" fieldLabel="购药发票"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
+				<aos:combobox name="proofIncome" fieldLabel="收入证明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.99"/>
+				<aos:combobox name="purchaseInvoice" fieldLabel="购药发票"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.99" />
 				
 				<aos:combobox name="medicalEvaluationForm" fieldLabel="医学评估表"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:combobox name="informedConsentOfPatients" fieldLabel="患者知情同意函"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
@@ -155,14 +155,15 @@
 				<aos:combobox id="langMuDoctorModify" fieldLabel="朗沐医生" name="langMuDoctor" forceSelection="false" emptyText="请选择医生..."  editable="true" columnWidth="0.5" url="hd/getDoctor.jhtml" />
 				<aos:combobox name="estimatedTimeToIncreaseDrugInjection" fieldLabel="预计增药注射时间"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:textfield name="remarks" fieldLabel="备注" maxLength="100" columnWidth="0.5" />
+				<aos:datetimefield name="passdate" fieldLabel="审核时间" format="Y-m-d H:i:s" editable="false" columnWidth="0.5" />
 				<aos:combobox fieldLabel="诊断医院是否为朗沐医院" name="isLangMuHospital" dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.49" />
 				
-				<aos:datetimefield name="passdate" fieldLabel="审核时间" format="Y-m-d H:i:s" editable="false" columnWidth="0.5" />
-				<aos:combobox name="recipientsReceiveSingleDrug" fieldLabel="受助药品领取单"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
-				<aos:combobox name="endOfStatement" fieldLabel="捐助结束声明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
+				<aos:combobox name="recipientsReceiveSingleDrug" fieldLabel="受助药品领取单"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.5" />
 				<aos:datefield name="year" fieldLabel="年份" format="Y" editable="false" columnWidth="0.49" />
+				
+				<aos:combobox name="endOfStatement" fieldLabel="捐助结束声明"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.99" />
+				<aos:textareafield name="remarks" fieldLabel="备注"  height="50" columnWidth="0.99" />
 				
 			</aos:fieldset>
 		</aos:formpanel>

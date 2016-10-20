@@ -12,7 +12,7 @@
 		<aos:gridpanel id="_g_user" region="center" onrender="_g_user_query" url="queryPatientListHR.jhtml" enableLocking="false">
 			<aos:docked forceBoder="0 0 1 0">
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:combobox id="patient_query_type" name="patient_query_type" dicField="custom_hr_query" value="0"  width="90"/>
+				<aos:combobox editable="false"   id="patient_query_type" name="patient_query_type" dicField="custom_hr_query" value="0"  width="90"/>
 				<aos:triggerfield emptyText="请输入关键字" name="hotkey" id="_hotkey" onenterkey="_g_user_query"
 					trigger1Cls="x-form-search-trigger" onTrigger1Click="_g_user_query" width="180" />
 				<aos:dockeditem xtype="tbfill" />

@@ -105,9 +105,9 @@ public class TPatientServiceImpl implements TPatientService {
 			if("0".equals(patientQueryType)){
 				criteria.andArchivesLike(hotkey);
 			}else if("1".equals(patientQueryType)){
-				if("%是%".equals(hotkey)){
+				if("%已通过%".equals(hotkey)){
 					criteria.andStateEqualTo("1");
-				}else if("%否%".equals(hotkey)){
+				}else if("%未通过%".equals(hotkey)){
 					criteria.andStateEqualTo("0");
 				}else{
 					criteria.andStateEqualTo(hotkey);
@@ -115,7 +115,13 @@ public class TPatientServiceImpl implements TPatientService {
 			}else if("2".equals(patientQueryType)){
 				criteria.andNameLike(hotkey);
 			}else if("3".equals(patientQueryType)){
-				criteria.andSexLike(hotkey);
+				if("%女%".equals(hotkey)){
+					criteria.andSexEqualTo("1");
+				}else if("%男%".equals(hotkey)){
+					criteria.andSexEqualTo("0");
+				}else{
+					criteria.andSexEqualTo(hotkey);
+				}
 			}else if("4".equals(patientQueryType)){
 				criteria.andPhoneLike(hotkey);
 			}else if("5".equals(patientQueryType)){
@@ -169,9 +175,9 @@ public class TPatientServiceImpl implements TPatientService {
 			if("0".equals(patientQueryType)){
 				criteria.andArchivesLike(hotkey);
 			}else if("1".equals(patientQueryType)){
-				if("%是%".equals(hotkey)){
+				if("%已通过%".equals(hotkey)){
 					criteria.andStateEqualTo("1");
-				}else if("%否%".equals(hotkey)){
+				}else if("%未通过%".equals(hotkey)){
 					criteria.andStateEqualTo("0");
 				}else{
 					criteria.andStateEqualTo(hotkey);
@@ -179,7 +185,13 @@ public class TPatientServiceImpl implements TPatientService {
 			}else if("2".equals(patientQueryType)){
 				criteria.andNameLike(hotkey);
 			}else if("3".equals(patientQueryType)){
-				criteria.andSexLike(hotkey);
+				if("%女%".equals(hotkey)){
+					criteria.andSexEqualTo("1");
+				}else if("%男%".equals(hotkey)){
+					criteria.andSexEqualTo("0");
+				}else{
+					criteria.andSexEqualTo(hotkey);
+				}
 			}else if("4".equals(patientQueryType)){
 				criteria.andPhoneLike(hotkey);
 			}else if("5".equals(patientQueryType)){

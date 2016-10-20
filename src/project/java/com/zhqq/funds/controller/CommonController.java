@@ -80,6 +80,11 @@ public class CommonController {
 		return "funds/dataManagerList.jsp";
 	}
 	
+	@RequestMapping(value = "funds/patient/dataManagerQuery")
+	public String dataManagerQueryInit() {
+		return "funds/dataManagerQuery.jsp";
+	}
+	
 	/**
 	 * 医生页面初始化
 	 *

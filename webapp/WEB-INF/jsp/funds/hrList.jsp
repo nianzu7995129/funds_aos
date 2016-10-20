@@ -26,7 +26,7 @@
 				<aos:dockeditem text="导出" tooltip="导出专员信息成Excel"
 					onclick="_g_user_export" icon="icon9.png" />
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:combobox id="patient_query_type" name="patient_query_type"
+				<aos:combobox editable="false"   id="patient_query_type" name="patient_query_type"
 					dicField="custom_hrm_query" value="0" width="90" />
 				<aos:triggerfield emptyText="请输入关键字" name="hotkey" id="_hotkey"
 					onenterkey="_g_user_query" trigger1Cls="x-form-search-trigger"

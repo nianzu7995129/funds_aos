@@ -19,7 +19,7 @@
 				<aos:dockeditem xtype="tbseparator" />
 				<aos:dockeditem text="导出" tooltip="导出医药下发信息成Excel" onclick="_g_user_export" icon="icon9.png" />
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:combobox id="md_md_type" name="md_md_type" dicField="custom_md_query" value="0"  width="90"/>
+				<aos:combobox editable="false"   id="md_md_type" name="md_md_type" dicField="custom_md_query" value="0"  width="90"/>
 				<aos:triggerfield emptyText="请输入关键字" name="hotkey" id="_hotkey" onenterkey="_g_user_query"
 					trigger1Cls="x-form-search-trigger" onTrigger1Click="_g_user_query" width="180" />
 				<aos:dockeditem xtype="tbseparator" />

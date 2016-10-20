@@ -21,7 +21,7 @@
 				<aos:dockeditem xtype="tbseparator" />
 				<aos:dockeditem text="导出" tooltip="导出医生信息成Excel" onclick="_g_user_export" icon="icon9.png" />
 				<aos:dockeditem xtype="tbseparator" />
-				<aos:combobox id="patient_query_type" name="patient_query_type" dicField="custom_doctor_query" value="0"  width="90"/>
+				<aos:combobox editable="false"  id="patient_query_type" name="patient_query_type" dicField="custom_doctor_query" value="0"  width="90"/>
 				<aos:triggerfield emptyText="请输入关键字" name="hotkey" id="_hotkey" onenterkey="_g_user_query"
 					trigger1Cls="x-form-search-trigger" onTrigger1Click="_g_user_query" width="180" />
 				<aos:dockeditem xtype="tbfill" />
@@ -66,7 +66,7 @@
 				<aos:combobox name="resume" fieldLabel="个人简历"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
 				<aos:textfield id="phone" name="phone" fieldLabel="联系电话"  maxLength="100" columnWidth="0.5" />
-				<aos:combobox name="isRegister" fieldLabel="是否在册" dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.49" />
+				<aos:combobox name="isRegister" fieldLabel="是否在册" editable="true" forceSelection="false"  dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.49" />
 			</aos:fieldset>
 		</aos:formpanel>
 		<aos:docked dock="bottom" ui="footer">
@@ -96,7 +96,7 @@
 				<aos:combobox name="resume" fieldLabel="个人简历"  dicField="custom_h_state" emptyText="" editable="true" forceSelection="false"  columnWidth="0.49" />
 				
 				<aos:textfield id="phoneModify" name="phone" fieldLabel="联系电话"  maxLength="100" columnWidth="0.5" />
-				<aos:combobox name="isRegister" fieldLabel="是否在册" dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.49" />
+				<aos:combobox name="isRegister" fieldLabel="是否在册" editable="true" forceSelection="false"  dicField="custom_is_hospital" emptyText="是" value="0" columnWidth="0.49" />
 			</aos:fieldset>
 		</aos:formpanel>
 		<aos:docked dock="bottom" ui="footer">
